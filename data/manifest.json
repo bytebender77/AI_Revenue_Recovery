@@ -1,0 +1,52 @@
+{
+  "generated_at": "2026-08-22T05:09:55.212358+00:00",
+  "seed": 20260822,
+  "response_model_version": "v1.0.0",
+  "clock": {
+    "total_hours": 720,
+    "dev_hours": [
+      0,
+      480
+    ],
+    "test_hours": [
+      480,
+      720
+    ],
+    "recovery_horizon_hours": 168.0,
+    "tick_hours": 1.0
+  },
+  "config": {
+    "seed": 20260822,
+    "n_dev": 6000,
+    "n_test": 3000,
+    "n_merchants_dev": 12,
+    "n_merchants_test": 8,
+    "customers_per_merchant": 260,
+    "regime_mix": [
+      0.82,
+      0.18
+    ],
+    "p_generic_code": 0.1,
+    "p_unmapped_code": 0.06,
+    "p_masquerade": 0.03,
+    "n_adv_fast_organic": 150,
+    "n_adv_soft_mask_terminal": 120,
+    "n_adv_outage_midwindow": 120,
+    "n_outage_windows_dev": 2,
+    "n_outage_windows_test": 1,
+    "outage_duration_hours": [
+      3,
+      9
+    ]
+  },
+  "dev": {
+    "n": 6000,
+    "observed_sha256": "25e63272306fe6a0127718c9550e93c509c7037422029f27f2835291244dd70a",
+    "latent_sha256": "ee77115e0ad81cbf7115d2f66b66eafe41ab33554362dd9e48b7518bbcd9bf0b"
+  },
+  "test": {
+    "n": 3000,
+    "observed_sha256": "e2276fa38df7be3eda0190406a8f2ada16847dfe88daf9f3408986f4b61bacda",
+    "latent_sha256": "c7872ddbc36159ef0ef541ae2a848cc25c53407a8a33dd5f4bf00af2d5bfa2db"
+  }
+}

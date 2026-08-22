@@ -1,0 +1,10 @@
+{
+  "sealed_at": "2026-08-22T05:09:55.212358+00:00",
+  "seed": 20260822,
+  "test": {
+    "n": 3000,
+    "observed_sha256": "e2276fa38df7be3eda0190406a8f2ada16847dfe88daf9f3408986f4b61bacda",
+    "latent_sha256": "c7872ddbc36159ef0ef541ae2a848cc25c53407a8a33dd5f4bf00af2d5bfa2db"
+  },
+  "rule": "The test cohort is read exactly once, at the end, by the final eval run. Any tuning decision taken after reading it invalidates the reported numbers. Hashes above detect regeneration."
+}
