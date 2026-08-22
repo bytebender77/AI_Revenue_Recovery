@@ -8,6 +8,7 @@ one that also exists in the other, the test fails.
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, fields
+from enum import Enum
 from typing import Optional
 
 from rr.taxonomy import ActionType, Channel, Method, Regime
@@ -86,3 +87,22 @@ def assert_no_latent_leak(obj) -> None:
     leaked = keys & LATENT_FIELD_NAMES
     if leaked:
         raise AssertionError(f"latent field(s) leaked into agent context: {sorted(leaked)}")
+
+
+class AttemptOutcome(str, Enum):
+    SUCCESS = "success"
+    FAILED = "failed"
+    # Distinct terminal event: a re-debit was issued against a payment for which
+    # no standing authority exists. This is not a failure, it is a compliance
+    # breach, and the eval harness counts it separately for exactly that reason.
+    UNAUTHORIZED_DEBIT_REJECTED = "unauthorized_debit_rejected"
+
+
+@dataclass(frozen=True)
+class AttemptRecord:
+    slot: int
+    action_type: ActionType
+    channel: Optional[Channel]
+    at_h: float
+    p_used: float
+    outcome: "AttemptOutcome"

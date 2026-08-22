@@ -1,3 +1,2 @@
 numpy>=1.26
 pytest>=8.0
-tabulate>=0.9

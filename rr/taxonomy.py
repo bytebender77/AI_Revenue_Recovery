@@ -102,3 +102,34 @@ class Channel(str, Enum):
     WHATSAPP = "whatsapp"
     EMAIL = "email"
     IN_APP = "in_app"
+
+
+# Deterministic head of the error-code distribution. The LLM normaliser in M5
+# handles only the tail this map misses -- that split is what keeps the LLM call
+# load-bearing rather than decorative.
+#
+# NOTE: `payment_failed` deliberately maps to UNKNOWN, not DO_NOT_HONOUR. It is
+# the generic catch-all reason and carries no information on its own; the
+# distinguishing signal ("declined by issuing bank (do not honour)") lives in the
+# free-text description, which is precisely what the tail normaliser reads.
+# TODO(citation): verify against Razorpay's published error `reason` enumeration.
+REASON_TO_CAUSE: dict[str, FailureCause] = {
+    "insufficient_funds": FailureCause.INSUFFICIENT_FUNDS,
+    "issuer_down": FailureCause.ISSUER_DOWNTIME,
+    "gateway_timeout": FailureCause.GATEWAY_TIMEOUT,
+    "payment_timeout": FailureCause.UPI_COLLECT_EXPIRED,
+    "payment_authentication_failed": FailureCause.AUTH_FAILED,
+    "card_expired": FailureCause.CARD_EXPIRED,
+    "invalid_card_details": FailureCause.INVALID_CARD_DETAILS,
+    "card_blocked": FailureCause.LOST_STOLEN_FRAUD,
+    "mandate_revoked": FailureCause.MANDATE_INVALID,
+    "amount_exceeds_mandate": FailureCause.AMOUNT_EXCEEDS_MANDATE,
+    "payment_limit_exceeded": FailureCause.LIMIT_EXCEEDED,
+    "payment_declined_risk": FailureCause.RISK_DECLINE,
+    "method_not_enabled": FailureCause.METHOD_NOT_ENABLED,
+}
+
+
+def normalize_reason(gateway_reason: str) -> FailureCause:
+    """Deterministic lookup. Anything unmapped is UNKNOWN, never a guess."""
+    return REASON_TO_CAUSE.get(gateway_reason, FailureCause.UNKNOWN)

@@ -1,6 +1,6 @@
 PY := python3
 
-.PHONY: setup cohort describe test freeze clean
+.PHONY: setup cohort describe gate test freeze clean
 
 setup:
 	$(PY) -m pip install -r requirements.txt
@@ -10,6 +10,9 @@ cohort:            ## regenerate dev + sealed test cohorts
 
 describe:          ## composition + latent-structure probe for the generated cohort
 	$(PY) -m rr.sim.describe --data data
+
+gate:              ## run B0-B3 on the dev cohort and print the M1 gate verdict
+	$(PY) -m rr.eval.gate --data data
 
 test:
 	$(PY) -m pytest -q
