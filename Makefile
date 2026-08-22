@@ -43,6 +43,9 @@ ablation-features:  ## feature cross v1 vs v2 on full dev
 	$(PY) -m rr.model.train --feature-version v2 --suffix _v2 --data data --out models
 	$(PY) -m rr.eval.ablation_features --data data --models models
 
+ablation-normalizer: train  ## LLM tail normaliser on vs off (--resolver openai|anthropic|offline)
+	$(PY) -m rr.eval.ablation_normalizer --data data --models models --resolver $(or $(RESOLVER),offline)
+
 m4: train          ## full dev: every arm, calibration, per-cause, NO_ACTION breakdown
 	$(PY) -m rr.eval.m4_report --data data --models models
 

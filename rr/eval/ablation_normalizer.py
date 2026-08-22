@@ -68,7 +68,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", type=pathlib.Path, default=pathlib.Path("data"))
     ap.add_argument("--models", type=pathlib.Path, default=pathlib.Path("models"))
-    ap.add_argument("--resolver", default="offline", choices=("offline", "anthropic"))
+    ap.add_argument("--resolver", default="offline", choices=("offline", "anthropic", "openai"))
     ap.add_argument("--cohort", default="dev")
     args = ap.parse_args()
     if args.cohort != "dev":

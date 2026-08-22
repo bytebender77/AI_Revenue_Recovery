@@ -43,15 +43,22 @@ class NormalizerConfig:
     # Weakest confidence still acted on. Anything weaker becomes UNKNOWN and takes
     # the existing conservative path -- the normaliser can fail to help, never harm.
     confidence_floor: str = "medium"
-    # TODO(citation): list prices for claude-opus-5, USD per million tokens.
-    # Verify against platform.claude.com/docs/en/pricing before quoting a cost.
-    price_input_per_mtok: float = 5.00
-    price_output_per_mtok: float = 25.00
-    price_cache_read_per_mtok: float = 0.50
     model_id: str = "claude-opus-5"
 
 
 NORMALIZER = NormalizerConfig()
+
+
+@dataclass(frozen=True)
+class Prices:
+    """USD per million tokens. Per-resolver, because providers differ.
+
+    TODO(citation): every figure below is UNVERIFIED. Check the provider's current
+    pricing page before quoting a cost number in the writeup."""
+    input_per_mtok: float
+    output_per_mtok: float
+    cache_read_per_mtok: float = 0.0
+
 
 TEMPERATURE_NOTE = (
     "claude-opus-5 rejects `temperature` with a 400; the parameter is not sent. "
@@ -86,10 +93,10 @@ class LLMCall:
         return asdict(self)
 
 
-def _cost(cfg: NormalizerConfig, inp: int, out: int, cache_read: int) -> float:
-    return (inp * cfg.price_input_per_mtok
-            + out * cfg.price_output_per_mtok
-            + cache_read * cfg.price_cache_read_per_mtok) / 1_000_000
+def _cost(prices: Prices, inp: int, out: int, cache_read: int) -> float:
+    return (inp * prices.input_per_mtok
+            + out * prices.output_per_mtok
+            + cache_read * prices.cache_read_per_mtok) / 1_000_000
 
 
 def _validate(raw: str, err: Optional[str], cfg: NormalizerConfig
@@ -158,8 +165,11 @@ class TailNormalizer:
             prompt_version=PROMPT_VERSION,
             prompt_hash=prompt_hash(),
             rendered_input_hash=key,
-            temperature=None,
-            temperature_note=TEMPERATURE_NOTE,
+            # Each provider reports what it ACTUALLY exposes rather than being
+            # flattened to one convention: Anthropic logs null + the 400 note,
+            # OpenAI logs the real value it was sent.
+            temperature=getattr(self.resolver, "temperature", None),
+            temperature_note=self.resolver.temperature_note,
             raw_output=raw,
             parse_status=status,
             resolved_cause=cause.value,
@@ -167,7 +177,7 @@ class TailNormalizer:
             input_tokens=usage.get("input_tokens", 0),
             output_tokens=usage.get("output_tokens", 0),
             cache_read_tokens=usage.get("cache_read_input_tokens", 0),
-            cost_usd=_cost(self.cfg, usage.get("input_tokens", 0),
+            cost_usd=_cost(self.resolver.prices, usage.get("input_tokens", 0),
                            usage.get("output_tokens", 0),
                            usage.get("cache_read_input_tokens", 0)),
             latency_ms=latency_ms,
@@ -188,9 +198,13 @@ class TailNormalizer:
         """JSONL sink for the eval harness, which stays on files and in-process.
         The pipeline path writes the same records to the `llm_call` table instead."""
         path.parent.mkdir(parents=True, exist_ok=True)
+        # Emitted from the CACHE, not from self.calls: exactly one row per distinct
+        # gateway response, holding the original call that produced it. Driving this
+        # off self.calls instead would write an empty log on any cache-warm re-run,
+        # and duplicate rows whenever an intent is resolved more than once.
         with path.open("w") as fh:
-            for c in self.calls:
-                fh.write(json.dumps(c.as_row(), sort_keys=True) + "\n")
+            for entry in self._cache.values():
+                fh.write(json.dumps(entry["call"], sort_keys=True) + "\n")
 
     @property
     def total_cost_usd(self) -> float:

@@ -21,7 +21,7 @@ from rr.agent.policy import EVPolicy
 from rr.config import CLOCK, CohortConfig
 from rr.eval.agent_run import run_agent
 from rr.model.beta_binomial import BetaBinomialModel
-from rr.normalize.llm_tail import TailNormalizer, _validate, NORMALIZER
+from rr.normalize.llm_tail import NORMALIZER, Prices, TailNormalizer, _validate
 from rr.sim.cohort import generate_cohort
 from rr.taxonomy import FailureCause
 
@@ -31,9 +31,15 @@ FORBIDDEN = ("rr.pipeline.executor", "rr.adapters", "ActionSpec", "ActionType",
 
 
 class FixedResolver:
-    """Returns one chosen cause for everything, at high confidence."""
+    """Returns one chosen cause for everything, at high confidence.
+
+    Implements the full resolver contract -- model_id, temperature,
+    temperature_note, prices -- so it exercises the same audit path a real
+    provider does."""
     model_id = "test-fixed-resolver"
-    temperature_note = "test"
+    temperature = None
+    temperature_note = "test; claude-opus-5 returns 400 for temperature"
+    prices = Prices(input_per_mtok=0.0, output_per_mtok=0.0)
 
     def __init__(self, cause: FailureCause):
         self.cause = cause
