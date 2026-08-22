@@ -93,6 +93,20 @@ class LLMCall:
         return asdict(self)
 
 
+CACHE_FORMAT = 2   # bumped when the key shape changes; format 1 keys were input-only
+
+
+def cache_key(resolver_kind: str, model_id: str, input_hash: str) -> str:
+    """Cache identity = WHO answered + WHICH model + WHAT was asked.
+
+    Keying on the input alone was a correctness bug and an audit-integrity bug: an
+    entry written by one provider satisfied a request to another, so a run could
+    report zero live calls while an audit row attributed one resolver's output to a
+    different model_id. Left readable rather than hashed so the cache file can be
+    eyeballed for exactly that class of mistake."""
+    return f"{resolver_kind}:{model_id}:{input_hash}"
+
+
 def _cost(prices: Prices, inp: int, out: int, cache_read: int) -> float:
     return (inp * prices.input_per_mtok
             + out * prices.output_per_mtok
@@ -136,15 +150,25 @@ class TailNormalizer:
     cache_path: Optional[pathlib.Path] = None
     cfg: NormalizerConfig = NORMALIZER
     calls: list = field(default_factory=list)
+    stale_cache_discarded: bool = False
     _cache: dict = field(default_factory=dict)
 
     def __post_init__(self):
-        if self.cache_path and self.cache_path.exists():
-            self._cache = json.loads(self.cache_path.read_text())
+        if not (self.cache_path and self.cache_path.exists()):
+            return
+        raw = json.loads(self.cache_path.read_text())
+        # A stale-format file is DISCARDED, never partially trusted -- old keys would
+        # silently never match, which reads as "cache is cold" instead of "cache is wrong".
+        if raw.get("cache_format") != CACHE_FORMAT:
+            self.stale_cache_discarded = True
+            self._cache = {}
+            return
+        self._cache = raw.get("entries", {})
 
     def resolve(self, event: dict) -> tuple[FailureCause, str, LLMCall]:
         rendered = render_input(event)
-        key = rendered_input_hash(rendered)
+        input_hash = rendered_input_hash(rendered)
+        key = cache_key(self.resolver.kind, self.resolver.model_id, input_hash)
 
         if key in self._cache:
             hit = self._cache[key]
@@ -164,7 +188,7 @@ class TailNormalizer:
             model_id=self.resolver.model_id,
             prompt_version=PROMPT_VERSION,
             prompt_hash=prompt_hash(),
-            rendered_input_hash=key,
+            rendered_input_hash=input_hash,
             # Each provider reports what it ACTUALLY exposes rather than being
             # flattened to one convention: Anthropic logs null + the 400 note,
             # OpenAI logs the real value it was sent.
@@ -192,7 +216,9 @@ class TailNormalizer:
     def save_cache(self) -> None:
         if self.cache_path:
             self.cache_path.parent.mkdir(parents=True, exist_ok=True)
-            self.cache_path.write_text(json.dumps(self._cache, indent=1, sort_keys=True))
+            self.cache_path.write_text(json.dumps(
+                {"cache_format": CACHE_FORMAT, "entries": self._cache},
+                indent=1, sort_keys=True))
 
     def write_call_log(self, path: pathlib.Path) -> None:
         """JSONL sink for the eval harness, which stays on files and in-process.

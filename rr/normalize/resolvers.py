@@ -31,6 +31,7 @@ class AnthropicResolver:
     No `temperature` is sent: claude-opus-5 rejects it with a 400. Effort is `low`
     because this is a short closed-set classification.
     """
+    kind = "anthropic"
     temperature = None
     temperature_note = TEMPERATURE_NOTE
     # TODO(citation): UNVERIFIED. platform.claude.com/docs/en/pricing
@@ -86,6 +87,7 @@ class OpenAIResolver:
     `max_completion_tokens`; usage is `prompt_tokens` / `completion_tokens` with
     cached reads under `prompt_tokens_details.cached_tokens`.
     """
+    kind = "openai"
     temperature = 0.0
     temperature_note = (
         "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with "
@@ -179,6 +181,7 @@ class KeywordResolver:
 
     `model_id` carries an explicit non-model marker so no audit row can be mistaken
     for a real LLM call."""
+    kind = "offline"
     model_id = "offline-keyword-resolver (NOT AN LLM)"
     temperature = None
     temperature_note = "No model involved; offline deterministic resolver."

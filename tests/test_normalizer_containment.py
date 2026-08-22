@@ -36,13 +36,18 @@ class FixedResolver:
     Implements the full resolver contract -- model_id, temperature,
     temperature_note, prices -- so it exercises the same audit path a real
     provider does."""
+    kind = "test"
     model_id = "test-fixed-resolver"
     temperature = None
     temperature_note = "test; claude-opus-5 returns 400 for temperature"
     prices = Prices(input_per_mtok=0.0, output_per_mtok=0.0)
 
-    def __init__(self, cause: FailureCause):
+    def __init__(self, cause: FailureCause, kind: str = None, model_id: str = None):
         self.cause = cause
+        if kind:
+            self.kind = kind
+        if model_id:
+            self.model_id = model_id
 
     def classify(self, system, rendered, schema):
         return (json.dumps({"cause": self.cause.value, "confidence": "high",
@@ -117,6 +122,60 @@ def test_cache_makes_repeat_resolution_free_and_identical():
     assert first[0] is second[0]
     assert tail.live_calls == 1 and len(tail.calls) == 2
     assert second[2].cached and second[2].cost_usd == 0.0
+
+
+EVENT = {"gateway_code": "BAD_REQUEST_ERROR", "gateway_reason": "payment_failed",
+         "gateway_source": "bank", "gateway_step": "payment_authorization",
+         "method": "card_mandate",
+         "gateway_description": "Declined by issuing bank (do not honour)"}
+
+
+def test_one_providers_cache_entry_never_satisfies_another():
+    """The cache key is (resolver kind, model_id, input hash), not the input alone.
+
+    Keying on the input alone let an offline keyword answer serve an `openai`
+    request: the run reported zero live calls while the audit row carried an
+    OpenAI model_id over an answer no model produced. That is an audit-integrity
+    failure, not a caching nicety -- it attributes one model's output to another."""
+    shared = {}
+    a = TailNormalizer(FixedResolver(FailureCause.DO_NOT_HONOUR,
+                                     kind="offline", model_id="keyword"))
+    b = TailNormalizer(FixedResolver(FailureCause.INSUFFICIENT_FUNDS,
+                                     kind="openai", model_id="gpt-4o-2024-08-06"))
+    a._cache = b._cache = shared          # deliberately the SAME cache object
+
+    cause_a, _, call_a = a.resolve(EVENT)
+    cause_b, _, call_b = b.resolve(EVENT)
+
+    assert len(shared) == 2, "same input under two resolvers collapsed to one entry"
+    assert cause_a is FailureCause.DO_NOT_HONOUR
+    assert cause_b is FailureCause.INSUFFICIENT_FUNDS, "cross-provider cache hit"
+    assert not call_b.cached, "the second resolver was served a foreign cache entry"
+    # Same input, so the input hash matches -- it is the identity prefix that differs.
+    assert call_a.rendered_input_hash == call_b.rendered_input_hash
+    assert call_a.model_id != call_b.model_id
+    assert a.live_calls == 1 and b.live_calls == 1
+
+
+def test_same_provider_different_model_is_also_a_distinct_entry():
+    shared = {}
+    old = TailNormalizer(FixedResolver(FailureCause.DO_NOT_HONOUR,
+                                       kind="openai", model_id="gpt-4o-2024-08-06"))
+    new = TailNormalizer(FixedResolver(FailureCause.ISSUER_DOWNTIME,
+                                       kind="openai", model_id="gpt-5-hypothetical"))
+    old._cache = new._cache = shared
+    old.resolve(EVENT)
+    _, _, call = new.resolve(EVENT)
+    assert len(shared) == 2 and not call.cached
+
+
+def test_stale_cache_format_is_discarded_not_partially_trusted(tmp_path):
+    """A format-1 file must not read as a cold cache; it must be visibly discarded."""
+    p = tmp_path / "cache.json"
+    p.write_text(json.dumps({"1438fb4908b754a0": {"cause": "do_not_honour",
+                                                  "confidence": "high", "call": {}}}))
+    tail = TailNormalizer(FixedResolver(FailureCause.DO_NOT_HONOUR), cache_path=p)
+    assert tail.stale_cache_discarded and tail.distinct_inputs == 0
 
 
 def test_every_call_is_audit_complete(tmp_path):
