@@ -1,4 +1,4 @@
-"""B3 -- the ceiling. Reads ground truth. Not achievable, and not meant to be.
+"""B3_greedy -- the ceiling, approximately. Reads ground truth. Not achievable, and not meant to be.
 
 Two deliberate constraints so that B3 - B2 measures an INFORMATION advantage and
 not a permission or budget advantage:
@@ -11,6 +11,7 @@ from __future__ import annotations
 
 from typing import Optional
 
+from rr.budget import EscalationBudget
 from rr.config import CLOCK, COSTS
 from rr.contracts import ActionSpec, AttemptContext
 from rr.sim.latent import LatentState
@@ -34,11 +35,12 @@ def _cost_minor(action: ActionSpec) -> int:
     return 0
 
 
-class B3Oracle:
-    name = "B3_oracle"
+class B3GreedyOracle:
+    name = "B3_greedy"
 
-    def __init__(self, latent: LatentState):
+    def __init__(self, latent: LatentState, budget: "EscalationBudget | None" = None):
         self.latent = latent
+        self.budget = budget
 
     def next_action(self, obs: dict, st: RunState) -> Optional[ActionSpec]:
         lat = self.latent
@@ -75,7 +77,7 @@ class B3Oracle:
                 candidates.extend(ActionSpec(ActionType.NUDGE, t, channel=ch) for ch in consented)
             if not st.merchant_alerted:
                 candidates.append(ActionSpec(ActionType.MERCHANT_ALERT, t))
-            if not st.escalated:
+            if not st.escalated and (self.budget is None or self.budget.available()):
                 candidates.append(ActionSpec(ActionType.ESCALATE_HUMAN, t))
 
         best, best_ev = None, 0.0
@@ -89,4 +91,7 @@ class B3Oracle:
             ev = p_recovery(a, lat, ctx) * obs["amount_minor"] * margin - _cost_minor(a)
             if ev > best_ev:
                 best, best_ev = a, ev
+        if best is not None and best.type is ActionType.ESCALATE_HUMAN and self.budget is not None:
+            if not self.budget.consume():
+                return None
         return best

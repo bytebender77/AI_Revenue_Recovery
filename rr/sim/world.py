@@ -156,5 +156,14 @@ def run_intent(obs: dict, latent: LatentState, policy: Policy) -> IntentResult:
 
 
 def run_arm(obs_rows: list[dict], latents: list[LatentState], policy_factory) -> list[IntentResult]:
-    """policy_factory(obs, latent) -> Policy. Only the oracle uses the latent arg."""
-    return [run_intent(o, l, policy_factory(o, l)) for o, l in zip(obs_rows, latents)]
+    """policy_factory(obs, latent) -> Policy. Only the oracle uses the latent arg.
+
+    Intents are PROCESSED in chronological order, so a shared capacity budget is
+    consumed the way it would be in production -- earliest failure first -- but
+    RETURNED in input order, so per-intent pairing across arms stays intact.
+    """
+    order = sorted(range(len(obs_rows)), key=lambda i: obs_rows[i]["failed_at_h"])
+    out: list[Optional[IntentResult]] = [None] * len(obs_rows)
+    for i in order:
+        out[i] = run_intent(obs_rows[i], latents[i], policy_factory(obs_rows[i], latents[i]))
+    return out  # type: ignore[return-value]

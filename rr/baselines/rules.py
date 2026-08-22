@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from typing import Optional
 
+from rr.budget import EscalationBudget
 from rr.config import REGULATORY
 from rr.contracts import ActionSpec
 from rr.sim.world import RunState
@@ -98,8 +99,11 @@ class B1BlindLadder:
 
 class B2GoodRules:
     """Soft declines only, exponential-ish backoff, NEVER_RETRY respected, one nudge,
-    no re-debit without a mandate."""
+    no re-debit without a mandate, escalation rationed by shared ops capacity."""
     name = "B2_good_rules"
+
+    def __init__(self, budget: Optional[EscalationBudget] = None):
+        self.budget = budget
 
     def next_action(self, obs: dict, st: RunState) -> Optional[ActionSpec]:
         cause = normalize_reason(obs["gateway_reason"])
@@ -135,6 +139,8 @@ class B2GoodRules:
 
     def _escalate(self, obs: dict, st: RunState, at: float) -> Optional[ActionSpec]:
         if st.escalated or obs["amount_minor"] < ESCALATE_MIN_AMOUNT_MINOR:
+            return None
+        if self.budget is not None and not self.budget.consume():
             return None
         return ActionSpec(ActionType.ESCALATE_HUMAN, at)
 

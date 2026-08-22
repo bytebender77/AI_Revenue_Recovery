@@ -4,7 +4,7 @@ import pathlib
 
 import pytest
 
-from rr.baselines.oracle import B3Oracle
+from rr.baselines.oracle import B3GreedyOracle
 from rr.baselines.rules import B0DoNothing, B1BlindLadder, B2GoodRules
 from rr.config import CLOCK, CohortConfig
 from rr.contracts import AttemptOutcome
@@ -37,7 +37,7 @@ def test_b1_issues_unauthorized_debits_and_b2_b3_do_not(cohort):
     obs, lat = cohort
     b1 = run_arm(obs, lat, lambda o, l: B1BlindLadder())
     assert sum(r.unauthorized_debit_rejected for r in b1) > 0, "B1 should breach; it has no regime check"
-    for policy in (lambda o, l: B2GoodRules(), lambda o, l: B3Oracle(l)):
+    for policy in (lambda o, l: B2GoodRules(), lambda o, l: B3GreedyOracle(l)):
         res = run_arm(obs, lat, policy)
         assert sum(r.unauthorized_debit_rejected for r in res) == 0
 
@@ -55,7 +55,7 @@ def test_unauthorized_rejection_is_a_distinct_terminal_event(cohort):
 
 
 def test_oracle_never_retries_a_terminal_cause(cohort):
-    res = run_arm(*cohort, lambda o, l: B3Oracle(l))
+    res = run_arm(*cohort, lambda o, l: B3GreedyOracle(l))
     assert sum(r.never_retry_violations_true for r in res) == 0
 
 

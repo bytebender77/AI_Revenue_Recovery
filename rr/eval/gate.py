@@ -12,8 +12,10 @@ import pathlib
 import sys
 import time
 
-from rr.baselines.oracle import B3Oracle
+from rr.baselines.oracle import B3GreedyOracle
 from rr.baselines.rules import B0DoNothing, B1BlindLadder, B2GoodRules
+from rr.budget import EscalationBudget
+from rr.config import COSTS
 from rr.eval.metrics import (
     ArmSummary, gap_by_cause, make_resamples, paired_gap_ci, rupees, summarize,
 )
@@ -62,24 +64,30 @@ def main() -> None:
     print(f"\n=== M1 GATE -- cohort '{args.cohort}', n={len(obs)} ===\n")
 
     t0 = time.time()
+    pct = COSTS.escalation_capacity_pct
+    b2_budget = EscalationBudget.for_cohort(len(obs), pct)
+    b3_budget = EscalationBudget.for_cohort(len(obs), pct)
     runs = {
         "B0_do_nothing": run_arm(obs, lat, lambda o, l: B0DoNothing()),
         "B1_blind_ladder": run_arm(obs, lat, lambda o, l: B1BlindLadder()),
-        "B2_good_rules": run_arm(obs, lat, lambda o, l: B2GoodRules()),
-        "B3_oracle": run_arm(obs, lat, lambda o, l: B3Oracle(l)),
+        "B2_good_rules": run_arm(obs, lat, lambda o, l: B2GoodRules(b2_budget)),
+        "B3_greedy": run_arm(obs, lat, lambda o, l: B3GreedyOracle(l, b3_budget)),
     }
+    print(f"  escalation capacity: {b2_budget.capacity} slots per arm "
+          f"({pct:.0%} of cohort), applied identically to B2 and B3_greedy")
+    print(f"  consumed -- B2: {b2_budget.used}   B3_greedy: {b3_budget.used}\n")
     idx = make_resamples(len(obs), reps=args.reps)
     arms = [summarize(k, v, idx) for k, v in runs.items()]
     _arm_table(arms)
     print(f"\n  ({time.time() - t0:.1f}s, {args.reps} bootstrap resamples, paired on intents)\n")
 
-    b2, b3 = runs["B2_good_rules"], runs["B3_oracle"]
+    b2, b3 = runs["B2_good_rules"], runs["B3_greedy"]
     gap_total, gap_lo, gap_hi = paired_gap_ci(b3, b2, idx)
     s2 = next(a for a in arms if a.name == "B2_good_rules")
-    s3 = next(a for a in arms if a.name == "B3_oracle")
+    s3 = next(a for a in arms if a.name == "B3_greedy")
     capture = s2.incremental_minor / s3.incremental_minor if s3.incremental_minor else 0.0
 
-    print("=== B3 - B2 gap, by true failure cause ===\n")
+    print("=== B3_greedy - B2 gap, by true failure cause ===\n")
     rows = gap_by_cause(b2, b3)
     hdr = f"{'cause':<24}{'n':>6}{'B2 incr':>12}{'B3 incr':>12}{'gap':>12}{'share':>8}"
     print(hdr)
@@ -99,7 +107,7 @@ def main() -> None:
     passed = gap_significant and headroom_ok and spread_ok
 
     print(f"\n=== VERDICT ===\n")
-    print(f"  B3 - B2 incremental gap  : INR {rupees(gap_total)}  "
+    print(f"  B3_greedy - B2 gap        : INR {rupees(gap_total)}  "
           f"95% CI [{rupees(gap_lo)}, {rupees(gap_hi)}]")
     print(f"  B2 captures              : {capture:.1%} of oracle incremental "
           f"({1 - capture:.1%} headroom, need >= {MIN_CAPTURE_HEADROOM:.0%})")

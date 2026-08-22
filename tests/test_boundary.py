@@ -32,12 +32,14 @@ def test_observed_jsonl_carries_no_latent_field():
 
 
 def test_no_agent_module_imports_latent_state():
-    """Vacuous until rr/agent exists (M2). Kept here so it fails the day it stops being."""
-    for pkg in ("agent", "policy", "normalize"):
+    """The pipeline runs on observed fields only. Ground truth enters exactly once,
+    through rr/sim/adapter.py, which is the executor seam and is injected."""
+    for pkg in ("agent", "policy", "normalize", "pipeline", "adapters", "baselines/rules.py"):
         root = REPO / "rr" / pkg
         if not root.exists():
             continue
-        for py in root.rglob("*.py"):
+        files = [root] if root.is_file() else list(root.rglob("*.py"))
+        for py in files:
             src = py.read_text()
             assert "rr.sim.latent" not in src and "from rr.sim import latent" not in src, (
                 f"{py} imports ground truth"

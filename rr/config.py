@@ -57,6 +57,10 @@ class CostConfig:
     # terminal decline. Placeholder; real value depends on network + merchant MCC.
     terminal_retry_penalty_minor: int = 25_000
     default_margin_bps: int = 4_000  # 40% contribution margin on recovered revenue
+    # Share of failed intents an ops team can actually work. Applied identically
+    # to every arm so that no arm wins on permission rather than judgement.
+    # TODO(citation): staffing decision, merchant-specific. Placeholder.
+    escalation_capacity_pct: float = 0.05
 
 
 @dataclass(frozen=True)
