@@ -127,3 +127,93 @@ def paired_gap_ci(a: Sequence[IntentResult], b: Sequence[IntentResult],
 
 def rupees(minor: float) -> str:
     return f"{minor / 100:,.0f}"
+
+
+# --------------------------------------------------------- M4: wasted contact --
+
+@dataclass
+class ContactWaste:
+    contacts: int
+    wasted: int
+    to_self_healers: int
+    to_never_recovers: int
+    annoyance_cost_minor: int
+    send_cost_minor: int
+
+    @property
+    def rate(self) -> float:
+        return self.wasted / self.contacts if self.contacts else 0.0
+
+
+def contact_waste(results: Sequence[IntentResult]) -> ContactWaste:
+    """A contact is wasted when it could not have changed the outcome: the payment
+    was going to recover anyway, or it never recovered at all. Measurable here only
+    because the simulator holds the counterfactual; in production this is exactly
+    what the randomised control arm is for."""
+    total = heal = never = 0
+    send = 0
+    for r in results:
+        if not r.contacts:
+            continue
+        total += r.contacts
+        for rec in r.records:
+            if rec.action_type is ActionType.NUDGE:
+                send += COSTS.contact_cost_minor[rec.channel.value]
+        if r.counterfactual_self_heals:
+            heal += r.contacts
+        elif r.recovered_at_h is None:
+            never += r.contacts
+    wasted = heal + never
+    return ContactWaste(total, wasted, heal, never,
+                        wasted * COSTS.wasted_contact_cost_minor, send)
+
+
+# ------------------------------------------------------- M4: model calibration --
+
+def reliability(model, results: Sequence[IntentResult], obs_by_id: dict, bins: int = 10):
+    """Predicted p vs realised outcome on the attempts the agent actually made."""
+    from rr.contracts import AttemptOutcome
+    from rr.model.beta_binomial import time_bucket
+    from rr.taxonomy import DEBIT_ACTIONS, normalize_reason
+
+    pts = []
+    for r in results:
+        o = obs_by_id[r.intent_id]
+        cause = normalize_reason(o["gateway_reason"]).value
+        idx = 0
+        for rec in r.records:
+            if rec.outcome is AttemptOutcome.UNAUTHORIZED_DEBIT_REJECTED:
+                continue
+            label = (f"{rec.action_type.value}:{rec.channel.value}"
+                     if rec.channel else rec.action_type.value)
+            cell = model.lookup(action=label, cause=cause, method=o["method"],
+                                attempt_index=idx,
+                                time_bucket=time_bucket(rec.at_h - o["failed_at_h"]),
+                                regime=o["regime"])
+            pts.append((cell.mean, 1.0 if rec.outcome is AttemptOutcome.SUCCESS else 0.0))
+            if rec.action_type in DEBIT_ACTIONS:
+                idx += 1
+    if not pts:
+        return [], float("nan")
+    brier = sum((p - y) ** 2 for p, y in pts) / len(pts)
+    table = []
+    for b in range(bins):
+        lo, hi = b / bins, (b + 1) / bins
+        sel = [(p, y) for p, y in pts if (lo <= p < hi or (b == bins - 1 and p == 1.0))]
+        if sel:
+            table.append((lo, hi, len(sel), sum(p for p, _ in sel) / len(sel),
+                          sum(y for _, y in sel) / len(sel)))
+    return table, brier
+
+
+def gap_by_cause_pair(a: Sequence[IntentResult], b: Sequence[IntentResult]) -> list[tuple]:
+    """(cause, n, a_incremental, b_incremental, a-b) sorted worst-loss first."""
+    da, db = delta_vector(a), delta_vector(b)
+    buckets: dict = {}
+    for i, r in enumerate(a):
+        v = buckets.setdefault(r.true_cause, [0, 0, 0])
+        v[0] += 1
+        v[1] += int(da[i])
+        v[2] += int(db[i])
+    return sorted(((c, v[0], v[1], v[2], v[1] - v[2]) for c, v in buckets.items()),
+                  key=lambda r: r[4])

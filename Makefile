@@ -1,6 +1,6 @@
 PY := python3
 
-.PHONY: setup cohort describe gate db-up db-down db-init run verify-chain audit test freeze clean
+.PHONY: setup cohort describe gate train m4 db-up db-down db-init run verify-chain audit test freeze clean
 
 setup:
 	$(PY) -m pip install -r requirements.txt
@@ -20,7 +20,14 @@ db-down:
 db-init: db-up      ## (re)create the schema -- DROPS existing tables and the ledger chain
 	$(PY) -c "from rr.db.conn import init_schema; init_schema(); print('  schema ready')"
 
-run: db-up          ## end-to-end on a 500-intent demo cohort, writing every decision to postgres
+data/dev_observed.jsonl:
+	$(PY) -m rr.sim.cohort --out data
+
+models/success_model.json: data/dev_observed.jsonl
+	$(PY) -m rr.model.train --data data --out models
+
+run: db-up data/dev_observed.jsonl   ## clean clone: docker compose up, then make run. No other steps.
+	@$(PY) -c "from rr.db.conn import ensure_schema; ensure_schema()"
 	$(PY) -m rr.pipeline.runner --data data --limit 500
 
 verify-chain:
@@ -28,6 +35,11 @@ verify-chain:
 
 audit:             ## AUDIT=<payment_intent_id> make audit
 	@psql "$${DATABASE_URL:-postgresql://rr:rr@localhost:5434/rr}" -v id="'$(AUDIT)'" -f sql/audit.sql
+
+train: models/success_model.json   ## fit the success + organic models on dev exploration data
+
+m4: train          ## full dev: every arm, calibration, per-cause, NO_ACTION breakdown
+	$(PY) -m rr.eval.m4_report --data data --models models
 
 gate:              ## run B0-B3 on the dev cohort and print the M1 gate verdict
 	$(PY) -m rr.eval.gate --data data

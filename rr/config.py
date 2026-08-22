@@ -88,6 +88,66 @@ class CohortConfig:
     outage_duration_hours: tuple[int, int] = (3, 9)
 
 
+@dataclass(frozen=True)
+class OutageDetectorConfig:
+    """Naive issuer-outage heuristic used by B2.5. Tuning, not regulation."""
+    consecutive_failures: int = 8
+    window_hours: float = 2.0
+    backoff_hours: float = 6.0
+
+
+@dataclass(frozen=True)
+class ModelConfig:
+    """Empirical-Bayes Beta-Binomial over the observable feature cross."""
+    shrinkage_k: float = 25.0          # pseudo-counts pulled from the parent cell
+    ci_samples: int = 4000             # random.betavariate draws per cell
+    ci_alpha: float = 0.10             # 90% credible interval
+    fit_split_fraction: float = 0.50   # share of dev used to fit; rest is a leakage check
+    # A cell with one observation is a rumour, not evidence. Below this count the
+    # lookup falls through to the parent, which has enough data to be worth using.
+    min_cell_observations: int = 8
+    time_buckets_h: tuple = (2.0, 8.0, 24.0, 48.0, 96.0)
+
+
+@dataclass(frozen=True)
+class PolicyConfig:
+    tick_hours: float = 6.0
+    candidate_grid_h: tuple = (0.5, 2, 6, 12, 24, 36, 48, 72, 96, 120, 144, 168)
+    max_nudge_channels: int = 2
+    # "incremental" scores an action by the value it ADDS over doing nothing.
+    # "gross" is the literal p_success x amount formula, kept so the difference
+    # can be measured rather than asserted. See docs/ev-objective.md.
+    ev_objective: str = "incremental"
+    # Chargeback risk is NOT learnable from what the agent observes -- the label
+    # never arrives in production either -- so it is a configured prior.
+    # TODO(citation): real rates are network- and MCC-specific. Placeholder.
+    p_chargeback_known_soft: float = 0.002
+    # An UNKNOWN cause is a cause that might be hiding something terminal. Priced at
+    # the rate at which that actually happens -- measurable in production by manually
+    # diagnosing a sample of unknown-code failures, which is why this is estimable
+    # rather than guessed. See the sensitivity table in `make m4`: raising it from
+    # 0.010 costs no incremental recovery and cuts terminal-retry exposure by a third.
+    # TODO(citation): network- and MCC-specific chargeback economics still UNVERIFIED.
+    p_chargeback_unknown_cause: float = 0.075
+
+
+@dataclass(frozen=True)
+class CircuitBreakerConfig:
+    """Portfolio-level halt. Per-transaction rules can all pass while a whole
+    cause-cell quietly stops converting."""
+    # Keyed on (cause, attempt_index), NOT cause alone. Third attempts convert at
+    # 3-7% by nature; pooling them with first attempts lets a healthy cell trip the
+    # breaker on the strength of its own tail. Halting one rung is a real control;
+    # halting an entire cause because its tail is weak is a bug -- and was one.
+    window_attempts: int = 60
+    min_success_rate: float = 0.015      # below the weakest natural cell (limit_exceeded idx2, 3.3%)
+    min_attempts_before_arming: int = 40
+
+
 REGULATORY = RegulatoryConfig()
+OUTAGE = OutageDetectorConfig()
+MODEL = ModelConfig()
+POLICY = PolicyConfig()
+BREAKER = CircuitBreakerConfig()
 CLOCK = SimClock()
 COSTS = CostConfig()

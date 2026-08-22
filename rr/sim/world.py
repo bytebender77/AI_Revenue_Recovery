@@ -80,7 +80,43 @@ def _ctx(obs: dict, st: RunState, t: float) -> AttemptContext:
     )
 
 
-def run_intent(obs: dict, latent: LatentState, policy: Policy) -> IntentResult:
+def apply_action(obs: dict, latent: LatentState, action: ActionSpec, st: RunState,
+                 slot: int, crn_ns: str = "outcome") -> AttemptRecord:
+    """Execute exactly one action against the world. Shared by the per-intent
+    runner and the tick-based agent runner so the two cannot drift apart."""
+    if action.type in DEBIT_ACTIONS and Regime(obs["regime"]) is Regime.CUSTOMER_INITIATED:
+        return AttemptRecord(slot, action.type, action.channel, action.at_h, 0.0,
+                             AttemptOutcome.UNAUTHORIZED_DEBIT_REJECTED)
+    p = p_recovery(action, latent, _ctx(obs, st, action.at_h))
+    hit = rng.u01(obs["intent_id"], crn_ns, slot) < p
+    return AttemptRecord(slot, action.type, action.channel, action.at_h, p,
+                         AttemptOutcome.SUCCESS if hit else AttemptOutcome.FAILED)
+
+
+def advance_state(st: RunState, rec: AttemptRecord) -> None:
+    if rec.action_type in DEBIT_ACTIONS:
+        st.retry_index += 1
+    elif rec.action_type is ActionType.NUDGE:
+        st.nudges_sent += 1
+    elif rec.action_type is ActionType.MERCHANT_ALERT:
+        st.merchant_alerted = True
+    elif rec.action_type is ActionType.ESCALATE_HUMAN:
+        st.escalated = True
+
+
+def settle(obs: dict, latent: LatentState, agent_recovery_at: Optional[float]):
+    """min(agent success, organic self-heal), both bounded by the horizon."""
+    t_end = obs["failed_at_h"] + CLOCK.recovery_horizon_hours
+    c = []
+    if agent_recovery_at is not None and agent_recovery_at <= t_end:
+        c.append((agent_recovery_at, "agent"))
+    if latent.self_heal_at_h is not None and latent.self_heal_at_h <= t_end:
+        c.append((latent.self_heal_at_h, "organic"))
+    return min(c) if c else (None, None)
+
+
+def run_intent(obs: dict, latent: LatentState, policy: Policy,
+               crn_ns: str = "outcome") -> IntentResult:
     t0 = obs["failed_at_h"]
     t_end = t0 + CLOCK.recovery_horizon_hours
     st = RunState(failed_at_h=t0)
@@ -114,34 +150,16 @@ def run_intent(obs: dict, latent: LatentState, policy: Policy) -> IntentResult:
         else:
             other += 1
 
-        if is_debit and regime is Regime.CUSTOMER_INITIATED:
-            outcome, p = AttemptOutcome.UNAUTHORIZED_DEBIT_REJECTED, 0.0
+        rec = apply_action(obs, latent, action, st, slot, crn_ns)
+        if rec.outcome is AttemptOutcome.UNAUTHORIZED_DEBIT_REJECTED:
             v_unauth += 1
-        else:
-            p = p_recovery(action, latent, _ctx(obs, st, action.at_h))
-            hit = rng.u01(obs["intent_id"], "outcome", slot) < p
-            outcome = AttemptOutcome.SUCCESS if hit else AttemptOutcome.FAILED
-
-        st.history.append(AttemptRecord(slot, action.type, action.channel, action.at_h, p, outcome))
-        if outcome is AttemptOutcome.SUCCESS:
+        st.history.append(rec)
+        if rec.outcome is AttemptOutcome.SUCCESS:
             agent_recovery_at = action.at_h + resolution_lag_hours(action, latent)
             break
+        advance_state(st, rec)
 
-        if is_debit:
-            st.retry_index += 1
-        elif action.type is ActionType.NUDGE:
-            st.nudges_sent += 1
-        elif action.type is ActionType.MERCHANT_ALERT:
-            st.merchant_alerted = True
-        elif action.type is ActionType.ESCALATE_HUMAN:
-            st.escalated = True
-
-    candidates = []
-    if agent_recovery_at is not None and agent_recovery_at <= t_end:
-        candidates.append((agent_recovery_at, "agent"))
-    if latent.self_heal_at_h is not None and latent.self_heal_at_h <= t_end:
-        candidates.append((latent.self_heal_at_h, "organic"))
-    recovered_at, attribution = min(candidates) if candidates else (None, None)
+    recovered_at, attribution = settle(obs, latent, agent_recovery_at)
 
     return IntentResult(
         intent_id=obs["intent_id"], merchant_id=obs["merchant_id"],
@@ -155,7 +173,8 @@ def run_intent(obs: dict, latent: LatentState, policy: Policy) -> IntentResult:
     )
 
 
-def run_arm(obs_rows: list[dict], latents: list[LatentState], policy_factory) -> list[IntentResult]:
+def run_arm(obs_rows: list[dict], latents: list[LatentState], policy_factory,
+            crn_ns: str = "outcome") -> list[IntentResult]:
     """policy_factory(obs, latent) -> Policy. Only the oracle uses the latent arg.
 
     Intents are PROCESSED in chronological order, so a shared capacity budget is
@@ -165,5 +184,6 @@ def run_arm(obs_rows: list[dict], latents: list[LatentState], policy_factory) ->
     order = sorted(range(len(obs_rows)), key=lambda i: obs_rows[i]["failed_at_h"])
     out: list[Optional[IntentResult]] = [None] * len(obs_rows)
     for i in order:
-        out[i] = run_intent(obs_rows[i], latents[i], policy_factory(obs_rows[i], latents[i]))
+        out[i] = run_intent(obs_rows[i], latents[i],
+                            policy_factory(obs_rows[i], latents[i]), crn_ns)
     return out  # type: ignore[return-value]
