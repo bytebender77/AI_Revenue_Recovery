@@ -63,9 +63,28 @@ def _no_action_reason(cands, chosen, lost_auction: bool) -> tuple[str, Optional[
 
 
 def run_agent(obs_rows: list[dict], latents: list[LatentState], policy,
-              crn_ns: str = "outcome") -> tuple[list[IntentResult], dict]:
+              crn_ns: str = "outcome", normalizer=None
+              ) -> tuple[list[IntentResult], dict]:
+    """`normalizer` is an optional TailNormalizer. It affects DIAGNOSIS ONLY.
+
+    Every legality decision below is taken by the eligibility gate from the
+    diagnosed cause; swapping the normaliser in or out changes which cause the
+    gate is given, never what the gate is allowed to permit."""
+    if getattr(policy, "issuer_index", None) is None:
+        from rr.agent.features import IssuerFailureIndex
+        policy.issuer_index = IssuerFailureIndex.build(obs_rows)
     rts = [Runtime(o, l, RunState(failed_at_h=o["failed_at_h"]), o["failed_at_h"])
            for o, l in zip(obs_rows, latents)]
+
+    # Resolve each intent's cause exactly once: the normaliser's own cache makes
+    # repeat calls cheap, but they would duplicate rows in the audit log.
+    _resolved: dict[str, object] = {}
+
+    def cause_of(obs: dict):
+        iid = obs["intent_id"]
+        if iid not in _resolved:
+            _resolved[iid] = diagnose(obs, normalizer)
+        return _resolved[iid]
     budget = EscalationBudget.for_cohort(len(rts), COSTS.escalation_capacity_pct)
     breaker = CircuitBreaker()
 
@@ -91,8 +110,8 @@ def run_agent(obs_rows: list[dict], latents: list[LatentState], policy,
                 rt.active = False
                 continue
 
-            cause = normalize_reason(rt.obs["gateway_reason"])
-            diag = diagnose(rt.obs)
+            diag = cause_of(rt.obs)
+            cause = diag.failure_cause
             st = PolicyState(slot=len(rt.st.history), retry_index=rt.st.retry_index,
                              nudges_sent=rt.st.nudges_sent,
                              merchant_alerted=rt.st.merchant_alerted,
@@ -159,12 +178,16 @@ def run_agent(obs_rows: list[dict], latents: list[LatentState], policy,
                 rt.debits += 1
                 if rt.latent.true_cause in NEVER_RETRY:
                     rt.v_true += 1
-                if normalize_reason(rt.obs["gateway_reason"]) in NEVER_RETRY:
+                # Judged against the cause the gate ACTUALLY SAW, which is the
+                # diagnosed one. With the normaliser on, a cause it resolves into
+                # the terminal set is a cause the gate would have blocked -- so a
+                # nonzero count here means the gate leaked, in either configuration.
+                if cause_of(rt.obs).failure_cause in NEVER_RETRY:
                     rt.v_obs += 1
                 if rec.outcome is AttemptOutcome.UNAUTHORIZED_DEBIT_REJECTED:
                     rt.v_unauth += 1
                 else:
-                    breaker.record(normalize_reason(rt.obs["gateway_reason"]).value,
+                    breaker.record(cause_of(rt.obs).failure_cause.value,
                                    rt.st.retry_index,
                                    rec.outcome is AttemptOutcome.SUCCESS)
             elif action.type is ActionType.NUDGE:

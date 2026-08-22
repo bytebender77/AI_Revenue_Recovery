@@ -26,6 +26,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Optional
 
+from rr.agent.features import build_features
 from rr.config import COSTS, POLICY
 from rr.model.beta_binomial import BetaBinomialModel, CellPosterior, time_bucket
 from rr.taxonomy import ActionType, Channel, DEBIT_ACTIONS, FailureCause
@@ -70,8 +71,9 @@ def _action_label(action: str, channel: Optional[str]) -> str:
 
 class EVPolicy:
     def __init__(self, success: BetaBinomialModel, organic: BetaBinomialModel,
-                 cfg=POLICY, costs=COSTS):
+                 cfg=POLICY, costs=COSTS, issuer_index=None):
         self.success, self.organic, self.cfg, self.costs = success, organic, cfg, costs
+        self.issuer_index = issuer_index
 
     # ------------------------------------------------------------ components --
     def _cost_minor(self, action: str, channel: Optional[str]) -> int:
@@ -87,7 +89,8 @@ class EVPolicy:
 
     def p_organic(self, obs: dict, cause: FailureCause) -> float:
         return self.organic.lookup(action="organic", cause=cause.value, method=obs["method"],
-                                   attempt_index=0, time_bucket="all",
+                                   attempt_index=0, time_bucket="all", dom="all",
+                                   hour="all", issuer_rate="all",
                                    regime=obs["regime"]).mean
 
     def _ev(self, p: float, obs: dict, cause: FailureCause, action: str,
@@ -137,10 +140,9 @@ class EVPolicy:
             if at < now_h or at > t0 + 168.0:
                 continue
             for action, channel in variants:
-                cell = self.success.lookup(
-                    action=_action_label(action, channel), cause=cause.value,
-                    method=obs["method"], attempt_index=st.retry_index,
-                    time_bucket=time_bucket(at - t0), regime=obs["regime"])
+                cell = self.success.lookup(**build_features(
+                    _action_label(action, channel), obs, cause.value, st.retry_index,
+                    at, time_bucket(at - t0), self.issuer_index))
                 ev, comp = self._ev(cell.mean, obs, cause, action, channel, p_org)
                 ev_lo, _ = self._ev(cell.lo, obs, cause, action, channel, p_org)
                 ev_hi, _ = self._ev(cell.hi, obs, cause, action, channel, p_org)

@@ -170,8 +170,10 @@ def contact_waste(results: Sequence[IntentResult]) -> ContactWaste:
 
 # ------------------------------------------------------- M4: model calibration --
 
-def reliability(model, results: Sequence[IntentResult], obs_by_id: dict, bins: int = 10):
+def reliability(model, results: Sequence[IntentResult], obs_by_id: dict, bins: int = 10,
+                issuer_index=None):
     """Predicted p vs realised outcome on the attempts the agent actually made."""
+    from rr.agent.features import build_features
     from rr.contracts import AttemptOutcome
     from rr.model.beta_binomial import time_bucket
     from rr.taxonomy import DEBIT_ACTIONS, normalize_reason
@@ -186,10 +188,9 @@ def reliability(model, results: Sequence[IntentResult], obs_by_id: dict, bins: i
                 continue
             label = (f"{rec.action_type.value}:{rec.channel.value}"
                      if rec.channel else rec.action_type.value)
-            cell = model.lookup(action=label, cause=cause, method=o["method"],
-                                attempt_index=idx,
-                                time_bucket=time_bucket(rec.at_h - o["failed_at_h"]),
-                                regime=o["regime"])
+            cell = model.lookup(**build_features(
+                label, o, cause, idx, rec.at_h,
+                time_bucket(rec.at_h - o["failed_at_h"]), issuer_index))
             pts.append((cell.mean, 1.0 if rec.outcome is AttemptOutcome.SUCCESS else 0.0))
             if rec.action_type in DEBIT_ACTIONS:
                 idx += 1

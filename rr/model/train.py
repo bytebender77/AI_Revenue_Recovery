@@ -26,6 +26,7 @@ from rr import rng
 from rr.baselines.rules import B0DoNothing, MAX_DEBITS, MAX_NUDGES, pick_channel
 from rr.config import MODEL, POLICY
 from rr.contracts import ActionSpec, AttemptOutcome
+from rr.agent.features import IssuerFailureIndex, build_features
 from rr.model.beta_binomial import BetaBinomialModel, time_bucket
 from rr.sim.cohort import load_latent, load_observed
 from rr.sim.latent import LatentState
@@ -39,7 +40,14 @@ MAX_EXPLORE_SLOTS = 3
 
 
 class ExplorationPolicy:
+    """Uniform over the legal action set, at a uniformly chosen grid time.
+
+    `rep` varies the draw across replicates, so more replicates buy genuine action
+    and timing coverage rather than just repeated samples of the same choice."""
     name = "explore"
+
+    def __init__(self, rep: int = 0):
+        self.rep = rep
 
     def next_action(self, obs: dict, st: RunState) -> Optional[ActionSpec]:
         slot = len(st.history)
@@ -64,9 +72,9 @@ class ExplorationPolicy:
             return None
 
         iid = obs["intent_id"]
-        act, ch = legal[int(rng.u01(iid, "explore_action", slot) * len(legal))]
+        act, ch = legal[int(rng.u01(iid, "explore_action", self.rep, slot) * len(legal))]
         grid = POLICY.candidate_grid_h
-        at = obs["failed_at_h"] + grid[int(rng.u01(iid, "explore_time", slot) * len(grid))]
+        at = obs["failed_at_h"] + grid[int(rng.u01(iid, "explore_time", self.rep, slot) * len(grid))]
         return ActionSpec(act, at, ch)
 
 
@@ -74,8 +82,12 @@ def _action_label(action_type: str, channel: Optional[str]) -> str:
     return f"{action_type}:{channel}" if channel else action_type
 
 
-def observations_from_run(results, obs_by_id: dict) -> list[dict]:
-    """One row per executed attempt: the features visible at fire time, and the outcome."""
+def observations_from_run(results, obs_by_id: dict, issuer_index=None) -> list[dict]:
+    """One row per executed attempt: the features visible at fire time, and the outcome.
+
+    Always emits the full v2 feature set. A v1 model simply has no level that
+    references the last three, so the same training rows fit either version --
+    which is what makes the ablation a fair comparison."""
     rows = []
     for r in results:
         o = obs_by_id[r.intent_id]
@@ -84,14 +96,12 @@ def observations_from_run(results, obs_by_id: dict) -> list[dict]:
         for rec in r.records:
             if rec.outcome is AttemptOutcome.UNAUTHORIZED_DEBIT_REJECTED:
                 continue
-            rows.append({
-                "action": _action_label(rec.action_type.value,
-                                        rec.channel.value if rec.channel else None),
-                "cause": cause, "method": o["method"], "attempt_index": retry_index,
-                "time_bucket": time_bucket(rec.at_h - o["failed_at_h"]),
-                "regime": o["regime"],
-                "success": rec.outcome is AttemptOutcome.SUCCESS,
-            })
+            feat = build_features(
+                _action_label(rec.action_type.value, rec.channel.value if rec.channel else None),
+                o, cause, retry_index, rec.at_h,
+                time_bucket(rec.at_h - o["failed_at_h"]), issuer_index)
+            feat["success"] = rec.outcome is AttemptOutcome.SUCCESS
+            rows.append(feat)
             if rec.action_type in DEBIT_ACTIONS:
                 retry_index += 1
     return rows
@@ -104,6 +114,7 @@ def organic_observations(results, obs_by_id: dict) -> list[dict]:
                 obs_by_id[r.intent_id]["gateway_reason"]).value,
              "method": obs_by_id[r.intent_id]["method"], "attempt_index": 0,
              "time_bucket": "all", "regime": obs_by_id[r.intent_id]["regime"],
+             "dom": "all", "hour": "all", "issuer_rate": "all",
              "success": r.recovered_at_h is not None}
             for r in results]
 
@@ -116,6 +127,11 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", type=pathlib.Path, default=pathlib.Path("data"))
     ap.add_argument("--out", type=pathlib.Path, default=pathlib.Path("models"))
+    ap.add_argument("--feature-version", default="v2", choices=("v1", "v2"))
+    ap.add_argument("--replicates", type=int, default=20,
+                    help="independent exploration passes; each varies action AND "
+                         "outcome draws, which is what a longer collection period buys")
+    ap.add_argument("--suffix", default="")
     args = ap.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
 
@@ -129,16 +145,21 @@ def main() -> None:
     print(f"  fit split: {len(fit_obs)} of {len(obs)} dev intents "
           f"({MODEL.fit_split_fraction:.0%}), CRN namespace '{EXPLORE_NS}'")
 
-    explore = run_arm(fit_obs, fit_lat, lambda o, l: ExplorationPolicy(), crn_ns=EXPLORE_NS)
-    rows = observations_from_run(explore, by_id)
-    success = BetaBinomialModel().fit(rows)
-    success.save(args.out / "success_model.json")
+    issuer_index = IssuerFailureIndex.build(obs)   # observable failure stream
+    rows = []
+    for rep in range(args.replicates):
+        run = run_arm(fit_obs, fit_lat, (lambda r: lambda o, l: ExplorationPolicy(r))(rep),
+                      crn_ns=f"{EXPLORE_NS}{rep}")
+        rows += observations_from_run(run, by_id, issuer_index)
+    success = BetaBinomialModel(feature_version=args.feature_version).fit(rows)
+    success.save(args.out / f"success_model{args.suffix}.json")
 
     control = run_arm(fit_obs, fit_lat, lambda o, l: B0DoNothing(), crn_ns=EXPLORE_NS)
     organic_rows = organic_observations(control, by_id)
-    organic = BetaBinomialModel().fit(organic_rows)
-    organic.save(args.out / "organic_model.json")
+    organic = BetaBinomialModel(feature_version="v1").fit(organic_rows)
+    organic.save(args.out / f"organic_model{args.suffix}.json")
 
+    print(f"  feature cross : {args.feature_version}, {args.replicates} exploration replicates")
     print(f"  success model : {len(rows):>6} attempt observations  cells {success.summary()}")
     print(f"  organic model : {len(organic_rows):>6} intent observations  "
           f"base rate {sum(r['success'] for r in organic_rows)/len(organic_rows):.3f}")

@@ -22,15 +22,31 @@ class Diagnosis:
     normalizer_version: str = NORMALIZER_VERSION
 
 
-def diagnose(event: dict) -> Diagnosis:
+# Confidence levels are reported by the resolver as words; the Diagnosis record
+# carries a number so downstream code has one comparable scale.
+_CONFIDENCE_NUMERIC = {"high": 0.9, "medium": 0.65, "low": 0.3}
+
+
+def diagnose(event: dict, tail=None) -> Diagnosis:
+    """Deterministic map first. The LLM tail is consulted only for what it misses.
+
+    `tail` is a rr.normalize.llm_tail.TailNormalizer, or None. Injected rather than
+    imported so the pipeline has no import-time dependency on the model, and so the
+    ablation can run the identical code path with the resolver switched off.
+    """
     cause = normalize_reason(event["gateway_reason"])
-    hit = cause is not FailureCause.UNKNOWN
-    return Diagnosis(
-        failure_cause=cause,
-        persistence_class=PERSISTENCE[cause].value,
-        resolver="map" if hit else "default",
+    if cause is not FailureCause.UNKNOWN:
+        return Diagnosis(cause, PERSISTENCE[cause].value, "map", 1.0)
+
+    if tail is None:
         # An unmapped code yields UNKNOWN with zero confidence. It never yields a
-        # guess -- that is what the M5 tail resolver is for, and it will be
-        # constrained to this same closed enum.
-        confidence=1.0 if hit else 0.0,
-    )
+        # guess -- the conservative path downstream is the whole point.
+        return Diagnosis(cause, PERSISTENCE[cause].value, "default", 0.0)
+
+    resolved, confidence, _call = tail.resolve(event)
+    if resolved is FailureCause.UNKNOWN:
+        # Abstention. Indistinguishable downstream from having no resolver at all,
+        # which is exactly the intended failure mode.
+        return Diagnosis(resolved, PERSISTENCE[resolved].value, "llm_abstain", 0.0)
+    return Diagnosis(resolved, PERSISTENCE[resolved].value, "llm",
+                     _CONFIDENCE_NUMERIC.get(confidence, 0.0))

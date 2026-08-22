@@ -1,0 +1,1581 @@
+{
+ "feature_version": "v1",
+ "levels": [
+  [
+   "action",
+   "cause",
+   "method",
+   "attempt_index",
+   "time_bucket",
+   "regime"
+  ],
+  [
+   "action",
+   "cause",
+   "method",
+   "attempt_index",
+   "regime"
+  ],
+  [
+   "action",
+   "cause",
+   "attempt_index",
+   "regime"
+  ],
+  [
+   "action",
+   "cause",
+   "regime"
+  ],
+  [
+   "action",
+   "regime"
+  ],
+  [
+   "action"
+  ],
+  []
+ ],
+ "config": {
+  "shrinkage_k": 25.0,
+  "ci_samples": 4000,
+  "ci_alpha": 0.1,
+  "fit_split_fraction": 0.5,
+  "min_cell_observations": 8,
+  "time_buckets_h": [
+   2.0,
+   8.0,
+   24.0,
+   48.0,
+   96.0
+  ]
+ },
+ "posteriors": {
+  "6": {
+   "(global)": {
+    "mean": 0.20645475186506648,
+    "lo": 0.1943939098092712,
+    "hi": 0.21823858944620708,
+    "n": 3058,
+    "successes": 624,
+    "level": 6,
+    "key": "(global)"
+   }
+  },
+  "5": {
+   "action=organic": {
+    "mean": 0.20407439792300575,
+    "lo": 0.19198451053453158,
+    "hi": 0.21561455756584447,
+    "n": 3058,
+    "successes": 624,
+    "level": 5,
+    "key": "action=organic"
+   }
+  },
+  "4": {
+   "action=organic|regime=merchant_initiated": {
+    "mean": 0.19374326821366086,
+    "lo": 0.1812476837391593,
+    "hi": 0.2067264890124265,
+    "n": 2484,
+    "successes": 481,
+    "level": 4,
+    "key": "action=organic|regime=merchant_initiated"
+   },
+   "action=organic|regime=customer_initiated": {
+    "mean": 0.2472485141036313,
+    "lo": 0.21845425875759197,
+    "hi": 0.2768381962135843,
+    "n": 574,
+    "successes": 143,
+    "level": 4,
+    "key": "action=organic|regime=customer_initiated"
+   }
+  },
+  "3": {
+   "action=organic|cause=mandate_invalid|regime=merchant_initiated": {
+    "mean": 0.021563032123031445,
+    "lo": 0.00966979346903109,
+    "hi": 0.03822391505469646,
+    "n": 246,
+    "successes": 1,
+    "level": 3,
+    "key": "action=organic|cause=mandate_invalid|regime=merchant_initiated"
+   },
+   "action=organic|cause=unknown|regime=merchant_initiated": {
+    "mean": 0.1553238247486541,
+    "lo": 0.13300768701660168,
+    "hi": 0.17941029357076155,
+    "n": 650,
+    "successes": 100,
+    "level": 3,
+    "key": "action=organic|cause=unknown|regime=merchant_initiated"
+   },
+   "action=organic|cause=auth_failed|regime=customer_initiated": {
+    "mean": 0.3015101071049232,
+    "lo": 0.23298902357438656,
+    "hi": 0.37421211824798006,
+    "n": 95,
+    "successes": 30,
+    "level": 3,
+    "key": "action=organic|cause=auth_failed|regime=customer_initiated"
+   },
+   "action=organic|cause=issuer_downtime|regime=merchant_initiated": {
+    "mean": 0.3174184620535232,
+    "lo": 0.27508730496552153,
+    "hi": 0.36062434797879855,
+    "n": 299,
+    "successes": 98,
+    "level": 3,
+    "key": "action=organic|cause=issuer_downtime|regime=merchant_initiated"
+   },
+   "action=organic|cause=limit_exceeded|regime=merchant_initiated": {
+    "mean": 0.27975055962562684,
+    "lo": 0.22124850897582174,
+    "hi": 0.3403632881866267,
+    "n": 121,
+    "successes": 36,
+    "level": 3,
+    "key": "action=organic|cause=limit_exceeded|regime=merchant_initiated"
+   },
+   "action=organic|cause=insufficient_funds|regime=merchant_initiated": {
+    "mean": 0.21093723867289058,
+    "lo": 0.1846069238681272,
+    "hi": 0.2382608569717458,
+    "n": 619,
+    "successes": 131,
+    "level": 3,
+    "key": "action=organic|cause=insufficient_funds|regime=merchant_initiated"
+   },
+   "action=organic|cause=auth_failed|regime=merchant_initiated": {
+    "mean": 0.351100961239312,
+    "lo": 0.2676969394735963,
+    "hi": 0.43747329464767976,
+    "n": 60,
+    "successes": 25,
+    "level": 3,
+    "key": "action=organic|cause=auth_failed|regime=merchant_initiated"
+   },
+   "action=organic|cause=unknown|regime=customer_initiated": {
+    "mean": 0.18181453525657099,
+    "lo": 0.13573669790142343,
+    "hi": 0.2313699442422224,
+    "n": 141,
+    "successes": 24,
+    "level": 3,
+    "key": "action=organic|cause=unknown|regime=customer_initiated"
+   },
+   "action=organic|cause=upi_collect_expired|regime=customer_initiated": {
+    "mean": 0.287563396455008,
+    "lo": 0.21582919218613986,
+    "hi": 0.3641431283252446,
+    "n": 73,
+    "successes": 22,
+    "level": 3,
+    "key": "action=organic|cause=upi_collect_expired|regime=customer_initiated"
+   },
+   "action=organic|cause=gateway_timeout|regime=customer_initiated": {
+    "mean": 0.3741181134947536,
+    "lo": 0.28607059887153635,
+    "hi": 0.46551963748892283,
+    "n": 53,
+    "successes": 23,
+    "level": 3,
+    "key": "action=organic|cause=gateway_timeout|regime=customer_initiated"
+   },
+   "action=organic|cause=invalid_card_details|regime=customer_initiated": {
+    "mean": 0.17953032131476956,
+    "lo": 0.08942784435000604,
+    "hi": 0.2897464978505525,
+    "n": 15,
+    "successes": 1,
+    "level": 3,
+    "key": "action=organic|cause=invalid_card_details|regime=customer_initiated"
+   },
+   "action=organic|cause=amount_exceeds_mandate|regime=merchant_initiated": {
+    "mean": 0.05843581705341522,
+    "lo": 0.026065401985815476,
+    "hi": 0.10277191920672535,
+    "n": 75,
+    "successes": 1,
+    "level": 3,
+    "key": "action=organic|cause=amount_exceeds_mandate|regime=merchant_initiated"
+   },
+   "action=organic|cause=issuer_downtime|regime=customer_initiated": {
+    "mean": 0.3100155493921895,
+    "lo": 0.22434802038383458,
+    "hi": 0.4004259088720927,
+    "n": 53,
+    "successes": 18,
+    "level": 3,
+    "key": "action=organic|cause=issuer_downtime|regime=customer_initiated"
+   },
+   "action=organic|cause=card_expired|regime=merchant_initiated": {
+    "mean": 0.11912467447625204,
+    "lo": 0.07706295946058032,
+    "hi": 0.16707213400283305,
+    "n": 108,
+    "successes": 11,
+    "level": 3,
+    "key": "action=organic|cause=card_expired|regime=merchant_initiated"
+   },
+   "action=organic|cause=gateway_timeout|regime=merchant_initiated": {
+    "mean": 0.45636330308135076,
+    "lo": 0.3932285540585744,
+    "hi": 0.5208822584746508,
+    "n": 139,
+    "successes": 70,
+    "level": 3,
+    "key": "action=organic|cause=gateway_timeout|regime=merchant_initiated"
+   },
+   "action=organic|cause=insufficient_funds|regime=customer_initiated": {
+    "mean": 0.19983804183267917,
+    "lo": 0.1413185286933876,
+    "hi": 0.26434735303668694,
+    "n": 91,
+    "successes": 17,
+    "level": 3,
+    "key": "action=organic|cause=insufficient_funds|regime=customer_initiated"
+   },
+   "action=organic|cause=card_expired|regime=customer_initiated": {
+    "mean": 0.16700495006025076,
+    "lo": 0.08326209478444749,
+    "hi": 0.27082182649958525,
+    "n": 18,
+    "successes": 1,
+    "level": 3,
+    "key": "action=organic|cause=card_expired|regime=customer_initiated"
+   },
+   "action=organic|cause=method_not_enabled|regime=merchant_initiated": {
+    "mean": 0.13090761365787895,
+    "lo": 0.05377591968036433,
+    "hi": 0.23318296260144725,
+    "n": 12,
+    "successes": 0,
+    "level": 3,
+    "key": "action=organic|cause=method_not_enabled|regime=merchant_initiated"
+   },
+   "action=organic|cause=lost_stolen_fraud|regime=customer_initiated": {
+    "mean": 0.22893380935521415,
+    "lo": 0.10946273931833983,
+    "hi": 0.36692467414411556,
+    "n": 2,
+    "successes": 0,
+    "level": 3,
+    "key": "action=organic|cause=lost_stolen_fraud|regime=customer_initiated"
+   },
+   "action=organic|cause=lost_stolen_fraud|regime=merchant_initiated": {
+    "mean": 0.08969595750632448,
+    "lo": 0.03657216288804218,
+    "hi": 0.15974105196532365,
+    "n": 29,
+    "successes": 0,
+    "level": 3,
+    "key": "action=organic|cause=lost_stolen_fraud|regime=merchant_initiated"
+   },
+   "action=organic|cause=invalid_card_details|regime=merchant_initiated": {
+    "mean": 0.11534678978443413,
+    "lo": 0.06000256871649817,
+    "hi": 0.18595970754534324,
+    "n": 43,
+    "successes": 3,
+    "level": 3,
+    "key": "action=organic|cause=invalid_card_details|regime=merchant_initiated"
+   },
+   "action=organic|cause=risk_decline|regime=merchant_initiated": {
+    "mean": 0.053817574503794686,
+    "lo": 0.021398005277543247,
+    "hi": 0.09898727584081402,
+    "n": 65,
+    "successes": 0,
+    "level": 3,
+    "key": "action=organic|cause=risk_decline|regime=merchant_initiated"
+   },
+   "action=organic|cause=limit_exceeded|regime=customer_initiated": {
+    "mean": 0.2584551539723683,
+    "lo": 0.16510225439297557,
+    "hi": 0.35798824758381237,
+    "n": 26,
+    "successes": 7,
+    "level": 3,
+    "key": "action=organic|cause=limit_exceeded|regime=customer_initiated"
+   },
+   "action=organic|cause=upi_collect_expired|regime=merchant_initiated": {
+    "mean": 0.2289205047753842,
+    "lo": 0.1340106459393507,
+    "hi": 0.3476238164123926,
+    "n": 18,
+    "successes": 5,
+    "level": 3,
+    "key": "action=organic|cause=upi_collect_expired|regime=merchant_initiated"
+   },
+   "action=organic|cause=risk_decline|regime=customer_initiated": {
+    "mean": 0.19316290164346195,
+    "lo": 0.09256228833517084,
+    "hi": 0.3167114810525991,
+    "n": 7,
+    "successes": 0,
+    "level": 3,
+    "key": "action=organic|cause=risk_decline|regime=customer_initiated"
+   }
+  },
+  "2": {
+   "action=organic|cause=mandate_invalid|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.005679246505814709,
+    "lo": 0.000743680455954936,
+    "hi": 0.01458007736507482,
+    "n": 246,
+    "successes": 1,
+    "level": 2,
+    "key": "action=organic|cause=mandate_invalid|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=unknown|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.1539008823980983,
+    "lo": 0.1320240437230396,
+    "hi": 0.17679930867763607,
+    "n": 650,
+    "successes": 100,
+    "level": 2,
+    "key": "action=organic|cause=unknown|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=auth_failed|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.31281460564685903,
+    "lo": 0.24568649058449152,
+    "hi": 0.3829290082001635,
+    "n": 95,
+    "successes": 30,
+    "level": 2,
+    "key": "action=organic|cause=auth_failed|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=issuer_downtime|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.32696130108437677,
+    "lo": 0.2848737570542085,
+    "hi": 0.3697782353887825,
+    "n": 299,
+    "successes": 98,
+    "level": 2,
+    "key": "action=organic|cause=issuer_downtime|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=limit_exceeded|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.29447783555233337,
+    "lo": 0.23488382287199505,
+    "hi": 0.35831290515014663,
+    "n": 121,
+    "successes": 36,
+    "level": 2,
+    "key": "action=organic|cause=limit_exceeded|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=insufficient_funds|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.21160470647022092,
+    "lo": 0.18604869316224903,
+    "hi": 0.23822341578363676,
+    "n": 619,
+    "successes": 131,
+    "level": 2,
+    "key": "action=organic|cause=insufficient_funds|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=auth_failed|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.3973826356586212,
+    "lo": 0.3108075070301721,
+    "hi": 0.482882770575924,
+    "n": 60,
+    "successes": 25,
+    "level": 2,
+    "key": "action=organic|cause=auth_failed|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=unknown|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.17196002036996552,
+    "lo": 0.12500402508498262,
+    "hi": 0.22260330596975053,
+    "n": 141,
+    "successes": 24,
+    "level": 2,
+    "key": "action=organic|cause=unknown|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=upi_collect_expired|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.29784780521811427,
+    "lo": 0.22434690124884604,
+    "hi": 0.3768533006910171,
+    "n": 73,
+    "successes": 22,
+    "level": 2,
+    "key": "action=organic|cause=upi_collect_expired|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=gateway_timeout|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.4147814466329338,
+    "lo": 0.3263972550669619,
+    "hi": 0.5096059930175852,
+    "n": 53,
+    "successes": 23,
+    "level": 2,
+    "key": "action=organic|cause=gateway_timeout|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=invalid_card_details|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.13720645082173097,
+    "lo": 0.06009676758912532,
+    "hi": 0.23238711234051945,
+    "n": 15,
+    "successes": 1,
+    "level": 2,
+    "key": "action=organic|cause=invalid_card_details|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=amount_exceeds_mandate|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.024608954263353803,
+    "lo": 0.00568128230156543,
+    "hi": 0.05492338211014459,
+    "n": 75,
+    "successes": 1,
+    "level": 2,
+    "key": "action=organic|cause=amount_exceeds_mandate|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=issuer_downtime|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.33013318890775306,
+    "lo": 0.24239812418283233,
+    "hi": 0.41962919466506876,
+    "n": 53,
+    "successes": 18,
+    "level": 2,
+    "key": "action=organic|cause=issuer_downtime|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=card_expired|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.10509862302185188,
+    "lo": 0.06463531641215342,
+    "hi": 0.15359488335488455,
+    "n": 108,
+    "successes": 11,
+    "level": 2,
+    "key": "action=organic|cause=card_expired|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=gateway_timeout|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.4963968449819132,
+    "lo": 0.4312537889535164,
+    "hi": 0.5599179880831798,
+    "n": 139,
+    "successes": 70,
+    "level": 2,
+    "key": "action=organic|cause=gateway_timeout|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=insufficient_funds|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.18962026763635328,
+    "lo": 0.13335493321746722,
+    "hi": 0.25173722576523955,
+    "n": 91,
+    "successes": 17,
+    "level": 2,
+    "key": "action=organic|cause=insufficient_funds|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=card_expired|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.12035171515130857,
+    "lo": 0.049582576570302926,
+    "hi": 0.2079188559462899,
+    "n": 18,
+    "successes": 1,
+    "level": 2,
+    "key": "action=organic|cause=card_expired|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=method_not_enabled|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.08845109030937767,
+    "lo": 0.0273775877835113,
+    "hi": 0.17335974542154772,
+    "n": 12,
+    "successes": 0,
+    "level": 2,
+    "key": "action=organic|cause=method_not_enabled|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=lost_stolen_fraud|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.21197574940297606,
+    "lo": 0.09759144908559053,
+    "hi": 0.35309459933997656,
+    "n": 2,
+    "successes": 0,
+    "level": 2,
+    "key": "action=organic|cause=lost_stolen_fraud|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=lost_stolen_fraud|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.04152590625292799,
+    "lo": 0.008536028521921072,
+    "hi": 0.09456194572974938,
+    "n": 29,
+    "successes": 0,
+    "level": 2,
+    "key": "action=organic|cause=lost_stolen_fraud|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=invalid_card_details|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.08652455506780667,
+    "lo": 0.038720259026462076,
+    "hi": 0.15046085328362874,
+    "n": 43,
+    "successes": 3,
+    "level": 2,
+    "key": "action=organic|cause=invalid_card_details|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=risk_decline|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.01494932625105408,
+    "lo": 0.0014700531527948382,
+    "hi": 0.04008850432388872,
+    "n": 65,
+    "successes": 0,
+    "level": 2,
+    "key": "action=organic|cause=risk_decline|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=limit_exceeded|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.2639486048884158,
+    "lo": 0.16587915091798355,
+    "hi": 0.36853514089412565,
+    "n": 26,
+    "successes": 7,
+    "level": 2,
+    "key": "action=organic|cause=limit_exceeded|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=upi_collect_expired|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.24937238649731638,
+    "lo": 0.14975943509849532,
+    "hi": 0.36220644648742506,
+    "n": 18,
+    "successes": 5,
+    "level": 2,
+    "key": "action=organic|cause=upi_collect_expired|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=risk_decline|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.15090851690895465,
+    "lo": 0.06410572368300428,
+    "hi": 0.26369620944264877,
+    "n": 7,
+    "successes": 0,
+    "level": 2,
+    "key": "action=organic|cause=risk_decline|attempt_index=0|regime=customer_initiated"
+   }
+  },
+  "1": {
+   "action=organic|cause=mandate_invalid|method=card_mandate|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.0016509437516903224,
+    "lo": 5.601040830025466e-12,
+    "hi": 0.00885962489451484,
+    "n": 61,
+    "successes": 0,
+    "level": 1,
+    "key": "action=organic|cause=mandate_invalid|method=card_mandate|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=unknown|method=emandate_nach|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.19682452306263476,
+    "lo": 0.13785388891908681,
+    "hi": 0.2593831116684761,
+    "n": 86,
+    "successes": 18,
+    "level": 1,
+    "key": "action=organic|cause=unknown|method=emandate_nach|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=auth_failed|method=upi|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.257813221111938,
+    "lo": 0.17850818462484166,
+    "hi": 0.34486010067624046,
+    "n": 48,
+    "successes": 11,
+    "level": 1,
+    "key": "action=organic|cause=auth_failed|method=upi|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=unknown|method=upi_autopay|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.16721805506083068,
+    "lo": 0.13416902980870576,
+    "hi": 0.2030476789606667,
+    "n": 303,
+    "successes": 51,
+    "level": 1,
+    "key": "action=organic|cause=unknown|method=upi_autopay|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=issuer_downtime|method=upi_autopay|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.3183811244820604,
+    "lo": 0.26458195481978874,
+    "hi": 0.373193633834048,
+    "n": 164,
+    "successes": 52,
+    "level": 1,
+    "key": "action=organic|cause=issuer_downtime|method=upi_autopay|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=unknown|method=card_mandate|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.1218444827271065,
+    "lo": 0.09153538494854102,
+    "hi": 0.1566330569181073,
+    "n": 261,
+    "successes": 31,
+    "level": 1,
+    "key": "action=organic|cause=unknown|method=card_mandate|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=limit_exceeded|method=upi_autopay|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.296585312008165,
+    "lo": 0.2239940155239515,
+    "hi": 0.37231611861852054,
+    "n": 74,
+    "successes": 22,
+    "level": 1,
+    "key": "action=organic|cause=limit_exceeded|method=upi_autopay|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=insufficient_funds|method=emandate_nach|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.20937180919343096,
+    "lo": 0.15810805629508506,
+    "hi": 0.26506164912834546,
+    "n": 134,
+    "successes": 28,
+    "level": 1,
+    "key": "action=organic|cause=insufficient_funds|method=emandate_nach|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=mandate_invalid|method=emandate_nach|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.0017747645330670966,
+    "lo": 8.194878936809177e-12,
+    "hi": 0.009396476035386516,
+    "n": 55,
+    "successes": 0,
+    "level": 1,
+    "key": "action=organic|cause=mandate_invalid|method=emandate_nach|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=auth_failed|method=upi_autopay|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.41099489284077095,
+    "lo": 0.3256231196813261,
+    "hi": 0.4980852003114997,
+    "n": 60,
+    "successes": 25,
+    "level": 1,
+    "key": "action=organic|cause=auth_failed|method=upi_autopay|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=unknown|method=netbanking|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.21467648556615113,
+    "lo": 0.11166900212565721,
+    "hi": 0.3350078747725016,
+    "n": 9,
+    "successes": 3,
+    "level": 1,
+    "key": "action=organic|cause=unknown|method=netbanking|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=upi_collect_expired|method=upi|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.300471378882172,
+    "lo": 0.22681862317111445,
+    "hi": 0.37972890915951035,
+    "n": 73,
+    "successes": 22,
+    "level": 1,
+    "key": "action=organic|cause=upi_collect_expired|method=upi|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=gateway_timeout|method=netbanking|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.39409067091854727,
+    "lo": 0.2659813100867739,
+    "hi": 0.5229776101804254,
+    "n": 14,
+    "successes": 5,
+    "level": 1,
+    "key": "action=organic|cause=gateway_timeout|method=netbanking|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=invalid_card_details|method=card|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.11075403176358185,
+    "lo": 0.043767459208692544,
+    "hi": 0.20216504544367228,
+    "n": 15,
+    "successes": 1,
+    "level": 1,
+    "key": "action=organic|cause=invalid_card_details|method=card|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=insufficient_funds|method=upi_autopay|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.2096768166522221,
+    "lo": 0.17428073204253958,
+    "hi": 0.24599371187997293,
+    "n": 315,
+    "successes": 66,
+    "level": 1,
+    "key": "action=organic|cause=insufficient_funds|method=upi_autopay|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=amount_exceeds_mandate|method=upi_autopay|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.023753292008585957,
+    "lo": 0.0034144617734490237,
+    "hi": 0.05988021520430377,
+    "n": 43,
+    "successes": 1,
+    "level": 1,
+    "key": "action=organic|cause=amount_exceeds_mandate|method=upi_autopay|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=insufficient_funds|method=card_mandate|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.21687239826541294,
+    "lo": 0.17205218164821512,
+    "hi": 0.26692791992085063,
+    "n": 170,
+    "successes": 37,
+    "level": 1,
+    "key": "action=organic|cause=insufficient_funds|method=card_mandate|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=issuer_downtime|method=upi|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.32595231647667544,
+    "lo": 0.227808846467537,
+    "hi": 0.43025308756553776,
+    "n": 31,
+    "successes": 10,
+    "level": 1,
+    "key": "action=organic|cause=issuer_downtime|method=upi|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=auth_failed|method=card|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.36704379891058286,
+    "lo": 0.2610154863583756,
+    "hi": 0.4808204849720851,
+    "n": 29,
+    "successes": 12,
+    "level": 1,
+    "key": "action=organic|cause=auth_failed|method=card|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=card_expired|method=card_mandate|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.10246214718455864,
+    "lo": 0.0627309425686527,
+    "hi": 0.14872667325520122,
+    "n": 108,
+    "successes": 11,
+    "level": 1,
+    "key": "action=organic|cause=card_expired|method=card_mandate|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=mandate_invalid|method=upi_autopay|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.007367620404163663,
+    "lo": 0.0005114905436393165,
+    "hi": 0.02130884883343441,
+    "n": 130,
+    "successes": 1,
+    "level": 1,
+    "key": "action=organic|cause=mandate_invalid|method=upi_autopay|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=issuer_downtime|method=card|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.38980381537334785,
+    "lo": 0.25793238022405895,
+    "hi": 0.5285386661259726,
+    "n": 9,
+    "successes": 5,
+    "level": 1,
+    "key": "action=organic|cause=issuer_downtime|method=card|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=gateway_timeout|method=card_mandate|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.5409848045710962,
+    "lo": 0.44410282062553796,
+    "hi": 0.6365864964141305,
+    "n": 46,
+    "successes": 26,
+    "level": 1,
+    "key": "action=organic|cause=gateway_timeout|method=card_mandate|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=gateway_timeout|method=emandate_nach|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.4980834281818687,
+    "lo": 0.3740315282830278,
+    "hi": 0.6115218407081835,
+    "n": 22,
+    "successes": 11,
+    "level": 1,
+    "key": "action=organic|cause=gateway_timeout|method=emandate_nach|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=insufficient_funds|method=card|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.1986478793388371,
+    "lo": 0.10739251670435042,
+    "hi": 0.30359945706330815,
+    "n": 19,
+    "successes": 4,
+    "level": 1,
+    "key": "action=organic|cause=insufficient_funds|method=card|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=unknown|method=upi|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.19150000480423718,
+    "lo": 0.1316757824080089,
+    "hi": 0.25638540982455327,
+    "n": 81,
+    "successes": 16,
+    "level": 1,
+    "key": "action=organic|cause=unknown|method=upi|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=gateway_timeout|method=upi_autopay|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.4730200117140399,
+    "lo": 0.3908698388279253,
+    "hi": 0.5578780296129012,
+    "n": 71,
+    "successes": 33,
+    "level": 1,
+    "key": "action=organic|cause=gateway_timeout|method=upi_autopay|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=insufficient_funds|method=upi|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.204729259595956,
+    "lo": 0.13286239877235306,
+    "hi": 0.2874358850661458,
+    "n": 47,
+    "successes": 10,
+    "level": 1,
+    "key": "action=organic|cause=insufficient_funds|method=upi|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=card_expired|method=card|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.09322774136703986,
+    "lo": 0.03288573432369491,
+    "hi": 0.1737749044594806,
+    "n": 18,
+    "successes": 1,
+    "level": 1,
+    "key": "action=organic|cause=card_expired|method=card|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=gateway_timeout|method=upi|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.4190105130553597,
+    "lo": 0.3074499476748296,
+    "hi": 0.5349672105547107,
+    "n": 26,
+    "successes": 11,
+    "level": 1,
+    "key": "action=organic|cause=gateway_timeout|method=upi|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=issuer_downtime|method=card_mandate|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.31455680458356017,
+    "lo": 0.24500967042817953,
+    "hi": 0.38635969886614796,
+    "n": 90,
+    "successes": 28,
+    "level": 1,
+    "key": "action=organic|cause=issuer_downtime|method=card_mandate|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=limit_exceeded|method=card_mandate|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.2726990981468056,
+    "lo": 0.1829957497661555,
+    "hi": 0.36780707302235155,
+    "n": 35,
+    "successes": 9,
+    "level": 1,
+    "key": "action=organic|cause=limit_exceeded|method=card_mandate|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=method_not_enabled|method=upi_autopay|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.05976425020903895,
+    "lo": 0.012477547557625219,
+    "hi": 0.1309441932050139,
+    "n": 12,
+    "successes": 0,
+    "level": 1,
+    "key": "action=organic|cause=method_not_enabled|method=upi_autopay|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=lost_stolen_fraud|method=card|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.19627384203979265,
+    "lo": 0.0880378198167201,
+    "hi": 0.3345893368440339,
+    "n": 2,
+    "successes": 0,
+    "level": 1,
+    "key": "action=organic|cause=lost_stolen_fraud|method=card|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=lost_stolen_fraud|method=card_mandate|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.02118668686373877,
+    "lo": 0.0010482453362952314,
+    "hi": 0.05968275065314625,
+    "n": 24,
+    "successes": 0,
+    "level": 1,
+    "key": "action=organic|cause=lost_stolen_fraud|method=card_mandate|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=issuer_downtime|method=emandate_nach|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.3739147503872774,
+    "lo": 0.2847090614121293,
+    "hi": 0.47018907913025054,
+    "n": 45,
+    "successes": 18,
+    "level": 1,
+    "key": "action=organic|cause=issuer_downtime|method=emandate_nach|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=invalid_card_details|method=card_mandate|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.07592814524551716,
+    "lo": 0.030889467876479386,
+    "hi": 0.13543935411772073,
+    "n": 43,
+    "successes": 3,
+    "level": 1,
+    "key": "action=organic|cause=invalid_card_details|method=card_mandate|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=auth_failed|method=wallet|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.3386332807300509,
+    "lo": 0.2027879058992944,
+    "hi": 0.48177652567992846,
+    "n": 4,
+    "successes": 2,
+    "level": 1,
+    "key": "action=organic|cause=auth_failed|method=wallet|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=unknown|method=card|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.10427143584641627,
+    "lo": 0.05119565169316973,
+    "hi": 0.16802328454684473,
+    "n": 45,
+    "successes": 3,
+    "level": 1,
+    "key": "action=organic|cause=unknown|method=card|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=risk_decline|method=upi_autopay|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.005662623579944726,
+    "lo": 3.219746768249414e-06,
+    "hi": 0.024004522994856742,
+    "n": 41,
+    "successes": 0,
+    "level": 1,
+    "key": "action=organic|cause=risk_decline|method=upi_autopay|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=insufficient_funds|method=wallet|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.19351266727272082,
+    "lo": 0.10200515936428099,
+    "hi": 0.29824964670205756,
+    "n": 15,
+    "successes": 3,
+    "level": 1,
+    "key": "action=organic|cause=insufficient_funds|method=wallet|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=limit_exceeded|method=upi|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.2719743024442079,
+    "lo": 0.175539097858362,
+    "hi": 0.3788052954789998,
+    "n": 25,
+    "successes": 7,
+    "level": 1,
+    "key": "action=organic|cause=limit_exceeded|method=upi|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=issuer_downtime|method=wallet|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.3307525716998008,
+    "lo": 0.19779467303382095,
+    "hi": 0.4747261609305028,
+    "n": 6,
+    "successes": 2,
+    "level": 1,
+    "key": "action=organic|cause=issuer_downtime|method=wallet|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=risk_decline|method=card_mandate|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.007627207270945958,
+    "lo": 4.076222856790684e-06,
+    "hi": 0.03294736708086413,
+    "n": 24,
+    "successes": 0,
+    "level": 1,
+    "key": "action=organic|cause=risk_decline|method=card_mandate|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=upi_collect_expired|method=upi_autopay|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.2612630154054165,
+    "lo": 0.15939550724937757,
+    "hi": 0.3807229106360895,
+    "n": 18,
+    "successes": 5,
+    "level": 1,
+    "key": "action=organic|cause=upi_collect_expired|method=upi_autopay|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=issuer_downtime|method=netbanking|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.2891665538341821,
+    "lo": 0.16667848313194406,
+    "hi": 0.42762539355509965,
+    "n": 7,
+    "successes": 1,
+    "level": 1,
+    "key": "action=organic|cause=issuer_downtime|method=netbanking|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=unknown|method=wallet|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.20319356481448833,
+    "lo": 0.09828787399262329,
+    "hi": 0.33381803457344394,
+    "n": 6,
+    "successes": 2,
+    "level": 1,
+    "key": "action=organic|cause=unknown|method=wallet|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=gateway_timeout|method=card|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.3865480051819795,
+    "lo": 0.24948706891894057,
+    "hi": 0.5284972931716867,
+    "n": 7,
+    "successes": 2,
+    "level": 1,
+    "key": "action=organic|cause=gateway_timeout|method=card|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=auth_failed|method=netbanking|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.3287273113120891,
+    "lo": 0.21264224088509526,
+    "hi": 0.45619603426299404,
+    "n": 14,
+    "successes": 5,
+    "level": 1,
+    "key": "action=organic|cause=auth_failed|method=netbanking|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=limit_exceeded|method=emandate_nach|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.3341066456434685,
+    "lo": 0.21335165413554583,
+    "hi": 0.46254584494086337,
+    "n": 12,
+    "successes": 5,
+    "level": 1,
+    "key": "action=organic|cause=limit_exceeded|method=emandate_nach|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=risk_decline|method=card|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.11789727883512083,
+    "lo": 0.04129118968067289,
+    "hi": 0.22189754938442185,
+    "n": 7,
+    "successes": 0,
+    "level": 1,
+    "key": "action=organic|cause=risk_decline|method=card|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=insufficient_funds|method=netbanking|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.1354430483116809,
+    "lo": 0.05482557990986025,
+    "hi": 0.2379404409730754,
+    "n": 10,
+    "successes": 0,
+    "level": 1,
+    "key": "action=organic|cause=insufficient_funds|method=netbanking|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=amount_exceeds_mandate|method=card_mandate|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.013671641257418779,
+    "lo": 0.00016034259776720637,
+    "hi": 0.04823307749419709,
+    "n": 20,
+    "successes": 0,
+    "level": 1,
+    "key": "action=organic|cause=amount_exceeds_mandate|method=card_mandate|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=amount_exceeds_mandate|method=emandate_nach|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.01662767179956338,
+    "lo": 0.00014788008870843936,
+    "hi": 0.05766467659385932,
+    "n": 12,
+    "successes": 0,
+    "level": 1,
+    "key": "action=organic|cause=amount_exceeds_mandate|method=emandate_nach|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=limit_exceeded|method=netbanking|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.25379673546963055,
+    "lo": 0.12543247671942692,
+    "hi": 0.402000570228958,
+    "n": 1,
+    "successes": 0,
+    "level": 1,
+    "key": "action=organic|cause=limit_exceeded|method=netbanking|attempt_index=0|regime=customer_initiated"
+   },
+   "action=organic|cause=lost_stolen_fraud|method=upi_autopay|attempt_index=0|regime=merchant_initiated": {
+    "mean": 0.03460492187743999,
+    "lo": 0.00211305840331861,
+    "hi": 0.10061800483497353,
+    "n": 5,
+    "successes": 0,
+    "level": 1,
+    "key": "action=organic|cause=lost_stolen_fraud|method=upi_autopay|attempt_index=0|regime=merchant_initiated"
+   },
+   "action=organic|cause=gateway_timeout|method=wallet|attempt_index=0|regime=customer_initiated": {
+    "mean": 0.4957914892201079,
+    "lo": 0.34851054075667226,
+    "hi": 0.6378456103078244,
+    "n": 6,
+    "successes": 5,
+    "level": 1,
+    "key": "action=organic|cause=gateway_timeout|method=wallet|attempt_index=0|regime=customer_initiated"
+   }
+  },
+  "0": {
+   "action=organic|cause=mandate_invalid|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.00047992550921230304,
+    "lo": 3.911239970596022e-35,
+    "hi": 0.0025844198117149714,
+    "n": 61,
+    "successes": 0,
+    "level": 0,
+    "key": "action=organic|cause=mandate_invalid|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=unknown|method=emandate_nach|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.2064920096987916,
+    "lo": 0.14587947933009282,
+    "hi": 0.27297758469355504,
+    "n": 86,
+    "successes": 18,
+    "level": 0,
+    "key": "action=organic|cause=unknown|method=emandate_nach|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=auth_failed|method=upi|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.238977130517787,
+    "lo": 0.16181248385708516,
+    "hi": 0.3253495885314339,
+    "n": 48,
+    "successes": 11,
+    "level": 0,
+    "key": "action=organic|cause=auth_failed|method=upi|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=unknown|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.16823308346500232,
+    "lo": 0.13505827927409117,
+    "hi": 0.20374476388878296,
+    "n": 303,
+    "successes": 51,
+    "level": 0,
+    "key": "action=organic|cause=unknown|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=issuer_downtime|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.317246180487045,
+    "lo": 0.2627922431414959,
+    "hi": 0.37355626539174297,
+    "n": 164,
+    "successes": 52,
+    "level": 0,
+    "key": "action=organic|cause=issuer_downtime|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=unknown|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.11904234988873309,
+    "lo": 0.08902737097612766,
+    "hi": 0.1512305741700887,
+    "n": 261,
+    "successes": 31,
+    "level": 0,
+    "key": "action=organic|cause=unknown|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=limit_exceeded|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.2971175030323649,
+    "lo": 0.2240593855793644,
+    "hi": 0.3754222001223887,
+    "n": 74,
+    "successes": 22,
+    "level": 0,
+    "key": "action=organic|cause=limit_exceeded|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=insufficient_funds|method=emandate_nach|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.20902072471594826,
+    "lo": 0.15786501892390908,
+    "hi": 0.26357518907286676,
+    "n": 134,
+    "successes": 28,
+    "level": 0,
+    "key": "action=organic|cause=insufficient_funds|method=emandate_nach|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=mandate_invalid|method=emandate_nach|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.0005546139165834677,
+    "lo": 1.131156081568144e-31,
+    "hi": 0.003442544883076977,
+    "n": 55,
+    "successes": 0,
+    "level": 0,
+    "key": "action=organic|cause=mandate_invalid|method=emandate_nach|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=auth_failed|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.4149984978943444,
+    "lo": 0.3285348156694351,
+    "hi": 0.5078379849971452,
+    "n": 60,
+    "successes": 25,
+    "level": 0,
+    "key": "action=organic|cause=auth_failed|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=unknown|method=netbanking|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.24608565115158174,
+    "lo": 0.1369651355865609,
+    "hi": 0.37624389328688224,
+    "n": 9,
+    "successes": 3,
+    "level": 0,
+    "key": "action=organic|cause=unknown|method=netbanking|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=upi_collect_expired|method=upi|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.3011406578781051,
+    "lo": 0.2255086909524138,
+    "hi": 0.38096079354985296,
+    "n": 73,
+    "successes": 22,
+    "level": 0,
+    "key": "action=organic|cause=upi_collect_expired|method=upi|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=gateway_timeout|method=netbanking|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.38082735315291494,
+    "lo": 0.25788756599939433,
+    "hi": 0.5099753024681872,
+    "n": 14,
+    "successes": 5,
+    "level": 0,
+    "key": "action=organic|cause=gateway_timeout|method=netbanking|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=invalid_card_details|method=card|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.09422126985223865,
+    "lo": 0.03223364313662461,
+    "hi": 0.18037576033807046,
+    "n": 15,
+    "successes": 1,
+    "level": 0,
+    "key": "action=organic|cause=invalid_card_details|method=card|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=insufficient_funds|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.2095350600479575,
+    "lo": 0.174436494640717,
+    "hi": 0.24642174443746634,
+    "n": 315,
+    "successes": 66,
+    "level": 0,
+    "key": "action=organic|cause=insufficient_funds|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=amount_exceeds_mandate|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.023438710297274252,
+    "lo": 0.0030147530846960356,
+    "hi": 0.05831580030073505,
+    "n": 43,
+    "successes": 1,
+    "level": 0,
+    "key": "action=organic|cause=amount_exceeds_mandate|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=insufficient_funds|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.21754774336736063,
+    "lo": 0.1706202950224171,
+    "hi": 0.26785422384571206,
+    "n": 170,
+    "successes": 37,
+    "level": 0,
+    "key": "action=organic|cause=insufficient_funds|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=issuer_downtime|method=upi|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.3240858555699444,
+    "lo": 0.22868365565495796,
+    "hi": 0.42592646377012916,
+    "n": 31,
+    "successes": 10,
+    "level": 0,
+    "key": "action=organic|cause=issuer_downtime|method=upi|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=auth_failed|method=card|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.3921499069030477,
+    "lo": 0.28775769884655455,
+    "hi": 0.5043198461679481,
+    "n": 29,
+    "successes": 12,
+    "level": 0,
+    "key": "action=organic|cause=auth_failed|method=card|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=card_expired|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.10196656901965387,
+    "lo": 0.06204107576801882,
+    "hi": 0.14894751177304616,
+    "n": 108,
+    "successes": 11,
+    "level": 0,
+    "key": "action=organic|cause=card_expired|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=mandate_invalid|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.007639938774865107,
+    "lo": 0.0005808043671573582,
+    "hi": 0.02136351111474422,
+    "n": 130,
+    "successes": 1,
+    "level": 0,
+    "key": "action=organic|cause=mandate_invalid|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=issuer_downtime|method=card|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.4336792760098146,
+    "lo": 0.29589374950199054,
+    "hi": 0.5733022937679549,
+    "n": 9,
+    "successes": 5,
+    "level": 0,
+    "key": "action=organic|cause=issuer_downtime|method=card|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=gateway_timeout|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.5566847903419353,
+    "lo": 0.459867302327845,
+    "hi": 0.6519104651287406,
+    "n": 46,
+    "successes": 26,
+    "level": 0,
+    "key": "action=organic|cause=gateway_timeout|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=gateway_timeout|method=emandate_nach|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.49898054690524934,
+    "lo": 0.3826863877003647,
+    "hi": 0.6233809441795239,
+    "n": 22,
+    "successes": 11,
+    "level": 0,
+    "key": "action=organic|cause=gateway_timeout|method=emandate_nach|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=insufficient_funds|method=card|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.20377720416979378,
+    "lo": 0.11077042992981058,
+    "hi": 0.31050015127876535,
+    "n": 19,
+    "successes": 4,
+    "level": 0,
+    "key": "action=organic|cause=insufficient_funds|method=card|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=unknown|method=upi|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.19610849169911254,
+    "lo": 0.13538668263807646,
+    "hi": 0.26246458970389136,
+    "n": 81,
+    "successes": 16,
+    "level": 0,
+    "key": "action=organic|cause=unknown|method=upi|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=gateway_timeout|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.4669322947171979,
+    "lo": 0.3840689732673712,
+    "hi": 0.5480457023012901,
+    "n": 71,
+    "successes": 33,
+    "level": 0,
+    "key": "action=organic|cause=gateway_timeout|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=insufficient_funds|method=upi|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.20997543735970695,
+    "lo": 0.13327470374079936,
+    "hi": 0.2899354667794746,
+    "n": 47,
+    "successes": 10,
+    "level": 0,
+    "key": "action=organic|cause=insufficient_funds|method=upi|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=card_expired|method=card|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.07745798916688362,
+    "lo": 0.024423025274073668,
+    "hi": 0.1521808102083864,
+    "n": 18,
+    "successes": 1,
+    "level": 0,
+    "key": "action=organic|cause=card_expired|method=card|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=gateway_timeout|method=upi|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.4210835848310587,
+    "lo": 0.3121068192923856,
+    "hi": 0.5341958562497147,
+    "n": 26,
+    "successes": 11,
+    "level": 0,
+    "key": "action=organic|cause=gateway_timeout|method=upi|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=issuer_downtime|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.3118601749094696,
+    "lo": 0.2424635501944026,
+    "hi": 0.3829240118172252,
+    "n": 90,
+    "successes": 28,
+    "level": 0,
+    "key": "action=organic|cause=issuer_downtime|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=limit_exceeded|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.26362462422783567,
+    "lo": 0.17558446388555912,
+    "hi": 0.36013009264574514,
+    "n": 35,
+    "successes": 9,
+    "level": 0,
+    "key": "action=organic|cause=limit_exceeded|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=method_not_enabled|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.04038125014124254,
+    "lo": 0.00500281216225094,
+    "hi": 0.10492517893935718,
+    "n": 12,
+    "successes": 0,
+    "level": 0,
+    "key": "action=organic|cause=method_not_enabled|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=lost_stolen_fraud|method=card|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.18173503892573395,
+    "lo": 0.07456283519215791,
+    "hi": 0.31158958852915225,
+    "n": 2,
+    "successes": 0,
+    "level": 0,
+    "key": "action=organic|cause=lost_stolen_fraud|method=card|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=lost_stolen_fraud|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.010809534114152437,
+    "lo": 5.6788513631983394e-05,
+    "hi": 0.04018976923019926,
+    "n": 24,
+    "successes": 0,
+    "level": 0,
+    "key": "action=organic|cause=lost_stolen_fraud|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=issuer_downtime|method=emandate_nach|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.3906838394240277,
+    "lo": 0.298605036786593,
+    "hi": 0.48524405705429885,
+    "n": 45,
+    "successes": 18,
+    "level": 0,
+    "key": "action=organic|cause=issuer_downtime|method=emandate_nach|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=invalid_card_details|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.07203240634026366,
+    "lo": 0.029678472193891862,
+    "hi": 0.12742882779579223,
+    "n": 43,
+    "successes": 3,
+    "level": 0,
+    "key": "action=organic|cause=invalid_card_details|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=auth_failed|method=wallet|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.3608907592500438,
+    "lo": 0.21965288281193265,
+    "hi": 0.5128117001533553,
+    "n": 4,
+    "successes": 2,
+    "level": 0,
+    "key": "action=organic|cause=auth_failed|method=wallet|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=unknown|method=card|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.0800969413737201,
+    "lo": 0.03460199207548927,
+    "hi": 0.13514774349425512,
+    "n": 45,
+    "successes": 3,
+    "level": 0,
+    "key": "action=organic|cause=unknown|method=card|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=risk_decline|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.0021449331742214874,
+    "lo": 7.456677577803688e-12,
+    "hi": 0.012223355886400255,
+    "n": 41,
+    "successes": 0,
+    "level": 0,
+    "key": "action=organic|cause=risk_decline|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=insufficient_funds|method=wallet|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.19594541704545052,
+    "lo": 0.10240284234774273,
+    "hi": 0.30340515636175985,
+    "n": 15,
+    "successes": 3,
+    "level": 0,
+    "key": "action=organic|cause=insufficient_funds|method=wallet|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=limit_exceeded|method=upi|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.27598715122210393,
+    "lo": 0.1752434755918943,
+    "hi": 0.3807471965190009,
+    "n": 25,
+    "successes": 7,
+    "level": 0,
+    "key": "action=organic|cause=limit_exceeded|method=upi|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=issuer_downtime|method=wallet|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.3312520739514523,
+    "lo": 0.20488215480523064,
+    "hi": 0.4748499666375139,
+    "n": 6,
+    "successes": 2,
+    "level": 0,
+    "key": "action=organic|cause=issuer_downtime|method=wallet|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=risk_decline|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.0038914322810948768,
+    "lo": 2.368796432530817e-09,
+    "hi": 0.020348837103017246,
+    "n": 24,
+    "successes": 0,
+    "level": 0,
+    "key": "action=organic|cause=risk_decline|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=upi_collect_expired|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.2681761717473352,
+    "lo": 0.16228774180349376,
+    "hi": 0.38713222933034686,
+    "n": 18,
+    "successes": 5,
+    "level": 0,
+    "key": "action=organic|cause=upi_collect_expired|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=issuer_downtime|method=netbanking|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.25716137018295476,
+    "lo": 0.14028015479411166,
+    "hi": 0.3872019639573266,
+    "n": 7,
+    "successes": 1,
+    "level": 0,
+    "key": "action=organic|cause=issuer_downtime|method=netbanking|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=unknown|method=wallet|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.22838190710845832,
+    "lo": 0.11738988847575955,
+    "hi": 0.35742366765395955,
+    "n": 6,
+    "successes": 2,
+    "level": 0,
+    "key": "action=organic|cause=unknown|method=wallet|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=gateway_timeout|method=card|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.3644906290484215,
+    "lo": 0.22968528021196255,
+    "hi": 0.5057133274639752,
+    "n": 7,
+    "successes": 2,
+    "level": 0,
+    "key": "action=organic|cause=gateway_timeout|method=card|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=auth_failed|method=netbanking|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.33892776366159555,
+    "lo": 0.22150698394579957,
+    "hi": 0.4661612692806843,
+    "n": 14,
+    "successes": 5,
+    "level": 0,
+    "key": "action=organic|cause=auth_failed|method=netbanking|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=limit_exceeded|method=emandate_nach|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.3608828686780192,
+    "lo": 0.2378775857374879,
+    "hi": 0.4976765383153927,
+    "n": 12,
+    "successes": 5,
+    "level": 0,
+    "key": "action=organic|cause=limit_exceeded|method=emandate_nach|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=risk_decline|method=card|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.09210724908993814,
+    "lo": 0.02698963232685778,
+    "hi": 0.1854670238564641,
+    "n": 7,
+    "successes": 0,
+    "level": 0,
+    "key": "action=organic|cause=risk_decline|method=card|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=insufficient_funds|method=netbanking|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.09674503450834351,
+    "lo": 0.0318664962742281,
+    "hi": 0.19093341773423342,
+    "n": 10,
+    "successes": 0,
+    "level": 0,
+    "key": "action=organic|cause=insufficient_funds|method=netbanking|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=amount_exceeds_mandate|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.007595356254121543,
+    "lo": 2.3475751674430342e-06,
+    "hi": 0.031050725909321647,
+    "n": 20,
+    "successes": 0,
+    "level": 0,
+    "key": "action=organic|cause=amount_exceeds_mandate|method=card_mandate|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=amount_exceeds_mandate|method=emandate_nach|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.011234913378083366,
+    "lo": 1.0076023949295222e-05,
+    "hi": 0.04662274469508724,
+    "n": 12,
+    "successes": 0,
+    "level": 0,
+    "key": "action=organic|cause=amount_exceeds_mandate|method=emandate_nach|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=limit_exceeded|method=netbanking|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.24403532256695246,
+    "lo": 0.11819433304604833,
+    "hi": 0.39439267262692973,
+    "n": 1,
+    "successes": 0,
+    "level": 0,
+    "key": "action=organic|cause=limit_exceeded|method=netbanking|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   },
+   "action=organic|cause=lost_stolen_fraud|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated": {
+    "mean": 0.02883743489786666,
+    "lo": 0.00104744236474707,
+    "hi": 0.09169599754299149,
+    "n": 5,
+    "successes": 0,
+    "level": 0,
+    "key": "action=organic|cause=lost_stolen_fraud|method=upi_autopay|attempt_index=0|time_bucket=all|regime=merchant_initiated"
+   },
+   "action=organic|cause=gateway_timeout|method=wallet|attempt_index=0|time_bucket=all|regime=customer_initiated": {
+    "mean": 0.5611221687258935,
+    "lo": 0.4147311834537793,
+    "hi": 0.7028099037159047,
+    "n": 6,
+    "successes": 5,
+    "level": 0,
+    "key": "action=organic|cause=gateway_timeout|method=wallet|attempt_index=0|time_bucket=all|regime=customer_initiated"
+   }
+  }
+ }
+}

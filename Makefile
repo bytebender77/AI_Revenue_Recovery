@@ -1,6 +1,6 @@
 PY := python3
 
-.PHONY: setup cohort describe gate train m4 db-up db-down db-init run verify-chain audit test freeze clean
+.PHONY: setup cohort describe gate train m4 ablation-features ablation-normalizer db-up db-down db-init run verify-chain audit test freeze clean
 
 setup:
 	$(PY) -m pip install -r requirements.txt
@@ -37,6 +37,11 @@ audit:             ## AUDIT=<payment_intent_id> make audit
 	@psql "$${DATABASE_URL:-postgresql://rr:rr@localhost:5434/rr}" -v id="'$(AUDIT)'" -f sql/audit.sql
 
 train: models/success_model.json   ## fit the success + organic models on dev exploration data
+
+ablation-features:  ## feature cross v1 vs v2 on full dev
+	$(PY) -m rr.model.train --feature-version v1 --suffix _v1 --data data --out models
+	$(PY) -m rr.model.train --feature-version v2 --suffix _v2 --data data --out models
+	$(PY) -m rr.eval.ablation_features --data data --models models
 
 m4: train          ## full dev: every arm, calibration, per-cause, NO_ACTION breakdown
 	$(PY) -m rr.eval.m4_report --data data --models models
