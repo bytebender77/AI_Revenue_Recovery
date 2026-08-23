@@ -1,5 +1,12 @@
 PY := python3
 
+# Load .env if present, so API keys don't have to be exported by hand every shell.
+# Never committed -- see .gitignore. Do not quote values: KEY=sk-... not KEY="sk-..."
+ifneq (,$(wildcard .env))
+include .env
+export
+endif
+
 .PHONY: setup cohort describe gate train m4 ablation-features ablation-normalizer db-up db-down db-init run verify-chain audit test freeze clean
 
 setup:

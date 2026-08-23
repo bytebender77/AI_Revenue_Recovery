@@ -208,8 +208,13 @@ class TailNormalizer:
             request_id=request_id,
         )
         self.calls.append(call)
-        self._cache[key] = {"cause": cause.value, "confidence": confidence,
-                            "call": {**call.as_row(), "cached": False}}
+        # NEVER cache a transient failure. A network blip, rate limit, or refusal
+        # returns UNKNOWN; caching that would freeze a one-off outage into a
+        # permanent wrong answer that survives every later run. Only durable
+        # verdicts -- ok, below_floor, schema_violation -- are worth remembering.
+        if status != "error":
+            self._cache[key] = {"cause": cause.value, "confidence": confidence,
+                                "call": {**call.as_row(), "cached": False}}
         return cause, confidence, call
 
     # ------------------------------------------------------------------ audit --

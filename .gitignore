@@ -4,3 +4,6 @@ __pycache__/
 .pytest_cache/
 data/*.jsonl
 !data/.gitkeep
+.env
+models/normalizer_cache.json
+models/llm_calls.jsonl

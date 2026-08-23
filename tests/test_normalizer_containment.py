@@ -178,6 +178,27 @@ def test_stale_cache_format_is_discarded_not_partially_trusted(tmp_path):
     assert tail.stale_cache_discarded and tail.distinct_inputs == 0
 
 
+class ErroringResolver(FixedResolver):
+    """Simulates a network blip / rate limit / 401."""
+    def classify(self, system, rendered, schema):
+        return "", {}, None, "APIConnectionError: simulated"
+
+
+def test_transient_failures_are_never_cached():
+    """A one-off outage must not be frozen into a permanent UNKNOWN.
+
+    Caching an error would make a single network blip survive every later run,
+    silently and indistinguishably from a real abstention."""
+    tail = TailNormalizer(ErroringResolver(FailureCause.DO_NOT_HONOUR))
+    cause, _, call = tail.resolve(EVENT)
+    assert cause is FailureCause.UNKNOWN and call.parse_status == "error"
+    assert tail.distinct_inputs == 0, "an errored call was written to the cache"
+    # A durable verdict from the same input IS cached, so the retry can succeed.
+    ok = TailNormalizer(FixedResolver(FailureCause.DO_NOT_HONOUR))
+    ok.resolve(EVENT)
+    assert ok.distinct_inputs == 1
+
+
 def test_every_call_is_audit_complete(tmp_path):
     tail = TailNormalizer(FixedResolver(FailureCause.ISSUER_DOWNTIME))
     tail.resolve({"gateway_code": "NPCI_XR", "gateway_reason": "xr",
