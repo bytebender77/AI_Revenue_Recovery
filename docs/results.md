@@ -262,7 +262,8 @@ alive, and the guardrails do most of the stopping.
 4. **The margin halved out of sample and we lead with that**, alongside the four
    causes where the agent loses.
 5. **The guardrails are absolute where they can be.** Zero observable terminal
-   retries, zero unauthorised debits, across every arm and tier.
+   retries and zero unauthorised debits for every **gated** arm, in every tier.
+   B1, which has no gate, has 1674 and 1391 — that gap is what the gate buys.
 6. **Two components were built, measured, and shipped OFF** — feature_cross_v2 and the
    LLM tail normaliser both lost their ablations. Those are in
    [shipping-config.md](shipping-config.md).
