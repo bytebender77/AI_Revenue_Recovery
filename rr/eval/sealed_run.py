@@ -144,8 +144,11 @@ def print_report(tag, obs, lat, runs, meta, success, issuer_index, idx, out: dic
     print("\n\n=== per cause: AGENT vs B2.5 (losses first) ===\n")
     h2 = f"  {'cause':<24}{'n':>6}{'agent':>12}{'B2.5':>12}{'delta':>12}"
     print(h2); print("  " + "-" * (len(h2) - 2))
+    causes = []
     for cause, cnt, a_v, b_v, gap in gap_by_cause_pair(runs["AGENT"], runs["B2.5_plus_outage"]):
         print(f"  {cause.value:<24}{cnt:>6}{rupees(a_v):>12}{rupees(b_v):>12}{rupees(gap):>12}")
+        causes.append([cause.value, cnt, a_v, b_v, gap])
+    out["causes"] = causes
 
     print("\n=== calibration on held-out attempts ===\n")
     table, brier = reliability(success, runs["AGENT"], by_id, issuer_index=issuer_index)

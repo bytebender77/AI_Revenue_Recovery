@@ -7,7 +7,7 @@ include .env
 export
 endif
 
-.PHONY: setup cohort describe gate train m4 sealed-report dev-report ablation-features ablation-normalizer db-up db-down db-init run verify-chain audit test freeze clean
+.PHONY: setup cohort describe gate train m4 report serve razorpay-probe sealed-report dev-report ablation-features ablation-normalizer db-up db-down db-init run verify-chain audit test freeze clean
 
 setup:
 	$(PY) -m pip install -r requirements.txt
@@ -52,6 +52,15 @@ ablation-features:  ## feature cross v1 vs v2 on full dev
 
 ablation-normalizer: train  ## LLM tail normaliser on vs off (--resolver openai|anthropic|offline)
 	$(PY) -m rr.eval.ablation_normalizer --data data --models models --resolver $(or $(RESOLVER),offline)
+
+report:             ## static HTML report from the sealed-run JSON
+	$(PY) -m rr.report.html --docs docs --out docs/report.html
+
+serve:              ## audit API: GET /audit/{payment_id}
+	$(PY) -m uvicorn rr.api.audit:app --port 8080
+
+razorpay-probe:     ## the one live test-mode call (needs RAZORPAY_KEY_ID/SECRET)
+	$(PY) -m rr.adapters.razorpay_test
 
 sealed-report:      ## the sealed test-cohort run. Refuses to run twice.
 	$(PY) -m rr.eval.sealed_run --cohort test --data data --models models --out docs/results_test.json

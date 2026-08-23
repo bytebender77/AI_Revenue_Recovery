@@ -130,6 +130,35 @@ REASON_TO_CAUSE: dict[str, FailureCause] = {
 }
 
 
+# Razorpay's REAL card reason strings, read from their error documentation on
+# 2026-08-23 (docs/razorpay-reason-mapping.md). Added so the live adapter can consume
+# a real response. These strings do not occur in the synthetic corpus, so adding them
+# changes no measured number -- verified by re-running the dev report either side.
+RAZORPAY_REASON_TO_CAUSE: dict[str, FailureCause] = {
+    "insufficient_funds": FailureCause.INSUFFICIENT_FUNDS,
+    "card_expired": FailureCause.CARD_EXPIRED,
+    "authentication_failed": FailureCause.AUTH_FAILED,
+    "payment_timed_out": FailureCause.UPI_COLLECT_EXPIRED,
+    "gateway_technical_error": FailureCause.GATEWAY_TIMEOUT,
+    "bank_technical_error": FailureCause.ISSUER_DOWNTIME,
+    "transaction_limit_exceeded": FailureCause.LIMIT_EXCEEDED,
+    "payment_risk_check_failed": FailureCause.RISK_DECLINE,
+    "card_disabled_for_online_payments": FailureCause.METHOD_NOT_ENABLED,
+    "card_not_enrolled": FailureCause.METHOD_NOT_ENABLED,
+    "debit_instrument_inactive": FailureCause.METHOD_NOT_ENABLED,
+    "debit_instrument_blocked": FailureCause.LOST_STOLEN_FRAUD,
+    "incorrect_cvv": FailureCause.INVALID_CARD_DETAILS,
+    "card_declined": FailureCause.DO_NOT_HONOUR,
+    # `payment_failed` and `payment_cancelled` are deliberately absent: Razorpay
+    # defines payment_failed as "declined by the customer's bank", which names no
+    # cause. It must reach UNKNOWN and take the conservative path.
+}
+
+
 def normalize_reason(gateway_reason: str) -> FailureCause:
-    """Deterministic lookup. Anything unmapped is UNKNOWN, never a guess."""
-    return REASON_TO_CAUSE.get(gateway_reason, FailureCause.UNKNOWN)
+    """Deterministic lookup over our synthetic strings and Razorpay's real ones.
+    Anything unmapped is UNKNOWN, never a guess."""
+    hit = REASON_TO_CAUSE.get(gateway_reason)
+    if hit is not None:
+        return hit
+    return RAZORPAY_REASON_TO_CAUSE.get(gateway_reason, FailureCause.UNKNOWN)
