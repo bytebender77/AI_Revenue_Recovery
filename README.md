@@ -96,6 +96,8 @@ that either.
 
 ## How it works
 
+Full structural account — the decision path, the boundaries, and what is deliberately not built — in **[docs/architecture.md](docs/architecture.md)**.
+
 ```
 failure event → normalise cause → eligibility gate → EV policy → execute → outcome
                 (deterministic)   (permitted set)    (argmax)    (idempotent)
@@ -106,9 +108,25 @@ afterwards. The policy never sees an illegal action, so a missed check produces 
 empty option set rather than a live breach.
 
 **Expected net value**, not gross: `p_success × (1 − p_organic) × amount × margin −
-attempt cost − contact cost − annoyance − chargeback risk`. Multiplying by
-`(1 − p_organic)` means an action earns nothing on the branch where the payment would
-have recovered anyway — see [docs/ev-objective.md](docs/ev-objective.md).
+attempt cost − contact cost − annoyance − chargeback risk`.
+
+The `(1 − p_organic)` term is the objective agreeing with the metric. The literal
+formula `p_success × amount × margin` maximises **gross** recovery — it pays an action
+in full for succeeding on a payment that would have recovered on its own, which is the
+exact number this project argues against reporting. Multiplying by `(1 − p_organic)`
+means value accrues only on the branch where nothing else would have worked. Without
+it, the agent optimises one quantity and is scored on another, and the gap between them
+is pure claimed credit.
+
+**We measured the difference rather than asserting it.** `POLICY.ev_objective="gross"`
+runs as its own arm. On dev (n=6000, `make m4` — *not* the sealed cohort):
+`ev_incremental` beats `ev_gross` by **16,407, 95% CI [−105,871, 139,349]** — a **tie**
+on recovery. The honest reading is that the term does not buy measurable incremental
+recovery; **it buys restraint.** The gross objective reaches the same recovery while
+sending **8% more customer contacts** (2364 vs 2182), issuing more debits (5644 vs
+5557), and committing more true `NEVER_RETRY` violations (329 vs 315) — it chases
+payments that were going to land anyway. We ship `incremental` for that, and because an
+agent scored on incremental recovery should be optimising incremental recovery.
 
 **`NO_ACTION` is a scored candidate at exactly zero**, not a fallback branch. It wins
 13.2% of decisions, and 22.8% of intents are never touched at all. Three
@@ -232,5 +250,6 @@ Stated here rather than buried; full list in
 | `rr/eval/` | tick loop, metrics, ablations, sealed run |
 | `rr/api/`, `rr/report/` | audit endpoint, static HTML report |
 | `rr/attic/` | the retired M2 rules port, unreachable and asserted so |
+| `docs/architecture.md` | **how it fits together**, and what it cannot do |
 | `docs/results.md` | **the numbers** |
 | `docs/shipping-config.md` | exactly what M6 measured and the video shows |

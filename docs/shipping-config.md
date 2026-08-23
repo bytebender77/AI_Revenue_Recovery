@@ -63,7 +63,8 @@ Two defects surfaced while proving it, both now fixed:
 
 ```
 POLICY.tick_hours                  6.0
-POLICY.ev_objective                incremental      # not gross; see docs/ev-objective.md
+POLICY.ev_objective                incremental      # not gross; rationale + the
+                                                    # measured tie are in README.md
 POLICY.p_chargeback_known_soft     0.002
 POLICY.p_chargeback_unknown_cause  0.075            # priced high on purpose
 COSTS.escalation_capacity_pct      0.05
