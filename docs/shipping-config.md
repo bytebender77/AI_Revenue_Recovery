@@ -8,20 +8,32 @@ Frozen: 2026-08-23. Commit: see `git log -1 -- docs/shipping-config.md`.
 
 ---
 
-## ⚠️ OPEN BLOCKER — two decision layers, only one is measured
+## ✅ CLOSED — one decision layer
 
-The repo contains **two** decision layers and they are not the same code:
+There were **two** decision layers: an M2 rules port behind `make run` and the M4 EV
+policy behind every number, so the video would have demonstrated one system while
+the results described another.
 
-| Path | File | Used by | Stamps |
-|---|---|---|---|
-| Demo | `rr/pipeline/policy.py` | `make run`, Postgres, `make audit` | `rules-b2-port-v1.0.0` |
-| Measured | `rr/agent/policy.py` | eval harness, all ablations | `ev-policy-v1.0.0` |
+Closed. `rr/pipeline/runner.py` now calls the same tick loop as the eval harness and
+supplies only a Postgres sink; `rr/agent/policy.py` scores every candidate and
+`rr/agent/decision.py` serialises every record. The rules port is retired to
+`rr/attic/rules_port_policy.py` and is not importable from any live package.
 
-**The video would demonstrate the M2 rules port while the numbers come from the M4
-EV policy.** That is exactly the divergence this document exists to prevent. It must
-be closed before the sealed run — port the EV policy into the pipeline so one system
-is both measured and demonstrated. Until then, every number below describes the
-*measured* path only.
+**Evidence: `tests/test_one_decision_layer.py`.** It runs one cohort through both
+entry points — the eval harness in memory, the demo path through Postgres — and
+deep-compares every decision record field by field: every candidate's score,
+`permitted`, `blocked_by`, the binding constraint, the reason code, and all three
+version strings. Both sides are round-tripped through JSON so a jsonb ordering or
+float difference cannot masquerade as agreement. Companion tests assert the retired
+module is unreachable and that nothing still emits `score_basis="rule_priority"`.
+
+Two defects surfaced while proving it, both now fixed:
+
+- **`(payment_intent_id, slot)` was not unique.** A deferred action is re-decided at
+  the same slot when its tick arrives, so a legitimate re-decision was
+  indistinguishable from a duplicate row. Added `decision_seq`, monotonic per intent.
+- **`decision` had no `run_id`**, reachable only via a four-table join, which left
+  `decision_seq` uniqueness unscoped across runs. Denormalised onto the row.
 
 ---
 
@@ -43,8 +55,7 @@ is both measured and demonstrated. Until then, every number below describes the
 | `TAXONOMY_VERSION` | `taxonomy-v1.0.0` |
 | `NORMALIZER_VERSION` | `map-v1.0.0` (deterministic map only) |
 | `MODEL_VERSION` | `beta-binomial-featurecross-v1.0.0` |
-| `POLICY_VERSION` (demo) | `rules-b2-port-v1.0.0` |
-| `EV_POLICY_VERSION` (measured) | `ev-policy-v1.0.0` |
+| `POLICY_VERSION` | `ev-policy-v1.0.0` — one layer, one value |
 | `EXPLAINER_VERSION` | `explainer-v1.0.0` |
 | Response model | `v1.0.0`, sha256 `0fd67f8b673f08b2…` — frozen before any policy code existed |
 
@@ -112,7 +123,10 @@ make ablation-normalizer RESOLVER=openai
 
 ## Known limitations, stated rather than buried
 
-1. **Two decision layers** (above). Blocker.
+1. **Explainer rejection rate was 0/40 on live gpt-4o**, but those were
+   `rule_priority` records carrying no `p_success`, so the strongest check was not
+   exercised. Now that every record is EV-scored, re-measure and report whatever
+   comes out.
 2. **Unmapped-code descriptions are independent of the true cause** in the frozen
    cohort generator, so chance (~1/15) is the ceiling on that slice for any
    classifier. Documented, not fixed — fixing it would invalidate M1–M5.
@@ -124,6 +138,8 @@ make ablation-normalizer RESOLVER=openai
    were seen; disclosed rather than retuned.
 5. **B3 is a greedy oracle**, so it is a lower bound on the ceiling — B2.5 beats it
    on `auth_failed`.
-6. **Explainer rejection rate was 0/40 on live gpt-4o**, but those were
-   `rule_priority` records carrying no `p_success`, so the strongest check was not
-   exercised. Expect a nonzero rate on M6's EV records; report whatever it is.
+6. **The demo path executes through the sink, not `rr/pipeline/executor.py`.**
+   Idempotency (unique `idempotency_key`), fire-time revalidation, `attempt` rows
+   and ledger entries are all preserved and asserted, but the standalone
+   `execute_decision` helper is now only reachable from tests. Consolidate or
+   retire it before the writeup.

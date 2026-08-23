@@ -1,13 +1,13 @@
-"""M2 policy: a faithful port of B2, emitting the full decision record shape.
+"""RETIRED -- the M2 rules port. Kept for reference only; NOT an entry point.
 
-Deliberately trivial. There is no success model and no expected-value arithmetic
-yet -- `score_basis` says `rule_priority` for exactly that reason, and M4 swaps it
-to `expected_net_value` without changing the record shape. What matters now is
-that the record is already complete: every candidate action with its score, not
-only the winner, plus the constraint that removed anything ranked higher.
+Superseded by rr/agent/policy.py (EV scoring). It lived behind `make run` while the
+eval harness used the EV policy, which meant the demo and the numbers described two
+different systems. That blocker is closed: there is now one decision layer.
 
-The ladder constants are imported from the B2 baseline rather than copied, so the
-port cannot silently drift from the arm it is measured against. M4 cuts that tie.
+Nothing under rr/pipeline/, rr/agent/, or rr/eval/ may import this module --
+tests/test_one_decision_layer.py asserts it by grep. It is here so the ablation
+story ("we shipped rules first, then measured our way off them") stays readable,
+not because anything runs it.
 """
 from __future__ import annotations
 

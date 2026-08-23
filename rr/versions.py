@@ -2,11 +2,10 @@
 
 A decision that cannot name the code that produced it is not auditable.
 
-NOTE ON THE TWO POLICIES. The repo currently contains two decision layers:
-`rr/pipeline/policy.py` (the M2 rules port, used by `make run` and the Postgres
-demo path) and `rr/agent/policy.py` (the M4 EV policy, used by the eval harness).
-They stamp different POLICY_VERSION values because they are different code. That
-divergence is an open blocker for the submission -- see docs/shipping-config.md.
+ONE DECISION LAYER. `rr/agent/policy.py` scores every candidate, whichever entry
+point asked. The M2 rules port is retired to rr/attic/ and unreachable from any
+live package -- tests/test_one_decision_layer.py asserts both the unreachability
+and the record-for-record equivalence of the two entry points.
 """
 TAXONOMY_VERSION = "taxonomy-v1.0.0"
 
@@ -16,10 +15,8 @@ NORMALIZER_VERSION = "map-v1.0.0"
 # feature_cross_v1 ships. v2 is retained and runnable but lost its ablation.
 MODEL_VERSION = "beta-binomial-featurecross-v1.0.0"
 
-# Stamped by rr/pipeline/policy.py (the demo path).
-POLICY_VERSION = "rules-b2-port-v1.0.0"
-
-# Stamped by rr/agent/policy.py (the measured path, M4 EV policy).
+# Stamped on every decision row by every entry point.
 EV_POLICY_VERSION = "ev-policy-v1.0.0"
+POLICY_VERSION = EV_POLICY_VERSION   # alias; there is only one policy now
 
 EXPLAINER_VERSION = "explainer-v1.0.0"

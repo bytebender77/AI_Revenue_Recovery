@@ -16,6 +16,7 @@ from collections import Counter
 from dataclasses import dataclass, field
 from typing import Optional
 
+from rr.agent.decision import AUCTION_RULE, build as build_record, control_record
 from rr.budget import EscalationBudget
 from rr.config import CLOCK, COSTS, POLICY
 from rr.contracts import ActionSpec, AttemptOutcome
@@ -46,6 +47,7 @@ class Runtime:
     v_obs: int = 0
     v_unauth: int = 0
     decisions: list = field(default_factory=list)
+    decision_seq: int = 0
 
     @property
     def horizon_end(self) -> float:
@@ -63,13 +65,14 @@ def _no_action_reason(cands, chosen, lost_auction: bool) -> tuple[str, Optional[
 
 
 def run_agent(obs_rows: list[dict], latents: list[LatentState], policy,
-              crn_ns: str = "outcome", normalizer=None
+              crn_ns: str = "outcome", normalizer=None, sink=None, arm_of=None
               ) -> tuple[list[IntentResult], dict]:
     """`normalizer` is an optional TailNormalizer. It affects DIAGNOSIS ONLY.
 
     Every legality decision below is taken by the eligibility gate from the
     diagnosed cause; swapping the normaliser in or out changes which cause the
     gate is given, never what the gate is allowed to permit."""
+    arm_of = arm_of or (lambda iid: "treatment")
     if getattr(policy, "issuer_index", None) is None:
         from rr.agent.features import IssuerFailureIndex
         policy.issuer_index = IssuerFailureIndex.build(obs_rows)
@@ -121,10 +124,10 @@ def run_agent(obs_rows: list[dict], latents: list[LatentState], policy,
                                  set(elig.permitted), 
                                  lambda a: elig.blocking_rule(ActionType(a)), breaker)
             best = policy.choose(cands)
-            proposals.append((rt, cands, best))
+            proposals.append((rt, cands, best, diag, elig))
 
         # ---- capacity auction: highest claimants win this tick's quota --------
-        esc = [(rt, c, b) for rt, c, b in proposals
+        esc = [(rt, c, b) for rt, c, b, _d, _e in proposals
                if b.action == ActionType.ESCALATE_HUMAN.value and b.at_h is not None
                and b.at_h < tick_end]
         esc.sort(key=lambda x: -x[2].ev_mean)
@@ -137,7 +140,7 @@ def run_agent(obs_rows: list[dict], latents: list[LatentState], policy,
         for _ in range(grant):
             budget.consume()
 
-        for rt, cands, best in proposals:
+        for rt, cands, best, diag, elig in proposals:
             lost = id(rt) in losers and best.action == ActionType.ESCALATE_HUMAN.value
             if lost:
                 best.chosen = False
@@ -146,25 +149,31 @@ def run_agent(obs_rows: list[dict], latents: list[LatentState], policy,
                         c.permitted, c.blocked_by = False, AUCTION_RULE
                 best = policy.choose(cands, exclude=(ActionType.ESCALATE_HUMAN.value,))
 
-            if best.action == ActionType.NO_ACTION.value:
-                code, binding = _no_action_reason(cands, best, lost)
-                rt.decisions.append({"slot": len(rt.st.history), "action": best.action,
-                                     "reason_code": code, "binding_constraint": binding,
-                                     "ev_inr": 0.0, "n_candidates": len(cands)})
+            slot_no = len(rt.st.history)
+            iid = rt.obs["intent_id"]
+            arm = arm_of(iid)
+            rt.decision_seq += 1
+            record = (control_record(iid, slot_no, rt.decision_seq) if arm == "control"
+                      else build_record(iid, slot_no, rt.decision_seq, arm, cands, best, lost))
+            rt.decisions.append(record.as_row())
+            if sink is not None:
+                sink.on_decision(rt.obs, record, diag, elig)
+
+            # The control arm is scored and audited exactly like treatment; it just
+            # never acts. That is what makes it a usable counterfactual.
+            if arm == "control" or best.action == ActionType.NO_ACTION.value:
                 rt.active = False
                 continue
-
-            rt.decisions.append({"slot": len(rt.st.history), "action": best.action,
-                                 "reason_code": "POSITIVE_EXPECTED_NET_VALUE",
-                                 "binding_constraint": AUCTION_RULE if lost else None,
-                                 "ev_inr": round(best.ev_mean / 100, 2),
-                                 "n_candidates": len(cands)})
 
             if best.at_h > tick_end:
                 rt.next_due_h = best.at_h
                 continue
-            # Fire-time check: never act on a payment that already recovered.
+            # Fire-time revalidation: never act on a payment that already recovered.
+            # This is the race that produces double charges and nudges to people who
+            # have already paid, so the abort is RECORDED, not silently dropped.
             if rt.latent.self_heal_at_h is not None and rt.latent.self_heal_at_h <= best.at_h:
+                if sink is not None:
+                    sink.on_attempt_aborted(rt.obs, record, best, "already_recovered")
                 rt.active = False
                 continue
 
@@ -173,6 +182,8 @@ def run_agent(obs_rows: list[dict], latents: list[LatentState], policy,
             slot = len(rt.st.history)
             rec = apply_action(rt.obs, rt.latent, action, rt.st, slot, crn_ns)
             rt.st.history.append(rec)
+            if sink is not None:
+                sink.on_attempt(rt.obs, record, best, rec)
 
             if action.type in DEBIT_ACTIONS:
                 rt.debits += 1

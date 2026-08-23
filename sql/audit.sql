@@ -28,18 +28,23 @@ FROM eligibility_snapshot e, jsonb_array_elements(e.rule_evaluations) r
 WHERE e.payment_intent_id = :id ORDER BY e.slot, rule;
 
 \echo '=== 4. WHAT WAS CONSIDERED, WITH SCORES (rejected options included) ==='
-SELECT d.slot, c->>'action' AS action, c->>'channel' AS channel,
-       (c->>'score')::numeric AS score, (c->>'permitted')::bool AS permitted,
-       c->>'blocked_by' AS blocked_by, (c->>'chosen')::bool AS chosen,
-       round((c->>'at_h')::numeric, 2) AS at_h, c->>'rationale' AS rationale
+SELECT d.decision_seq AS seq, d.slot, c->>'action' AS action, c->>'channel' AS chan,
+       (c->>'score')::numeric AS ev_inr,
+       (c->'evidence'->>'p_mean')::numeric AS p_success,
+       (c->'evidence'->>'observations')::int AS obs,
+       c->'components_inr'->>'value' AS value_inr,
+       c->'components_inr'->>'annoyance' AS annoy_inr,
+       round((c->>'at_h')::numeric, 1) AS at_h,
+       (c->>'permitted')::bool AS ok, c->>'blocked_by' AS blocked_by,
+       (c->>'chosen')::bool AS chosen
 FROM decision d, jsonb_array_elements(d.candidate_set) c
-WHERE d.payment_intent_id = :id ORDER BY d.slot, score DESC;
+WHERE d.payment_intent_id = :id ORDER BY d.decision_seq, ev_inr DESC;
 
 \echo '=== 5. WHAT BOUND THE CHOICE, AND UNDER WHICH VERSIONS ==='
-SELECT slot, chosen_action, chosen_channel, round(scheduled_for_h::numeric,2) AS at_h,
+SELECT decision_seq, slot, chosen_action, chosen_channel, round(scheduled_for_h::numeric,2) AS at_h,
        decision_reason_code, binding_constraint, score_basis,
        taxonomy_version, model_version, policy_version
-FROM decision WHERE payment_intent_id = :id ORDER BY slot \gx
+FROM decision WHERE payment_intent_id = :id ORDER BY decision_seq \gx
 
 \echo '=== 6. WHAT EXECUTED (idempotency + fire-time revalidation) ==='
 SELECT a.id, d.slot, a.idempotency_key, a.adapter, a.action_type, a.channel,
