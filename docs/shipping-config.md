@@ -121,13 +121,31 @@ make ablation-features        # v1 vs v2
 make ablation-normalizer RESOLVER=openai
 ```
 
+## Demo intent
+
+`dev_pi_000040` — reproduce with `--run-id fulldev --limit 6000`, then
+`AUDIT=dev_pi_000040 make audit`.
+
+₹1,879.31 UPI checkout failure, `customer_initiated`, `auth_failed`. The policy's
+highest-scoring option was `retry_same` at ₹142.45 (p=0.2534 from a 19,819-observation
+cell) and **the gate removed it** — `R001_no_mandate_no_debit`, because there is no
+standing authority to re-debit a one-time checkout. `retry_alternate_method` blocked
+by the same rule; `escalate_human` blocked by the value floor. It chose the only
+permitted lever, an email nudge at ₹55.66, scheduled for h=261.14.
+
+At fire time the executor re-read payment state and found the customer had already
+paid at h=260.97 — ten minutes earlier. The nudge was **aborted**, not sent.
+
+Final: recovered ₹1,879.31, `attribution = organic`, **0 debits, 0 contacts**. The
+agent's best behaviour on this row was to want three illegal things, take the one
+legal one, and then not even do that.
+
+Selected from 52 fire-time aborts on full dev; the 500-intent sample had 4, none of
+which had a debit blocked by the gate.
+
 ## Known limitations, stated rather than buried
 
-1. **Explainer rejection rate was 0/40 on live gpt-4o**, but those were
-   `rule_priority` records carrying no `p_success`, so the strongest check was not
-   exercised. Now that every record is EV-scored, re-measure and report whatever
-   comes out.
-2. **Unmapped-code descriptions are independent of the true cause** in the frozen
+1. **Unmapped-code descriptions are independent of the true cause** in the frozen
    cohort generator, so chance (~1/15) is the ceiling on that slice for any
    classifier. Documented, not fixed — fixing it would invalidate M1–M5.
 3. **True `NEVER_RETRY` violations cannot reach zero.** ~15% of failures arrive with
@@ -138,8 +156,13 @@ make ablation-normalizer RESOLVER=openai
    were seen; disclosed rather than retuned.
 5. **B3 is a greedy oracle**, so it is a lower bound on the ceiling — B2.5 beats it
    on `auth_failed`.
-6. **The demo path executes through the sink, not `rr/pipeline/executor.py`.**
-   Idempotency (unique `idempotency_key`), fire-time revalidation, `attempt` rows
-   and ledger entries are all preserved and asserted, but the standalone
-   `execute_decision` helper is now only reachable from tests. Consolidate or
-   retire it before the writeup.
+6. **The adapter execution seam is unwired.** `rr/pipeline/executor.py` was dead
+   and has been deleted. `rr/adapters/base.py` and `rr/sim/adapter.py` still define
+   `revalidate`/`execute`/`poll_outcome` with no live caller — the tick loop
+   executes and `PostgresSink` records. They are retained as M7's contract for the
+   one live Razorpay test-mode call and carry a header saying so. Idempotency,
+   fire-time revalidation and `attempt` rows are preserved in the sink and asserted.
+7. **Explainer rejection rate is 0% on EV records** (0/54 live gpt-4o calls), with
+   `p_success` in the required set. Not a check that never runs: falsifying
+   `p_mean` against all 60 stored drafts rejects 60/60. gpt-4o quotes the record
+   verbatim reliably when the prompt demands it.

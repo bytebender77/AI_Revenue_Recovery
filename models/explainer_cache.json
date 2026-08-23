@@ -1,6 +1,150 @@
 {
  "cache_format": 2,
  "entries": {
+  "openai:gpt-4o-2024-08-06:0a2486122c57f213": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.004915,
+    "input_tokens": 1682,
+    "latency_ms": 1602.4292500005686,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 71,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_alternate_method\\\" due to its positive expected net value. The decision was based on an expected net value of 107.44 and a success probability of 0.1983. There was no binding constraint affecting this decision. The action was selected because it had the highest score among permitted options.\"}",
+    "rendered_input_hash": "0a2486122c57f213",
+    "request_id": "chatcmpl-EFwAhlE1DQ2PhZA8K1xQKYFGaIgkB",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_alternate_method\" due to its positive expected net value. The decision was based on an expected net value of 107.44 and a success probability of 0.1983. There was no binding constraint affecting this decision. The action was selected because it had the highest score among permitted options."
+  },
+  "openai:gpt-4o-2024-08-06:0a7a2381fe996c01": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0050175,
+    "input_tokens": 1583,
+    "latency_ms": 1746.9984580002347,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 106,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" with an expected net value of 132.97 and a success probability of 0.1786. The decision was made due to the positive expected net value, as indicated by the decision reason code POSITIVE_EXPECTED_NET_VALUE. The binding constraint was \\\"R011_capacity_auction_lost,\\\" which blocked other higher-scoring actions like \\\"escalate_human.\\\" The \\\"retry_same\\\" action was permitted and had the highest score among the permitted options.\"}",
+    "rendered_input_hash": "0a7a2381fe996c01",
+    "request_id": "chatcmpl-EFwAvNTrpgBuaWbXkAlD1J2Ruf09a",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" with an expected net value of 132.97 and a success probability of 0.1786. The decision was made due to the positive expected net value, as indicated by the decision reason code POSITIVE_EXPECTED_NET_VALUE. The binding constraint was \"R011_capacity_auction_lost,\" which blocked other higher-scoring actions like \"escalate_human.\" The \"retry_same\" action was permitted and had the highest score among the permitted options."
+  },
+  "openai:gpt-4o-2024-08-06:0ab49cbb0739f4ae": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0050325,
+    "input_tokens": 1669,
+    "latency_ms": 3415.515124999729,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 86,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" with an expected net value of 944.81 and a success probability of 0.3140. This decision was made because it had the highest expected net value among the permitted actions, and there was no binding constraint affecting the choice. The decision was based on the expected net value, as indicated by the decision reason code \\\"POSITIVE_EXPECTED_NET_VALUE.\\\"\"}",
+    "rendered_input_hash": "0ab49cbb0739f4ae",
+    "request_id": "chatcmpl-EFwCAl6SyYqeRoze1VIgyFIEp9vuY",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" with an expected net value of 944.81 and a success probability of 0.3140. This decision was made because it had the highest expected net value among the permitted actions, and there was no binding constraint affecting the choice. The decision was based on the expected net value, as indicated by the decision reason code \"POSITIVE_EXPECTED_NET_VALUE.\""
+  },
+  "openai:gpt-4o-2024-08-06:0d62621b9a84ae4a": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0058375,
+    "input_tokens": 1859,
+    "latency_ms": 1766.8864169991139,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 119,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"escalate_human\\\" due to the decision reason code \\\"POSITIVE_EXPECTED_NET_VALUE\\\". The expected net value for this action was 199.37 INR, with a success probability of 0.2601. The binding constraint was \\\"R001_no_mandate_no_debit\\\", which blocked other potential actions such as \\\"retry_same\\\" and \\\"retry_alternate_method\\\". As a result, \\\"escalate_human\\\" was selected as it was permitted and had the highest expected net value among the allowed options.\"}",
+    "rendered_input_hash": "0d62621b9a84ae4a",
+    "request_id": "chatcmpl-EFwAxPA7bJFwDUkICBz1Kuw9nx3yb",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"escalate_human\" due to the decision reason code \"POSITIVE_EXPECTED_NET_VALUE\". The expected net value for this action was 199.37 INR, with a success probability of 0.2601. The binding constraint was \"R001_no_mandate_no_debit\", which blocked other potential actions such as \"retry_same\" and \"retry_alternate_method\". As a result, \"escalate_human\" was selected as it was permitted and had the highest expected net value among the allowed options."
+  },
+  "openai:gpt-4o-2024-08-06:0e8309d04d4c5585": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.004235,
+    "input_tokens": 1334,
+    "latency_ms": 1533.283750000919,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 90,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"merchant_alert\\\" with an expected net value of 14.15 and a success probability of 0.0271. This decision was made due to the \\\"POSITIVE_EXPECTED_NET_VALUE\\\" reason code. The binding constraint was \\\"R002_terminal_cause_no_debit,\\\" which blocked other higher-scoring actions. \\\"Merchant_alert\\\" was permitted and had the highest score among the allowed actions.\"}",
+    "rendered_input_hash": "0e8309d04d4c5585",
+    "request_id": "chatcmpl-EFwBKNibGmr6hFmSjnV932kDWL3y1",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"merchant_alert\" with an expected net value of 14.15 and a success probability of 0.0271. This decision was made due to the \"POSITIVE_EXPECTED_NET_VALUE\" reason code. The binding constraint was \"R002_terminal_cause_no_debit,\" which blocked other higher-scoring actions. \"Merchant_alert\" was permitted and had the highest score among the allowed actions."
+  },
+  "openai:gpt-4o-2024-08-06:0fc2ecea4ab62ca2": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.003795,
+    "input_tokens": 1134,
+    "latency_ms": 1954.7382090004248,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 96,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" due to its positive expected net value. The success probability for this action was 0.1483, and the expected net value was 258.67. The decision was constrained by \\\"R011_capacity_auction_lost,\\\" which blocked other higher-scoring actions like \\\"escalate_human.\\\" The action \\\"retry_same\\\" was permitted and selected as it was the best available option under the given constraints.\"}",
+    "rendered_input_hash": "0fc2ecea4ab62ca2",
+    "request_id": "chatcmpl-EFwB85bdgvnlm7rPzIm7a3B9vnsia",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" due to its positive expected net value. The success probability for this action was 0.1483, and the expected net value was 258.67. The decision was constrained by \"R011_capacity_auction_lost,\" which blocked other higher-scoring actions like \"escalate_human.\" The action \"retry_same\" was permitted and selected as it was the best available option under the given constraints."
+  },
   "openai:gpt-4o-2024-08-06:1024c5280bb64593": {
    "call": {
     "cache_read_tokens": 0,
@@ -24,6 +168,30 @@
    },
    "rejected": null,
    "text": "The chosen action was \"nudge\" via the \"whatsapp\" channel. This decision was made because the rule priority indicated that this was the most suitable action, as reflected by the highest score of 100.0 among the candidates considered. The expected net value of this action was 100.00 INR, and there was no binding constraint affecting the decision."
+  },
+  "openai:gpt-4o-2024-08-06:128868994f9b138a": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.00581,
+    "input_tokens": 1960,
+    "latency_ms": 4811.550541999168,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 91,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"merchant_alert\\\" with no specific channel selected. This decision was made due to the \\\"POSITIVE_EXPECTED_NET_VALUE\\\" reason code, with an expected net value of 37.29 and a success probability of 0.5247. There was no binding constraint affecting this decision. The action was selected from multiple candidates, all of which were permitted, with the highest score of 37.29.\"}",
+    "rendered_input_hash": "128868994f9b138a",
+    "request_id": "chatcmpl-EFwBym22zpfgUIO15LSiDl9ypLOea",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"merchant_alert\" with no specific channel selected. This decision was made due to the \"POSITIVE_EXPECTED_NET_VALUE\" reason code, with an expected net value of 37.29 and a success probability of 0.5247. There was no binding constraint affecting this decision. The action was selected from multiple candidates, all of which were permitted, with the highest score of 37.29."
   },
   "openai:gpt-4o-2024-08-06:12e4aca99034210d": {
    "call": {
@@ -73,6 +241,30 @@
    "rejected": null,
    "text": "The chosen action was \"retry_same\" for the payment intent dev_pi_004065. This decision was made based on the rule priority, with an expected net value of 100.00 INR. The action \"retry_same\" had the highest score of 100.0 among the candidates considered and was permitted. There was no binding constraint affecting this decision."
   },
+  "openai:gpt-4o-2024-08-06:154920be7120c321": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0058025,
+    "input_tokens": 1965,
+    "latency_ms": 1457.1265410013439,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 89,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"nudge\\\" via \\\"sms\\\". This decision was made because it had a positive expected net value, with an expected net value of 89.05 and a success probability of 0.1444. The binding constraint was \\\"R002_terminal_cause_no_debit\\\", which blocked other higher-scoring actions. The nudge via SMS was the highest scoring permitted action under these constraints.\"}",
+    "rendered_input_hash": "154920be7120c321",
+    "request_id": "chatcmpl-EFwAmvenMWKjgatzUAzHpRNir6HZX",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"nudge\" via \"sms\". This decision was made because it had a positive expected net value, with an expected net value of 89.05 and a success probability of 0.1444. The binding constraint was \"R002_terminal_cause_no_debit\", which blocked other higher-scoring actions. The nudge via SMS was the highest scoring permitted action under these constraints."
+  },
   "openai:gpt-4o-2024-08-06:1578f604484574ef": {
    "call": {
     "cache_read_tokens": 0,
@@ -96,6 +288,30 @@
    },
    "rejected": null,
    "text": "The chosen action was \"retry_same\" due to a decision reason code of SOFT_DECLINE_LADDER_RETRY. The expected net value for this action was 100.00 INR. The action was selected based on rule priority, and there was no binding constraint affecting the decision. Other candidates were either not permitted or had lower scores."
+  },
+  "openai:gpt-4o-2024-08-06:1748ca031410d86d": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0049,
+    "input_tokens": 1624,
+    "latency_ms": 2298.2560410000588,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 84,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"merchant_alert\\\" with no specific channel selected. This decision was made due to the \\\"POSITIVE_EXPECTED_NET_VALUE\\\" reason code, with an expected net value of 8.63 and a success probability of 0.0203. The binding constraint was \\\"R002_terminal_cause_no_debit,\\\" which blocked other potential actions such as retries and alternate methods.\"}",
+    "rendered_input_hash": "1748ca031410d86d",
+    "request_id": "chatcmpl-EFwB1X6CaRBJbzjgSgZPnvpWTqp68",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"merchant_alert\" with no specific channel selected. This decision was made due to the \"POSITIVE_EXPECTED_NET_VALUE\" reason code, with an expected net value of 8.63 and a success probability of 0.0203. The binding constraint was \"R002_terminal_cause_no_debit,\" which blocked other potential actions such as retries and alternate methods."
   },
   "openai:gpt-4o-2024-08-06:179cff8e5e415271": {
    "call": {
@@ -193,6 +409,102 @@
    "rejected": null,
    "text": "The chosen action was \"retry_same\" due to the decision reason code \"SOFT_DECLINE_LADDER_RETRY.\" The action was selected based on a rule priority score of 100.0, which was the highest among the candidates considered. The expected net value for this action was 100.00 INR. There was no binding constraint affecting this decision."
   },
+  "openai:gpt-4o-2024-08-06:1cdeea855c23e2d3": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0032275,
+    "input_tokens": 967,
+    "latency_ms": 1457.2594170003867,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 81,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"escalate_human\\\" due to the decision reason code \\\"POSITIVE_EXPECTED_NET_VALUE\\\". The expected net value for this action was 426.23, with a success probability of 0.2648. There was no binding constraint affecting this decision. The action was selected as it had the highest expected net value among the permitted options.\"}",
+    "rendered_input_hash": "1cdeea855c23e2d3",
+    "request_id": "chatcmpl-EFwBEu5pwaSoIyeUrkTHzXnxhyRt6",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"escalate_human\" due to the decision reason code \"POSITIVE_EXPECTED_NET_VALUE\". The expected net value for this action was 426.23, with a success probability of 0.2648. There was no binding constraint affecting this decision. The action was selected as it had the highest expected net value among the permitted options."
+  },
+  "openai:gpt-4o-2024-08-06:24578280a51e63cb": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0058125,
+    "input_tokens": 1965,
+    "latency_ms": 3985.5207500004326,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 90,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"nudge\\\" via the \\\"sms\\\" channel. This decision was made because it had a positive expected net value, with an expected net value of 22.03 and a success probability of 0.0903. The binding constraint was \\\"R002_terminal_cause_no_debit,\\\" which blocked other higher-scoring actions. The nudge via SMS was the highest permitted action under these constraints.\"}",
+    "rendered_input_hash": "24578280a51e63cb",
+    "request_id": "chatcmpl-EFwC68AiU8Dw3YFAIq39IG9BY46cg",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"nudge\" via the \"sms\" channel. This decision was made because it had a positive expected net value, with an expected net value of 22.03 and a success probability of 0.0903. The binding constraint was \"R002_terminal_cause_no_debit,\" which blocked other higher-scoring actions. The nudge via SMS was the highest permitted action under these constraints."
+  },
+  "openai:gpt-4o-2024-08-06:246596d8c015a7ba": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0052125,
+    "input_tokens": 1801,
+    "latency_ms": 3284.1427919993293,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 71,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" with an expected net value of 33.35 and a success probability of 0.2928. This decision was made because it had a positive expected net value, as indicated by the decision reason code \\\"POSITIVE_EXPECTED_NET_VALUE.\\\" There was no binding constraint affecting this decision.\"}",
+    "rendered_input_hash": "246596d8c015a7ba",
+    "request_id": "chatcmpl-EFwBuSwRCx8cvcJKLjlo169RErCw6",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" with an expected net value of 33.35 and a success probability of 0.2928. This decision was made because it had a positive expected net value, as indicated by the decision reason code \"POSITIVE_EXPECTED_NET_VALUE.\" There was no binding constraint affecting this decision."
+  },
+  "openai:gpt-4o-2024-08-06:253fb89b808bec5f": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.00319,
+    "input_tokens": 964,
+    "latency_ms": 1363.1635840010858,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 78,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_alternate_method\\\" due to the decision reason code POSITIVE_EXPECTED_NET_VALUE. The expected net value for this action was 125.94, with a success probability of 0.3843. There was no binding constraint affecting this decision. The action was selected as it had the highest expected net value among the permitted options.\"}",
+    "rendered_input_hash": "253fb89b808bec5f",
+    "request_id": "chatcmpl-EFwBgjOGKZQnpaolLBCsWWypedwl7",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_alternate_method\" due to the decision reason code POSITIVE_EXPECTED_NET_VALUE. The expected net value for this action was 125.94, with a success probability of 0.3843. There was no binding constraint affecting this decision. The action was selected as it had the highest expected net value among the permitted options."
+  },
   "openai:gpt-4o-2024-08-06:26d7d420dfac38d8": {
    "call": {
     "cache_read_tokens": 0,
@@ -216,6 +528,30 @@
    },
    "rejected": null,
    "text": "The chosen action was \"nudge\" via the \"whatsapp\" channel. This decision was made because the decision reason code was \"NO_MANDATE_REENGAGE_ONLY,\" indicating that re-engagement was necessary without a mandate. The expected net value of this action was 100.00 INR, and there was no success probability listed. There was no binding constraint affecting this decision."
+  },
+  "openai:gpt-4o-2024-08-06:2973f56e7d041b51": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.004165,
+    "input_tokens": 1366,
+    "latency_ms": 1688.1159159984236,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 75,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" with an expected net value of 571.55 and a success probability of 0.3260. This decision was made because it had the highest expected net value among the permitted options, as indicated by the decision reason code \\\"POSITIVE_EXPECTED_NET_VALUE.\\\" There was no binding constraint affecting this decision.\"}",
+    "rendered_input_hash": "2973f56e7d041b51",
+    "request_id": "chatcmpl-EFwAYRwwzHUJ8RhAZ0F9tHTrKCTM6",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" with an expected net value of 571.55 and a success probability of 0.3260. This decision was made because it had the highest expected net value among the permitted options, as indicated by the decision reason code \"POSITIVE_EXPECTED_NET_VALUE.\" There was no binding constraint affecting this decision."
   },
   "openai:gpt-4o-2024-08-06:32c525ba7a5c1f0b": {
    "call": {
@@ -241,6 +577,54 @@
    "rejected": null,
    "text": "The chosen action was \"merchant_alert\" with an expected net value of 100.00 INR. The decision was based on rule priority, and there was no binding constraint affecting the choice. The action \"escalate_human\" was not permitted due to being blocked by the rule R008_escalation_value_floor."
   },
+  "openai:gpt-4o-2024-08-06:335aa94379a594b7": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.004955,
+    "input_tokens": 1590,
+    "latency_ms": 1522.417083999244,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 98,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"nudge\\\" via \\\"sms\\\" due to its positive expected net value. The decision was based on an expected net value of 89.05 INR and a success probability of 0.1444. The binding constraint was \\\"R002_terminal_cause_no_debit,\\\" which blocked other higher-scoring actions. This constraint led to the selection of the nudge action as it was permitted and had the highest score among the allowed options.\"}",
+    "rendered_input_hash": "335aa94379a594b7",
+    "request_id": "chatcmpl-EFwAzpkuasRG1wcHSgyM0XIwsk2Al",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"nudge\" via \"sms\" due to its positive expected net value. The decision was based on an expected net value of 89.05 INR and a success probability of 0.1444. The binding constraint was \"R002_terminal_cause_no_debit,\" which blocked other higher-scoring actions. This constraint led to the selection of the nudge action as it was permitted and had the highest score among the allowed options."
+  },
+  "openai:gpt-4o-2024-08-06:354a04ca5c24d088": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0052625,
+    "input_tokens": 1801,
+    "latency_ms": 1484.0156249993015,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 76,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" due to the decision reason code POSITIVE_EXPECTED_NET_VALUE. The expected net value for this action was 112.52, with a success probability of 0.3140. There was no binding constraint affecting this decision. The action was selected because it had the highest expected net value among the permitted options.\"}",
+    "rendered_input_hash": "354a04ca5c24d088",
+    "request_id": "chatcmpl-EFwARwuLNdhxQLFDpLiqeInYn3kZq",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" due to the decision reason code POSITIVE_EXPECTED_NET_VALUE. The expected net value for this action was 112.52, with a success probability of 0.3140. There was no binding constraint affecting this decision. The action was selected because it had the highest expected net value among the permitted options."
+  },
   "openai:gpt-4o-2024-08-06:366b560f42e33ba6": {
    "call": {
     "cache_read_tokens": 0,
@@ -264,6 +648,54 @@
    },
    "rejected": null,
    "text": "The chosen action was \"retry_same\" with a score of 100.0, which was the highest among the candidates considered. The decision was made based on the rule priority, and there was no binding constraint affecting this choice. The expected net value for this action was 100.00 INR, and the success probability was not applicable in this case."
+  },
+  "openai:gpt-4o-2024-08-06:3e38cc2ba963c721": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0039725,
+    "input_tokens": 1269,
+    "latency_ms": 3187.834833001034,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 80,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"escalate_human\\\" due to the decision reason code \\\"POSITIVE_EXPECTED_NET_VALUE.\\\" The expected net value for this action was 318.17, with a success probability of 0.2034. There was no binding constraint affecting this decision. This action was selected as it had the highest expected net value among the permitted options.\"}",
+    "rendered_input_hash": "3e38cc2ba963c721",
+    "request_id": "chatcmpl-EFwAZ6lyM8CQWqqNC2Cqu0s1HBDd2",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"escalate_human\" due to the decision reason code \"POSITIVE_EXPECTED_NET_VALUE.\" The expected net value for this action was 318.17, with a success probability of 0.2034. There was no binding constraint affecting this decision. This action was selected as it had the highest expected net value among the permitted options."
+  },
+  "openai:gpt-4o-2024-08-06:41aeba643a19ede6": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0039025,
+    "input_tokens": 1177,
+    "latency_ms": 4179.245041001195,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 96,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" with an expected net value of 132.98 and a success probability of 0.1614. The decision was made based on the reason code POSITIVE_EXPECTED_NET_VALUE, indicating that this action was expected to yield a positive financial outcome. There was no binding constraint affecting this decision. The action \\\"retry_same\\\" was selected over other candidates because it had the highest expected net value among the options considered.\"}",
+    "rendered_input_hash": "41aeba643a19ede6",
+    "request_id": "chatcmpl-EFwBaIdMTUSQA4FmrLecWBYpZkV3l",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" with an expected net value of 132.98 and a success probability of 0.1614. The decision was made based on the reason code POSITIVE_EXPECTED_NET_VALUE, indicating that this action was expected to yield a positive financial outcome. There was no binding constraint affecting this decision. The action \"retry_same\" was selected over other candidates because it had the highest expected net value among the options considered."
   },
   "openai:gpt-4o-2024-08-06:43081e1bf93fea2d": {
    "call": {
@@ -313,6 +745,30 @@
    "rejected": null,
    "text": "The chosen action was \"retry_same\" due to the decision reason code \"SOFT_DECLINE_LADDER_RETRY.\" This action was selected based on a rule priority score of 100.0, which was the highest among the candidates considered. The expected net value for this action was 100.00 INR, and there was no binding constraint affecting the decision. The success probability was not applicable in this case."
   },
+  "openai:gpt-4o-2024-08-06:48f45355a60d1075": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.00536,
+    "input_tokens": 1804,
+    "latency_ms": 1640.6685000001744,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 85,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" due to the decision reason code POSITIVE_EXPECTED_NET_VALUE. The expected net value for this action was 0.89, with a success probability of 0.1849. The binding constraint was R006_no_alternate_instrument, which prevented consideration of alternate methods. This action was selected as it was permitted and had a positive expected net value.\"}",
+    "rendered_input_hash": "48f45355a60d1075",
+    "request_id": "chatcmpl-EFwAQIhLlKjrudanuK6X0hhVSfeDr",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" due to the decision reason code POSITIVE_EXPECTED_NET_VALUE. The expected net value for this action was 0.89, with a success probability of 0.1849. The binding constraint was R006_no_alternate_instrument, which prevented consideration of alternate methods. This action was selected as it was permitted and had a positive expected net value."
+  },
   "openai:gpt-4o-2024-08-06:4d01eea8629a6154": {
    "call": {
     "cache_read_tokens": 0,
@@ -336,6 +792,198 @@
    },
    "rejected": null,
    "text": "The chosen action was \"retry_same\" due to the decision reason code \"SOFT_DECLINE_LADDER_RETRY.\" This action was selected based on the rule priority score, where \"retry_same\" had the highest score of 100.0 among the permitted candidates. There was no binding constraint affecting this decision. The expected net value for this action was 100.00 INR, and the success probability was not applicable."
+  },
+  "openai:gpt-4o-2024-08-06:516405291ecb2b26": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.005795,
+    "input_tokens": 1966,
+    "latency_ms": 1500.2996250004799,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 88,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"nudge\\\" via the \\\"in_app\\\" channel. This decision was made because it had a positive expected net value, with an expected net value of 89.89 and a success probability of 0.1382. The binding constraint was \\\"R002_terminal_cause_no_debit,\\\" which blocked other higher-scoring actions like \\\"retry_same\\\" and \\\"retry_alternate_method.\\\"\"}",
+    "rendered_input_hash": "516405291ecb2b26",
+    "request_id": "chatcmpl-EFwAjQPtPRvpxplNcsBT1hv4ud4GA",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"nudge\" via the \"in_app\" channel. This decision was made because it had a positive expected net value, with an expected net value of 89.89 and a success probability of 0.1382. The binding constraint was \"R002_terminal_cause_no_debit,\" which blocked other higher-scoring actions like \"retry_same\" and \"retry_alternate_method.\""
+  },
+  "openai:gpt-4o-2024-08-06:54044f7cbb5efb0d": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.003285,
+    "input_tokens": 1014,
+    "latency_ms": 1410.9255000003031,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 75,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"merchant_alert\\\" with no specific channel selected. This decision was made because it had a positive expected net value, with an expected net value of 0.26 and a success probability of 0.0449. There was no binding constraint affecting this decision. The action was selected over other candidates due to its higher score.\"}",
+    "rendered_input_hash": "54044f7cbb5efb0d",
+    "request_id": "chatcmpl-EFwBDJCvcmpPLeVzGE2nkHswyjdlL",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"merchant_alert\" with no specific channel selected. This decision was made because it had a positive expected net value, with an expected net value of 0.26 and a success probability of 0.0449. There was no binding constraint affecting this decision. The action was selected over other candidates due to its higher score."
+  },
+  "openai:gpt-4o-2024-08-06:5a327c6c4b6b845d": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0045025,
+    "input_tokens": 1537,
+    "latency_ms": 3579.930667001463,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 66,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" with no specific channel selected. This decision was made because it had a positive expected net value, specifically an expected net value of 292.64. The probability of success for this action was 0.3260. There was no binding constraint affecting this decision.\"}",
+    "rendered_input_hash": "5a327c6c4b6b845d",
+    "request_id": "chatcmpl-EFwBrIeW5UOA6ZoP0qkl7u0urnJgH",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" with no specific channel selected. This decision was made because it had a positive expected net value, specifically an expected net value of 292.64. The probability of success for this action was 0.3260. There was no binding constraint affecting this decision."
+  },
+  "openai:gpt-4o-2024-08-06:5be72a7bf2e9086c": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.003765,
+    "input_tokens": 1118,
+    "latency_ms": 1630.884917000003,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 97,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"nudge\\\" via the \\\"email\\\" channel. This decision was made because it had a positive expected net value, with an expected net value of 126.02 and a success probability of 0.0358. The binding constraint was \\\"R011_capacity_auction_lost,\\\" which prevented other higher-scoring actions from being selected. The \\\"nudge/email\\\" action was permitted and had the highest score among the permitted options.\"}",
+    "rendered_input_hash": "5be72a7bf2e9086c",
+    "request_id": "chatcmpl-EFwB4YGrltBnqDK5L9bWWWOnwGiWs",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"nudge\" via the \"email\" channel. This decision was made because it had a positive expected net value, with an expected net value of 126.02 and a success probability of 0.0358. The binding constraint was \"R011_capacity_auction_lost,\" which prevented other higher-scoring actions from being selected. The \"nudge/email\" action was permitted and had the highest score among the permitted options."
+  },
+  "openai:gpt-4o-2024-08-06:6078a9f80b1828ea": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0045725,
+    "input_tokens": 1465,
+    "latency_ms": 1557.888917001037,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 91,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"nudge\\\" via the \\\"sms\\\" channel. This decision was made because it had a positive expected net value, with an expected net value of 6.07 and a success probability of 0.0903. The binding constraint was \\\"R002_terminal_cause_no_debit,\\\" which blocked other higher-scoring actions. The nudge via SMS was the highest scoring permitted action under these constraints.\"}",
+    "rendered_input_hash": "6078a9f80b1828ea",
+    "request_id": "chatcmpl-EFwAeavG9Jdd12nMz5KzoNUn4b13k",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"nudge\" via the \"sms\" channel. This decision was made because it had a positive expected net value, with an expected net value of 6.07 and a success probability of 0.0903. The binding constraint was \"R002_terminal_cause_no_debit,\" which blocked other higher-scoring actions. The nudge via SMS was the highest scoring permitted action under these constraints."
+  },
+  "openai:gpt-4o-2024-08-06:6112ec4efc29a5d4": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0042675,
+    "input_tokens": 1319,
+    "latency_ms": 1799.5303749994491,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 97,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_alternate_method\\\" due to its positive expected net value. The success probability for this action was 0.0918, and the expected net value was 38.59. The decision was influenced by the binding constraint \\\"R008_escalation_value_floor,\\\" which blocked the higher-scoring \\\"escalate_human\\\" option. This action was selected as it was permitted and had the highest score among the allowed options.\"}",
+    "rendered_input_hash": "6112ec4efc29a5d4",
+    "request_id": "chatcmpl-EFwBGGss8em1vGBnw1H4TmPb9sSJ9",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_alternate_method\" due to its positive expected net value. The success probability for this action was 0.0918, and the expected net value was 38.59. The decision was influenced by the binding constraint \"R008_escalation_value_floor,\" which blocked the higher-scoring \"escalate_human\" option. This action was selected as it was permitted and had the highest score among the allowed options."
+  },
+  "openai:gpt-4o-2024-08-06:61179dabd1265852": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0035625,
+    "input_tokens": 1161,
+    "latency_ms": 1263.3110000006127,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 66,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" due to a positive expected net value. The expected net value was 0.24, and the probability of success was 0.2459. There was no binding constraint affecting this decision. The action was selected because it had the highest score among permitted options.\"}",
+    "rendered_input_hash": "61179dabd1265852",
+    "request_id": "chatcmpl-EFwBJuPlcTtCjcmv9sBwSuJIAvTdd",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" due to a positive expected net value. The expected net value was 0.24, and the probability of success was 0.2459. There was no binding constraint affecting this decision. The action was selected because it had the highest score among permitted options."
+  },
+  "openai:gpt-4o-2024-08-06:63664e4e1f792d78": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0032,
+    "input_tokens": 912,
+    "latency_ms": 1392.0225420006318,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 92,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" due to its positive expected net value. The success probability for this action was 0.0578, and the expected net value was 99.34. The decision was constrained by \\\"R011_capacity_auction_lost,\\\" which blocked other higher-scoring actions like \\\"escalate_human.\\\" The \\\"retry_same\\\" action was permitted and had the highest score among the allowed options.\"}",
+    "rendered_input_hash": "63664e4e1f792d78",
+    "request_id": "chatcmpl-EFwBdXoFL4bStk9HMWDvJILrEl92e",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" due to its positive expected net value. The success probability for this action was 0.0578, and the expected net value was 99.34. The decision was constrained by \"R011_capacity_auction_lost,\" which blocked other higher-scoring actions like \"escalate_human.\" The \"retry_same\" action was permitted and had the highest score among the allowed options."
   },
   "openai:gpt-4o-2024-08-06:65143f57295c1e89": {
    "call": {
@@ -408,6 +1056,102 @@
    },
    "rejected": null,
    "text": "The chosen action was \"nudge\" via the \"sms\" channel. This decision was made because the \"nudge/sms\" option had the highest score of 100.0 and was permitted, while the other options were either not permitted or had lower scores. The expected net value for this action was 100.00 INR, and there was no binding constraint affecting the decision."
+  },
+  "openai:gpt-4o-2024-08-06:7121f9e968d8523e": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0050075,
+    "input_tokens": 1671,
+    "latency_ms": 1323.5539170000266,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 83,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_alternate_method\\\" for payment intent dev_pi_004193. This decision was made because it had a positive expected net value, with an expected net value of 125.94 and a success probability of 0.3843. There was no binding constraint affecting this decision. The action was selected based on the highest expected net value among the permitted candidates.\"}",
+    "rendered_input_hash": "7121f9e968d8523e",
+    "request_id": "chatcmpl-EFwAnBeHh3VgN5vLhOva1t557B08e",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_alternate_method\" for payment intent dev_pi_004193. This decision was made because it had a positive expected net value, with an expected net value of 125.94 and a success probability of 0.3843. There was no binding constraint affecting this decision. The action was selected based on the highest expected net value among the permitted candidates."
+  },
+  "openai:gpt-4o-2024-08-06:71b8e6660a696d82": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.004185,
+    "input_tokens": 1278,
+    "latency_ms": 1389.8798749996786,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 99,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"nudge\\\" via the \\\"whatsapp\\\" channel. This decision was made because it had a positive expected net value, with an expected net value of 61.24 and a success probability of 0.1083. The binding constraint was \\\"R008_escalation_value_floor,\\\" which prevented the consideration of the \\\"escalate_human\\\" option. The nudge action was permitted and had the highest score among the permitted actions.\"}",
+    "rendered_input_hash": "71b8e6660a696d82",
+    "request_id": "chatcmpl-EFwBA5hDW97fsYksl0K0VIg78lDgh",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"nudge\" via the \"whatsapp\" channel. This decision was made because it had a positive expected net value, with an expected net value of 61.24 and a success probability of 0.1083. The binding constraint was \"R008_escalation_value_floor,\" which prevented the consideration of the \"escalate_human\" option. The nudge action was permitted and had the highest score among the permitted actions."
+  },
+  "openai:gpt-4o-2024-08-06:734cd609b4853c7e": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.00325,
+    "input_tokens": 936,
+    "latency_ms": 2030.9219579994533,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 91,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"merchant_alert\\\" due to the decision reason code POSITIVE_EXPECTED_NET_VALUE. The expected net value for this action was 20.36, with a success probability of 0.0067. The binding constraint was R002_terminal_cause_no_debit, which blocked other potential actions. \\\"Merchant_alert\\\" was permitted and selected as it was the only viable option with a positive expected net value.\"}",
+    "rendered_input_hash": "734cd609b4853c7e",
+    "request_id": "chatcmpl-EFwBOkae2NOEXZ6XrH2yIb5M1hH26",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"merchant_alert\" due to the decision reason code POSITIVE_EXPECTED_NET_VALUE. The expected net value for this action was 20.36, with a success probability of 0.0067. The binding constraint was R002_terminal_cause_no_debit, which blocked other potential actions. \"Merchant_alert\" was permitted and selected as it was the only viable option with a positive expected net value."
+  },
+  "openai:gpt-4o-2024-08-06:7ecc4c7a9e456262": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.004705,
+    "input_tokens": 1482,
+    "latency_ms": 1656.0957499987126,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 100,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"nudge\\\" via the \\\"whatsapp\\\" channel. This decision was made because it had a positive expected net value, with an expected net value of 61.24 and a success probability of 0.1083. The binding constraint was \\\"R008_escalation_value_floor,\\\" which prevented the consideration of escalating to a human. The nudge via WhatsApp was permitted and selected as it met the criteria for a positive expected net value.\"}",
+    "rendered_input_hash": "7ecc4c7a9e456262",
+    "request_id": "chatcmpl-EFwAsmcwWr84mpFTePvHkWhP6Tm8L",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"nudge\" via the \"whatsapp\" channel. This decision was made because it had a positive expected net value, with an expected net value of 61.24 and a success probability of 0.1083. The binding constraint was \"R008_escalation_value_floor,\" which prevented the consideration of escalating to a human. The nudge via WhatsApp was permitted and selected as it met the criteria for a positive expected net value."
   },
   "openai:gpt-4o-2024-08-06:7f587f8fc0ceb4f0": {
    "call": {
@@ -505,6 +1249,78 @@
    "rejected": null,
    "text": "The chosen action was \"merchant_alert\" due to the decision reason code \"MERCHANT_SIDE_CONFIGURATION.\" There was no binding constraint affecting this decision. The expected net value for this action was 100.00 INR, and the success probability was not applicable. The decision was based on rule priority, with \"merchant_alert\" having the highest score of 100.0 among the candidates considered."
   },
+  "openai:gpt-4o-2024-08-06:88a75c81e7202887": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0039375,
+    "input_tokens": 1267,
+    "latency_ms": 2619.5174580007006,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 77,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" due to a decision reason code of POSITIVE_EXPECTED_NET_VALUE. The expected net value for this action was 271.18, with a success probability of 0.3260. There was no binding constraint affecting this decision. This action was selected as it had the highest expected net value among the candidates considered.\"}",
+    "rendered_input_hash": "88a75c81e7202887",
+    "request_id": "chatcmpl-EFwBYHNotIDapDjwgNDHF7ELo9sab",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" due to a decision reason code of POSITIVE_EXPECTED_NET_VALUE. The expected net value for this action was 271.18, with a success probability of 0.3260. There was no binding constraint affecting this decision. This action was selected as it had the highest expected net value among the candidates considered."
+  },
+  "openai:gpt-4o-2024-08-06:89967db68e6848dc": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0050325,
+    "input_tokens": 1673,
+    "latency_ms": 3602.759707999212,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 85,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" with an expected net value of 128.79 and a success probability of 0.1786. This decision was made due to the positive expected net value, as indicated by the decision reason code POSITIVE_EXPECTED_NET_VALUE. The binding constraint was \\\"R011_capacity_auction_lost,\\\" which blocked the alternative action \\\"escalate_human.\\\"\"}",
+    "rendered_input_hash": "89967db68e6848dc",
+    "request_id": "chatcmpl-EFwCDxbT7JhtSFhTGQZejEYFG978L",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" with an expected net value of 128.79 and a success probability of 0.1786. This decision was made due to the positive expected net value, as indicated by the decision reason code POSITIVE_EXPECTED_NET_VALUE. The binding constraint was \"R011_capacity_auction_lost,\" which blocked the alternative action \"escalate_human.\""
+  },
+  "openai:gpt-4o-2024-08-06:8ee9cac40d082a5b": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.00499,
+    "input_tokens": 1604,
+    "latency_ms": 1719.2978749990289,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 98,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"nudge\\\" via the \\\"sms\\\" channel. This decision was made because it had a positive expected net value, with an expected net value of 54.02 and a success probability of 0.0681. The binding constraint was \\\"R011_capacity_auction_lost,\\\" which prevented other higher-scoring actions from being selected. The \\\"nudge/sms\\\" action was permitted and had the highest score among the permitted options.\"}",
+    "rendered_input_hash": "8ee9cac40d082a5b",
+    "request_id": "chatcmpl-EFwB3rs5JBUkXojJAV7MaYotqSHr4",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"nudge\" via the \"sms\" channel. This decision was made because it had a positive expected net value, with an expected net value of 54.02 and a success probability of 0.0681. The binding constraint was \"R011_capacity_auction_lost,\" which prevented other higher-scoring actions from being selected. The \"nudge/sms\" action was permitted and had the highest score among the permitted options."
+  },
   "openai:gpt-4o-2024-08-06:914a5070b64c396b": {
    "call": {
     "cache_read_tokens": 0,
@@ -552,6 +1368,102 @@
    },
    "rejected": null,
    "text": "The chosen action was \"retry_same\" due to a decision reason code of SOFT_DECLINE_LADDER_RETRY. The expected net value for this action was 100.00 INR. There was no binding constraint affecting this decision. The action was selected based on rule priority, with a score of 100.0, which was the highest among the considered candidates."
+  },
+  "openai:gpt-4o-2024-08-06:964b7d6079a6a177": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.00379,
+    "input_tokens": 1132,
+    "latency_ms": 1617.6605000000563,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 96,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" due to a positive expected net value. The success probability for this action was 0.1849, and the expected net value was 0.89. The binding constraint was \\\"R006_no_alternate_instrument,\\\" which prevented consideration of alternate methods. This decision was made under the policy version ev-policy-v1.0.0 and model version beta-binomial-featurecross-v1.0.0.\"}",
+    "rendered_input_hash": "964b7d6079a6a177",
+    "request_id": "chatcmpl-EFwB6A7mG93Ma4ADqgk6HHvwber0t",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" due to a positive expected net value. The success probability for this action was 0.1849, and the expected net value was 0.89. The binding constraint was \"R006_no_alternate_instrument,\" which prevented consideration of alternate methods. This decision was made under the policy version ev-policy-v1.0.0 and model version beta-binomial-featurecross-v1.0.0."
+  },
+  "openai:gpt-4o-2024-08-06:977f7b06b945458e": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.00549,
+    "input_tokens": 1872,
+    "latency_ms": 1349.4609169993055,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 81,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"escalate_human\\\" due to the decision reason code \\\"POSITIVE_EXPECTED_NET_VALUE.\\\" The expected net value for this action was 1364.77, with a success probability of 0.3082. There was no binding constraint affecting this decision. The action was selected as it had the highest expected net value among the permitted options.\"}",
+    "rendered_input_hash": "977f7b06b945458e",
+    "request_id": "chatcmpl-EFwAcjrFOZ1sEJl5aR6pmmBkbdwPv",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"escalate_human\" due to the decision reason code \"POSITIVE_EXPECTED_NET_VALUE.\" The expected net value for this action was 1364.77, with a success probability of 0.3082. There was no binding constraint affecting this decision. The action was selected as it had the highest expected net value among the permitted options."
+  },
+  "openai:gpt-4o-2024-08-06:9e558af5a975008c": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0059375,
+    "input_tokens": 2007,
+    "latency_ms": 1639.7074169999541,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 92,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"nudge\\\" via \\\"sms\\\" due to its positive expected net value. The decision was made with a success probability of 0.0915 and an expected net value of 498.32. The binding constraint was \\\"R011_capacity_auction_lost,\\\" which blocked higher-scoring actions like \\\"escalate_human.\\\" This constraint led to the selection of the highest permitted action under the circumstances.\"}",
+    "rendered_input_hash": "9e558af5a975008c",
+    "request_id": "chatcmpl-EFwBID0sXPw4DcXtSxHztvI411PA5",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"nudge\" via \"sms\" due to its positive expected net value. The decision was made with a success probability of 0.0915 and an expected net value of 498.32. The binding constraint was \"R011_capacity_auction_lost,\" which blocked higher-scoring actions like \"escalate_human.\" This constraint led to the selection of the highest permitted action under the circumstances."
+  },
+  "openai:gpt-4o-2024-08-06:a2bc5092c8d5b55d": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.00513,
+    "input_tokens": 1676,
+    "latency_ms": 4324.504042000626,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 94,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_alternate_method\\\" with an expected net value of 758.96 and a success probability of 0.1983. The decision was made due to the \\\"POSITIVE_EXPECTED_NET_VALUE\\\" reason code. The binding constraint was \\\"R011_capacity_auction_lost,\\\" which blocked the higher-scoring \\\"escalate_human\\\" actions, making \\\"retry_alternate_method\\\" the best permitted option.\"}",
+    "rendered_input_hash": "a2bc5092c8d5b55d",
+    "request_id": "chatcmpl-EFwBko9UoNkb2DyuBalc6n8f5Kue1",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_alternate_method\" with an expected net value of 758.96 and a success probability of 0.1983. The decision was made due to the \"POSITIVE_EXPECTED_NET_VALUE\" reason code. The binding constraint was \"R011_capacity_auction_lost,\" which blocked the higher-scoring \"escalate_human\" actions, making \"retry_alternate_method\" the best permitted option."
   },
   "openai:gpt-4o-2024-08-06:a445dd4fd37943fb": {
    "call": {
@@ -625,6 +1537,54 @@
    "rejected": null,
    "text": "The chosen action was \"nudge\" via \"sms\" due to the decision reason code \"CUSTOMER_FIXABLE_INSTRUMENT.\" The expected net value for this action was 100.00 INR. There was no binding constraint affecting this decision. The action was selected based on rule priority, with \"nudge/sms\" having the highest score among permitted candidates."
   },
+  "openai:gpt-4o-2024-08-06:aebf80d5e026cf9f": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.005035,
+    "input_tokens": 1666,
+    "latency_ms": 1914.3022090011073,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 87,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" for payment intent dev_pi_002735. This decision was made because it had a positive expected net value, with an expected net INR of 0.24 and a success probability of 0.2459. There was no binding constraint affecting this decision. The action was selected from a set of candidates based on its score, which was the highest among permitted options.\"}",
+    "rendered_input_hash": "aebf80d5e026cf9f",
+    "request_id": "chatcmpl-EFwAfLYnm7ymTYxgGeyGkaRrjkcZ2",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" for payment intent dev_pi_002735. This decision was made because it had a positive expected net value, with an expected net INR of 0.24 and a success probability of 0.2459. There was no binding constraint affecting this decision. The action was selected from a set of candidates based on its score, which was the highest among permitted options."
+  },
+  "openai:gpt-4o-2024-08-06:b018362be446f71c": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.00544,
+    "input_tokens": 1772,
+    "latency_ms": 2944.3989170013083,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 101,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"nudge\\\" via the \\\"email\\\" channel. This decision was made because it had a positive expected net value, with an expected net value of 229.46 and a success probability of 0.0632. The binding constraint was \\\"R011_capacity_auction_lost,\\\" which blocked higher-scoring actions like \\\"escalate_human\\\" and \\\"retry_same.\\\" As a result, \\\"nudge/email\\\" was the highest permitted action.\"}",
+    "rendered_input_hash": "b018362be446f71c",
+    "request_id": "chatcmpl-EFwAO8viLYe64yFsUHWCnESSN5yfD",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"nudge\" via the \"email\" channel. This decision was made because it had a positive expected net value, with an expected net value of 229.46 and a success probability of 0.0632. The binding constraint was \"R011_capacity_auction_lost,\" which blocked higher-scoring actions like \"escalate_human\" and \"retry_same.\" As a result, \"nudge/email\" was the highest permitted action."
+  },
   "openai:gpt-4o-2024-08-06:b0fad56c9944028e": {
    "call": {
     "cache_read_tokens": 0,
@@ -673,6 +1633,54 @@
    "rejected": null,
    "text": "The chosen action was \"retry_same\" due to the decision reason code \"SOFT_DECLINE_LADDER_RETRY.\" This action was selected based on rule priority, with a score of 100.0, which was the highest among the permitted candidates. The expected net value for this action was 100.00 INR. There was no binding constraint affecting this decision."
   },
+  "openai:gpt-4o-2024-08-06:c07b71a0ef43a70f": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.005825,
+    "input_tokens": 1914,
+    "latency_ms": 1435.868250000567,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 104,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"merchant_alert\\\" with an expected net value of 14.15 and a success probability of 0.0271. This decision was made due to the \\\"POSITIVE_EXPECTED_NET_VALUE\\\" reason code. The binding constraint was \\\"R002_terminal_cause_no_debit,\\\" which blocked other higher-scoring actions like \\\"retry_same\\\" and \\\"retry_alternate_method.\\\" The \\\"merchant_alert\\\" action was permitted and selected as it was not blocked by any constraints.\"}",
+    "rendered_input_hash": "c07b71a0ef43a70f",
+    "request_id": "chatcmpl-EFwAu3MHlncfv9MEgYH5b7VZke9R2",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"merchant_alert\" with an expected net value of 14.15 and a success probability of 0.0271. This decision was made due to the \"POSITIVE_EXPECTED_NET_VALUE\" reason code. The binding constraint was \"R002_terminal_cause_no_debit,\" which blocked other higher-scoring actions like \"retry_same\" and \"retry_alternate_method.\" The \"merchant_alert\" action was permitted and selected as it was not blocked by any constraints."
+  },
+  "openai:gpt-4o-2024-08-06:c10d8201499af780": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.00504,
+    "input_tokens": 1680,
+    "latency_ms": 2523.0619159992784,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 84,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" with no specific channel selected. This decision was made because of a positive expected net value, with an expected net value of 27.24 and a success probability of 0.7887. There was no binding constraint affecting this decision. The action was selected from multiple candidates, all of which were permitted, and it had the highest score among them.\"}",
+    "rendered_input_hash": "c10d8201499af780",
+    "request_id": "chatcmpl-EFwAqppHHFDy3cUGDI2ZYSBk50vrW",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" with no specific channel selected. This decision was made because of a positive expected net value, with an expected net value of 27.24 and a success probability of 0.7887. There was no binding constraint affecting this decision. The action was selected from multiple candidates, all of which were permitted, and it had the highest score among them."
+  },
   "openai:gpt-4o-2024-08-06:c3ef43004ef16907": {
    "call": {
     "cache_read_tokens": 0,
@@ -696,6 +1704,54 @@
    },
    "rejected": null,
    "text": "The chosen action was \"escalate_human\" due to the decision reason code \"ESCALATE_HIGH_VALUE_TAIL.\" The binding constraint was \"R004_max_nudges,\" which blocked the \"nudge/whatsapp\" option. The expected net value for this decision was 60.00 INR, and the success probability was not applicable."
+  },
+  "openai:gpt-4o-2024-08-06:c4f62a5baf8047e3": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0036275,
+    "input_tokens": 1075,
+    "latency_ms": 1528.728792000038,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 94,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The action chosen was \\\"retry_alternate_method\\\" due to its positive expected net value. The success probability for this action was 0.0918, and the expected net value was 38.59. The decision was influenced by the binding constraint \\\"R008_escalation_value_floor,\\\" which blocked the higher-scoring \\\"escalate_human\\\" option. The chosen action was permitted and had the highest score among the permitted options.\"}",
+    "rendered_input_hash": "c4f62a5baf8047e3",
+    "request_id": "chatcmpl-EFwBeqNogk65yWnOp3nRkKsELhhvl",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The action chosen was \"retry_alternate_method\" due to its positive expected net value. The success probability for this action was 0.0918, and the expected net value was 38.59. The decision was influenced by the binding constraint \"R008_escalation_value_floor,\" which blocked the higher-scoring \"escalate_human\" option. The chosen action was permitted and had the highest score among the permitted options."
+  },
+  "openai:gpt-4o-2024-08-06:c6ca84076274adf3": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0059325,
+    "input_tokens": 1965,
+    "latency_ms": 1398.4477089998109,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 102,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"nudge\\\" via the \\\"sms\\\" channel. This decision was made because it had a positive expected net value, with an expected net value of 6.07 and a success probability of 0.0903. The binding constraint was \\\"R002_terminal_cause_no_debit,\\\" which blocked other actions such as retrying the same method or using an alternate method. The nudge via SMS was permitted and had the highest score among the permitted actions.\"}",
+    "rendered_input_hash": "c6ca84076274adf3",
+    "request_id": "chatcmpl-EFwAUErxUj45ThWcLVDyIABxSK7jz",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"nudge\" via the \"sms\" channel. This decision was made because it had a positive expected net value, with an expected net value of 6.07 and a success probability of 0.0903. The binding constraint was \"R002_terminal_cause_no_debit,\" which blocked other actions such as retrying the same method or using an alternate method. The nudge via SMS was permitted and had the highest score among the permitted actions."
   },
   "openai:gpt-4o-2024-08-06:cfa8d1485f4fc88d": {
    "call": {
@@ -745,6 +1801,54 @@
    "rejected": null,
    "text": "The chosen action was \"nudge\" via the \"whatsapp\" channel. This decision was made because the reason code was \"LADDER_EXHAUSTED_REENGAGE,\" indicating a need to reengage the customer after exhausting other options. The expected net value of this action was 100.00 INR, and there was no binding constraint affecting this decision. The success probability was not applicable in this case."
   },
+  "openai:gpt-4o-2024-08-06:d7dba02b434c87f7": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.00498,
+    "input_tokens": 1692,
+    "latency_ms": 3268.9519169998675,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 75,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" with an expected net value of 248.24 and a success probability of 0.8338. This decision was made because it had the highest expected net value among the permitted actions, as indicated by the decision reason code \\\"POSITIVE_EXPECTED_NET_VALUE.\\\" There was no binding constraint affecting this decision.\"}",
+    "rendered_input_hash": "d7dba02b434c87f7",
+    "request_id": "chatcmpl-EFwBn8GJN3ulNAUiAT5Wyzp2ZUXO6",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" with an expected net value of 248.24 and a success probability of 0.8338. This decision was made because it had the highest expected net value among the permitted actions, as indicated by the decision reason code \"POSITIVE_EXPECTED_NET_VALUE.\" There was no binding constraint affecting this decision."
+  },
+  "openai:gpt-4o-2024-08-06:d912166d9a82d59f": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.003985,
+    "input_tokens": 1162,
+    "latency_ms": 3166.077542000494,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 108,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"escalate_human\\\" due to the decision reason code \\\"POSITIVE_EXPECTED_NET_VALUE\\\". The expected net value for this action was 187.35 INR, with a success probability of 0.2470. The binding constraint was \\\"R001_no_mandate_no_debit\\\", which blocked other higher-scoring actions like \\\"retry_same\\\" and \\\"retry_alternate_method\\\". \\\"Escalate_human\\\" was the highest scoring permitted action under these constraints.\"}",
+    "rendered_input_hash": "d912166d9a82d59f",
+    "request_id": "chatcmpl-EFwBR4Jgq7cWr2QWlezCVJ8w5W4iN",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"escalate_human\" due to the decision reason code \"POSITIVE_EXPECTED_NET_VALUE\". The expected net value for this action was 187.35 INR, with a success probability of 0.2470. The binding constraint was \"R001_no_mandate_no_debit\", which blocked other higher-scoring actions like \"retry_same\" and \"retry_alternate_method\". \"Escalate_human\" was the highest scoring permitted action under these constraints."
+  },
   "openai:gpt-4o-2024-08-06:ddd2100f77ca8089": {
    "call": {
     "cache_read_tokens": 0,
@@ -792,6 +1896,30 @@
    },
    "rejected": null,
    "text": "The chosen action was \"retry_same\" due to a decision reason code of \"SOFT_DECLINE_LADDER_RETRY.\" This action was selected based on a rule priority score of 100.0, which was the highest among the candidates considered. The expected net value for this action was 100.00 INR. There was no binding constraint affecting this decision."
+  },
+  "openai:gpt-4o-2024-08-06:e300fd005e3ab238": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0051025,
+    "input_tokens": 1685,
+    "latency_ms": 1342.45062500122,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 89,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" with an expected net value of 132.97 and a success probability of 0.1786. The decision was made due to the \\\"POSITIVE_EXPECTED_NET_VALUE\\\" reason code. The binding constraint was \\\"R011_capacity_auction_lost,\\\" which blocked all \\\"escalate_human\\\" actions, leaving \\\"retry_same\\\" as the highest scoring permitted option.\"}",
+    "rendered_input_hash": "e300fd005e3ab238",
+    "request_id": "chatcmpl-EFwAohHc5Ino8pYVno9khwViBSxNa",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" with an expected net value of 132.97 and a success probability of 0.1786. The decision was made due to the \"POSITIVE_EXPECTED_NET_VALUE\" reason code. The binding constraint was \"R011_capacity_auction_lost,\" which blocked all \"escalate_human\" actions, leaving \"retry_same\" as the highest scoring permitted option."
   },
   "openai:gpt-4o-2024-08-06:e7214940fa94895e": {
    "call": {
@@ -865,6 +1993,78 @@
    "rejected": null,
    "text": "The chosen action was \"nudge\" via \"sms\". This decision was made because the \"nudge/sms\" option had the highest score of 100.0 and was permitted, while the other options were either not permitted or had lower scores. The expected net value for this action was 100.00 INR, and there was no binding constraint affecting the decision."
   },
+  "openai:gpt-4o-2024-08-06:ea500abf668ecc19": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.005715,
+    "input_tokens": 1858,
+    "latency_ms": 3721.423375000086,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 107,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"escalate_human\\\" due to the decision reason code \\\"POSITIVE_EXPECTED_NET_VALUE\\\". The expected net value for this action was 138.04, with a success probability of 0.2610. The binding constraint was \\\"R001_no_mandate_no_debit\\\", which blocked other higher-scoring actions like \\\"retry_same\\\" and \\\"retry_alternate_method\\\". \\\"Escalate_human\\\" was the highest scoring permitted action under these constraints.\"}",
+    "rendered_input_hash": "ea500abf668ecc19",
+    "request_id": "chatcmpl-EFwBV7xoCC3ZSusuXNksZ30jAYPWg",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"escalate_human\" due to the decision reason code \"POSITIVE_EXPECTED_NET_VALUE\". The expected net value for this action was 138.04, with a success probability of 0.2610. The binding constraint was \"R001_no_mandate_no_debit\", which blocked other higher-scoring actions like \"retry_same\" and \"retry_alternate_method\". \"Escalate_human\" was the highest scoring permitted action under these constraints."
+  },
+  "openai:gpt-4o-2024-08-06:eb2b106681c524f3": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0047925,
+    "input_tokens": 1669,
+    "latency_ms": 1774.3077499999345,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 62,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" with no specific channel selected. This decision was made because it had a positive expected net value, with an expected net value of 571.55 and a success probability of 0.3260. There was no binding constraint affecting this decision.\"}",
+    "rendered_input_hash": "eb2b106681c524f3",
+    "request_id": "chatcmpl-EFwATQm61R0yj6W4MHqhc5DLtDJD9",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" with no specific channel selected. This decision was made because it had a positive expected net value, with an expected net value of 571.55 and a success probability of 0.3260. There was no binding constraint affecting this decision."
+  },
+  "openai:gpt-4o-2024-08-06:f0b2b7b21aa4d6a3": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0051425,
+    "input_tokens": 1673,
+    "latency_ms": 3408.453207999628,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 96,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" due to a decision reason code of POSITIVE_EXPECTED_NET_VALUE. The expected net value for this action was 127.80, with a success probability of 0.1786. The binding constraint was \\\"R011_capacity_auction_lost,\\\" which blocked all \\\"escalate_human\\\" actions. This action was selected as it was permitted and had the highest expected net value among the allowed options.\"}",
+    "rendered_input_hash": "f0b2b7b21aa4d6a3",
+    "request_id": "chatcmpl-EFwC2rArsex9gvuMZTkbcPDdDHigq",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" due to a decision reason code of POSITIVE_EXPECTED_NET_VALUE. The expected net value for this action was 127.80, with a success probability of 0.1786. The binding constraint was \"R011_capacity_auction_lost,\" which blocked all \"escalate_human\" actions. This action was selected as it was permitted and had the highest expected net value among the allowed options."
+  },
   "openai:gpt-4o-2024-08-06:f2f99525332ad30d": {
    "call": {
     "cache_read_tokens": 0,
@@ -888,6 +2088,54 @@
    },
    "rejected": null,
    "text": "The chosen action was \"escalate_human\" due to the decision reason code \"ESCALATE_HIGH_VALUE_TAIL.\" The action was selected because the alternative action \"nudge/whatsapp\" was blocked by the binding constraint \"R004_max_nudges.\" The expected net value for this decision was 60.00 INR, and the success probability was not applicable."
+  },
+  "openai:gpt-4o-2024-08-06:f49423f6fa37de6e": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0044825,
+    "input_tokens": 1537,
+    "latency_ms": 1221.6786659992067,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 64,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" with no specific channel selected. This decision was made because of a \\\"POSITIVE_EXPECTED_NET_VALUE\\\" with an expected net value of 271.18 and a success probability of 0.3260. There was no binding constraint affecting this decision.\"}",
+    "rendered_input_hash": "f49423f6fa37de6e",
+    "request_id": "chatcmpl-EFwBMGI8L114EhpVAbjVyOHXp1t9b",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" with no specific channel selected. This decision was made because of a \"POSITIVE_EXPECTED_NET_VALUE\" with an expected net value of 271.18 and a success probability of 0.3260. There was no binding constraint affecting this decision."
+  },
+  "openai:gpt-4o-2024-08-06:f6d9075dd1b4ee3e": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.004525,
+    "input_tokens": 1350,
+    "latency_ms": 1485.0933749985415,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 115,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"escalate_human\\\" due to the decision reason code \\\"POSITIVE_EXPECTED_NET_VALUE.\\\" The expected net value for this action was 834.18, with a success probability of 0.2323. The binding constraint was \\\"R002_terminal_cause_no_debit,\\\" which blocked other potential actions such as \\\"retry_same\\\" and \\\"retry_alternate_method.\\\" As a result, \\\"escalate_human\\\" was selected as it was permitted and had the highest expected net value among the allowed options.\"}",
+    "rendered_input_hash": "f6d9075dd1b4ee3e",
+    "request_id": "chatcmpl-EFwAWz4xlyjG6obOYNUKU5F2tax7N",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"escalate_human\" due to the decision reason code \"POSITIVE_EXPECTED_NET_VALUE.\" The expected net value for this action was 834.18, with a success probability of 0.2323. The binding constraint was \"R002_terminal_cause_no_debit,\" which blocked other potential actions such as \"retry_same\" and \"retry_alternate_method.\" As a result, \"escalate_human\" was selected as it was permitted and had the highest expected net value among the allowed options."
   },
   "openai:gpt-4o-2024-08-06:f6f8ef3f4639ccc0": {
    "call": {
@@ -913,6 +2161,30 @@
    "rejected": null,
    "text": "The chosen action was \"nudge\" via the \"email\" channel. This decision was made because the reason code was \"CUSTOMER_FIXABLE_INSTRUMENT,\" indicating that the issue might be resolved by the customer. The expected net value of this action was 100.00 INR. There was no binding constraint affecting this decision."
   },
+  "openai:gpt-4o-2024-08-06:f9b5f96844b39f12": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.0050725,
+    "input_tokens": 1673,
+    "latency_ms": 1369.8054590004176,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 89,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"retry_same\\\" with an expected net value of 202.64 and a success probability of 0.1786. This decision was made because it had a positive expected net value, as indicated by the decision reason code POSITIVE_EXPECTED_NET_VALUE. The binding constraint was \\\"R011_capacity_auction_lost,\\\" which blocked other higher-scoring actions like \\\"escalate_human.\\\"\"}",
+    "rendered_input_hash": "f9b5f96844b39f12",
+    "request_id": "chatcmpl-EFwAkyFIkGQZLQAAK2nQkzVQW5M45",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"retry_same\" with an expected net value of 202.64 and a success probability of 0.1786. This decision was made because it had a positive expected net value, as indicated by the decision reason code POSITIVE_EXPECTED_NET_VALUE. The binding constraint was \"R011_capacity_auction_lost,\" which blocked other higher-scoring actions like \"escalate_human.\""
+  },
   "openai:gpt-4o-2024-08-06:fb52b7dc6e42e8e4": {
    "call": {
     "cache_read_tokens": 0,
@@ -936,6 +2208,30 @@
    },
    "rejected": null,
    "text": "The chosen action was \"nudge\" via the \"whatsapp\" channel. This decision was made because the reason code was \"LADDER_EXHAUSTED_REENGAGE,\" indicating a need to reengage the customer after exhausting other options. The expected net value of this action was 100.00 INR. There was no binding constraint affecting this decision."
+  },
+  "openai:gpt-4o-2024-08-06:fbb82ff44941193d": {
+   "call": {
+    "cache_read_tokens": 0,
+    "cached": false,
+    "confidence": "n/a",
+    "cost_usd": 0.00358,
+    "input_tokens": 1008,
+    "latency_ms": 1872.4567919998663,
+    "model_id": "gpt-4o-2024-08-06",
+    "output_tokens": 106,
+    "parse_status": "ok",
+    "prompt_hash": "6c2c53d37c189fdf",
+    "prompt_version": "explainer-v1.0.0",
+    "purpose": "explainer",
+    "raw_output": "{\"explanation\":\"The chosen action was \\\"escalate_human\\\" due to the decision reason code POSITIVE_EXPECTED_NET_VALUE. The expected net value for this action was 834.18 INR, with a success probability of 0.2323. The binding constraint was \\\"R002_terminal_cause_no_debit,\\\" which blocked other potential actions such as retrying the same method or using an alternate method. The action was selected as it was permitted and had the highest expected net value among the permitted options.\"}",
+    "rendered_input_hash": "fbb82ff44941193d",
+    "request_id": "chatcmpl-EFwBBd53BB1OkwQPTrljIiGzLPDur",
+    "resolved_cause": "POSITIVE_EXPECTED_NET_VALUE",
+    "temperature": 0.0,
+    "temperature_note": "OpenAI exposes `temperature`; sent as 0.0 for determinism. Combined with the strict json_schema and the rendered_input_hash cache, repeat runs reproduce exactly."
+   },
+   "rejected": null,
+   "text": "The chosen action was \"escalate_human\" due to the decision reason code POSITIVE_EXPECTED_NET_VALUE. The expected net value for this action was 834.18 INR, with a success probability of 0.2323. The binding constraint was \"R002_terminal_cause_no_debit,\" which blocked other potential actions such as retrying the same method or using an alternate method. The action was selected as it was permitted and had the highest expected net value among the permitted options."
   },
   "openai:gpt-4o-2024-08-06:ff7dd4d026779bc1": {
    "call": {

@@ -39,6 +39,16 @@ class SimAdapter:
         return cls({o["intent_id"]: LatentState(**{**d, "true_cause": FailureCause(d["true_cause"])})
                     for o, d in zip(obs, lat)})
 
+    def latents_for(self, obs_rows: list) -> list:
+        """Ground truth for a set of observed events, in order.
+
+        Public because the harness genuinely needs it -- `run_agent` drives the
+        simulated world and must be handed the latent state to roll outcomes
+        against. Callers previously reached into `_lat` directly, which laundered
+        ground truth past the boundary grep via a private attribute. Naming it makes
+        the dependency visible instead of hidden."""
+        return [self._lat[o["intent_id"]] for o in obs_rows]
+
     def counterfactual_self_heals(self, payment_intent_id: str) -> bool:
         """Simulator-only diagnostic. Used to sanity-check the treatment/control
         estimator, never to compute the reported number."""

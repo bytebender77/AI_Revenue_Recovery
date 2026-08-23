@@ -12,6 +12,7 @@ purpose: a record that survives the round-trip differently is not the same recor
 """
 import json
 import pathlib
+import uuid
 
 import pytest
 
@@ -67,7 +68,7 @@ def fixtures():
     sample = sorted(obs_all, key=lambda o: rng.u01(o["intent_id"], "demo"))[:N]
     sample.sort(key=lambda o: o["failed_at_h"])
     adapter = SimAdapter.from_cohort(DATA, "dev")
-    latents = [adapter._lat[o["intent_id"]] for o in sample]
+    latents = adapter.latents_for(sample)
     policy = lambda: EVPolicy(
         BetaBinomialModel.load(MODELS / "success_model_v1.json"),
         BetaBinomialModel.load(MODELS / "organic_model_v2.json"),
@@ -96,16 +97,15 @@ def test_both_entry_points_produce_identical_decisions(fixtures):
                  for d in eval_meta["decisions"]}
 
     # Entry point B: the demo path. Same loop, Postgres sink.
-    run_id = "equivalence_probe"
+    # A fresh run_id per invocation rather than deleting prior rows: `ledger_entry`
+    # is append-only and its trigger correctly refuses DELETE. The test must not
+    # need an exemption from a guarantee the system advertises.
+    run_id = f"equivalence_probe_{uuid.uuid4().hex[:12]}"
     try:
         conn = connect()
     except Exception as exc:
         pytest.skip(f"no database ({exc}); run `make db-init`")
     with conn:
-        with conn.cursor() as cur:
-            cur.execute("DELETE FROM ledger_entry WHERE run_id=%s", (run_id,))
-            cur.execute("DELETE FROM decision WHERE run_id=%s", (run_id,))
-            cur.execute("DELETE FROM failure_event WHERE run_id=%s", (run_id,))
         run_agent(sample, latents, policy(),
                   sink=PostgresSink(conn, run_id, arm_of), arm_of=arm_of)
         conn.commit()

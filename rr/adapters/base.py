@@ -1,6 +1,16 @@
-"""One interface, two adapters. The eval runs on `sim`; the demo makes one live
-test-mode call. Fixing the interface now means the live adapter is a drop-in and
-not a rewrite."""
+"""The executor seam. NOT CURRENTLY WIRED -- read this before assuming it runs.
+
+When the pipeline gained a Postgres sink and started sharing the eval harness's
+tick loop, the loop took over execution (it calls `apply_action` against the
+simulated world) and the sink took over recording. That left this interface with no
+live caller: `revalidate` / `execute` / `poll_outcome` are implemented by
+`rr/sim/adapter.py` and stubbed by `razorpay_test.py`, and nothing invokes them.
+
+It is kept, and kept honest with this notice, because it is the contract M7's one
+live Razorpay test-mode call plugs into. Re-wiring it is M7 work, not decoration.
+The guarantees it used to provide -- idempotency on (decision, action), fire-time
+revalidation, an `attempt` row per fired-or-aborted action -- are preserved in
+`PostgresSink` and asserted by tests/test_pipeline_db.py."""
 from __future__ import annotations
 
 from dataclasses import dataclass

@@ -185,7 +185,7 @@ def main() -> None:
     sample = sorted(obs_all, key=lambda o: rng.u01(o["intent_id"], "demo"))[: args.limit]
     sample.sort(key=lambda o: o["failed_at_h"])
     adapter = SimAdapter.from_cohort(args.data, "dev")
-    latents = [adapter._lat[o["intent_id"]] for o in sample]
+    latents = adapter.latents_for(sample)
 
     policy = EVPolicy(
         BetaBinomialModel.load(args.models / "success_model_v1.json"),

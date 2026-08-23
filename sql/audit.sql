@@ -28,20 +28,32 @@ FROM eligibility_snapshot e, jsonb_array_elements(e.rule_evaluations) r
 WHERE e.payment_intent_id = :id ORDER BY e.slot, rule;
 
 \echo '=== 4. WHAT WAS CONSIDERED, WITH SCORES (rejected options included) ==='
-SELECT d.decision_seq AS seq, d.slot, c->>'action' AS action, c->>'channel' AS chan,
-       (c->>'score')::numeric AS ev_inr,
-       (c->'evidence'->>'p_mean')::numeric AS p_success,
-       (c->'evidence'->>'observations')::int AS obs,
-       c->'components_inr'->>'value' AS value_inr,
-       c->'components_inr'->>'annoyance' AS annoy_inr,
-       round((c->>'at_h')::numeric, 1) AS at_h,
-       (c->>'permitted')::bool AS ok, c->>'blocked_by' AS blocked_by,
-       (c->>'chosen')::bool AS chosen
-FROM decision d, jsonb_array_elements(d.candidate_set) c
-WHERE d.payment_intent_id = :id ORDER BY d.decision_seq, ev_inr DESC;
+-- Best-scoring option per action, with how many scheduling times were evaluated.
+-- The policy scores every action at every grid time, so the raw candidate_set holds
+-- ~70 rows per decision that differ only in at_h. Collapsed here for reading; the
+-- full set is in decision.candidate_set and is what the equivalence test compares.
+WITH c AS (
+  SELECT d.decision_seq, d.slot, x.*,
+         row_number() OVER (PARTITION BY d.decision_seq, x.action, x.chan
+                            ORDER BY x.ev_inr DESC) AS rk,
+         count(*)    OVER (PARTITION BY d.decision_seq, x.action, x.chan) AS times_scored
+  FROM decision d, jsonb_array_elements(d.candidate_set) j,
+       LATERAL (SELECT j->>'action' AS action, j->>'channel' AS chan,
+                       (j->>'score')::numeric AS ev_inr,
+                       (j->'evidence'->>'p_mean')::numeric AS p_success,
+                       (j->'evidence'->>'observations')::int AS obs,
+                       round((j->>'at_h')::numeric,1) AS at_h,
+                       (j->>'permitted')::bool AS ok,
+                       j->>'blocked_by' AS blocked_by,
+                       (j->>'chosen')::bool AS chosen) x
+  WHERE d.payment_intent_id = :id
+)
+SELECT decision_seq AS seq, slot, action, chan, ev_inr, p_success, obs,
+       at_h AS best_at_h, times_scored, ok, blocked_by, chosen
+FROM c WHERE rk = 1 ORDER BY decision_seq, ev_inr DESC;
 
 \echo '=== 5. WHAT BOUND THE CHOICE, AND UNDER WHICH VERSIONS ==='
-SELECT decision_seq, slot, chosen_action, chosen_channel, round(scheduled_for_h::numeric,2) AS at_h,
+SELECT run_id, decision_seq, slot, chosen_action, chosen_channel, round(scheduled_for_h::numeric,2) AS at_h,
        decision_reason_code, binding_constraint, score_basis,
        taxonomy_version, model_version, policy_version
 FROM decision WHERE payment_intent_id = :id ORDER BY decision_seq \gx
