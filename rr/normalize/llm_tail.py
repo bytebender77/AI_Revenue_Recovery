@@ -108,6 +108,57 @@ def cache_key(resolver_kind: str, model_id: str, input_hash: str) -> str:
     return f"{resolver_kind}:{model_id}:{input_hash}"
 
 
+# --------------------------------------------------------------------------- #
+# Shared audit machinery. The normaliser and the explainer are different jobs    #
+# with different validators, but they produce ONE record shape, use ONE cache    #
+# key scheme, and write ONE log format. Anything below this line is used by both.#
+# --------------------------------------------------------------------------- #
+
+def load_cache(path: Optional[pathlib.Path]) -> tuple[dict, bool]:
+    """-> (entries, stale_discarded). A stale format is discarded wholesale."""
+    if not (path and path.exists()):
+        return {}, False
+    raw = json.loads(path.read_text())
+    if raw.get("cache_format") != CACHE_FORMAT:
+        return {}, True
+    return raw.get("entries", {}), False
+
+
+def save_cache(path: Optional[pathlib.Path], entries: dict) -> None:
+    if not path:
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({"cache_format": CACHE_FORMAT, "entries": entries},
+                               indent=1, sort_keys=True))
+
+
+def write_calls(path: pathlib.Path, entries: dict) -> None:
+    """One row per distinct cached input, from the cache rather than the call list,
+    so a cache-warm re-run still writes a complete log."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w") as fh:
+        for entry in entries.values():
+            fh.write(json.dumps(entry["call"], sort_keys=True) + "\n")
+
+
+def make_call(resolver, purpose: str, input_hash: str, raw: str, status: str,
+              usage: dict, request_id, latency_ms: float,
+              resolved: str, confidence: str) -> "LLMCall":
+    return LLMCall(
+        purpose=purpose, model_id=resolver.model_id, prompt_version=PROMPT_VERSION,
+        prompt_hash=prompt_hash(), rendered_input_hash=input_hash,
+        temperature=getattr(resolver, "temperature", None),
+        temperature_note=resolver.temperature_note, raw_output=raw,
+        parse_status=status, resolved_cause=resolved, confidence=confidence,
+        input_tokens=usage.get("input_tokens", 0),
+        output_tokens=usage.get("output_tokens", 0),
+        cache_read_tokens=usage.get("cache_read_input_tokens", 0),
+        cost_usd=_cost(resolver.prices, usage.get("input_tokens", 0),
+                       usage.get("output_tokens", 0),
+                       usage.get("cache_read_input_tokens", 0)),
+        latency_ms=latency_ms, request_id=request_id)
+
+
 def _cost(prices: Prices, inp: int, out: int, cache_read: int) -> float:
     return (inp * prices.input_per_mtok
             + out * prices.output_per_mtok

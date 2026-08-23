@@ -41,7 +41,7 @@ verify-chain:
 	$(PY) -m rr.db.verify
 
 audit:             ## AUDIT=<payment_intent_id> make audit
-	@psql "$${DATABASE_URL:-postgresql://rr:rr@localhost:5434/rr}" -v id="'$(AUDIT)'" -f sql/audit.sql
+	@psql "$${DATABASE_URL:-postgresql://rr:rr@localhost:55432/rr}" -v id="'$(AUDIT)'" -f sql/audit.sql
 
 train: models/success_model.json   ## fit the success + organic models on dev exploration data
 

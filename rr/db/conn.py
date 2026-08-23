@@ -5,13 +5,13 @@ import pathlib
 
 import psycopg
 
-DEFAULT_PORT = os.environ.get("RR_DB_PORT", "5434")
+DEFAULT_PORT = os.environ.get("RR_DB_PORT", "55432")
 DEFAULT_URL = f"postgresql://rr:rr@localhost:{DEFAULT_PORT}/rr"
 SCHEMA = pathlib.Path(__file__).with_name("schema.sql")
 
 
 def url() -> str:
-    """DATABASE_URL wins; otherwise RR_DB_PORT (default 5434) against the compose db."""
+    """DATABASE_URL wins; otherwise RR_DB_PORT (default 55432) against the compose db."""
     return os.environ.get("DATABASE_URL", DEFAULT_URL)
 
 

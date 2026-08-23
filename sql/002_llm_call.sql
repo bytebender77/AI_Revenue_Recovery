@@ -41,3 +41,18 @@ CREATE INDEX IF NOT EXISTS llm_call_input_idx  ON llm_call (rendered_input_hash)
 -- The diagnosis row already carries `resolver` ('map' | 'llm' | 'llm_abstain' |
 -- 'default'); this column ties a diagnosis to the exact call that produced it.
 ALTER TABLE diagnosis ADD COLUMN IF NOT EXISTS llm_call_id BIGINT REFERENCES llm_call(id);
+
+-- Explanations live in their OWN table, never as a column on `decision`.
+-- That is the structural half of the containment story: the explainer physically
+-- cannot alter the decision it renders, because it writes somewhere else entirely.
+CREATE TABLE IF NOT EXISTS decision_explanation (
+    id            BIGSERIAL PRIMARY KEY,
+    decision_id   BIGINT NOT NULL REFERENCES decision(id),
+    text          TEXT NOT NULL,
+    source        TEXT NOT NULL
+        CHECK (source IN ('llm','templated_fallback','templated_no_resolver')),
+    reject_reason TEXT,                 -- why an LLM draft was discarded, if it was
+    llm_call_id   BIGINT REFERENCES llm_call(id),
+    created_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
+    UNIQUE (decision_id)
+);
