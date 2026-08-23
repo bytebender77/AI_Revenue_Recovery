@@ -47,7 +47,7 @@ git clone <repo> && cd razorpay
 python3 -m venv .venv && ./.venv/bin/pip install -r requirements.txt
 docker compose up -d --wait db
 make db-init && psql "$DATABASE_URL" -f sql/002_llm_call.sql && psql "$DATABASE_URL" -f sql/003_decision_seq.sql
-make test          # 73 tests
+make test          # 83 tests; skips are labelled with a reason (-rs)
 make run           # end-to-end: 500 intents, every decision written to Postgres
 ```
 

@@ -64,6 +64,10 @@ def test_only_one_module_scores_candidates():
 def fixtures():
     if not (MODELS / "success_model_v1.json").exists():
         pytest.skip("run `make train` first")
+    # models/ is committed but data/*.jsonl is gitignored, so a clean clone has the
+    # model and not the cohort. Guard both or this errors instead of skipping.
+    if not (DATA / "dev_observed.jsonl").exists():
+        pytest.skip("run `make cohort` first")
     obs_all = load_observed(DATA / "dev_observed.jsonl")
     sample = sorted(obs_all, key=lambda o: rng.u01(o["intent_id"], "demo"))[:N]
     sample.sort(key=lambda o: o["failed_at_h"])
