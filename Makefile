@@ -7,7 +7,7 @@ include .env
 export
 endif
 
-.PHONY: setup cohort describe gate train m4 ablation-features ablation-normalizer db-up db-down db-init run verify-chain audit test freeze clean
+.PHONY: setup cohort describe gate train m4 sealed-report dev-report ablation-features ablation-normalizer db-up db-down db-init run verify-chain audit test freeze clean
 
 setup:
 	$(PY) -m pip install -r requirements.txt
@@ -52,6 +52,12 @@ ablation-features:  ## feature cross v1 vs v2 on full dev
 
 ablation-normalizer: train  ## LLM tail normaliser on vs off (--resolver openai|anthropic|offline)
 	$(PY) -m rr.eval.ablation_normalizer --data data --models models --resolver $(or $(RESOLVER),offline)
+
+sealed-report:      ## the sealed test-cohort run. Refuses to run twice.
+	$(PY) -m rr.eval.sealed_run --cohort test --data data --models models --out docs/results_test.json
+
+dev-report:         ## same report on dev; unrestricted, use this to iterate
+	$(PY) -m rr.eval.sealed_run --cohort dev --data data --models models --out docs/results_dev.json
 
 m4: train          ## full dev: every arm, calibration, per-cause, NO_ACTION breakdown
 	$(PY) -m rr.eval.m4_report --data data --models models

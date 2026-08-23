@@ -1,0 +1,241 @@
+{
+ "cohort": "test",
+ "n": 3000,
+ "headline": {
+  "B0_do_nothing": {
+   "gross": 173568642,
+   "incremental": 0,
+   "ci": [
+    0.0,
+    0.0
+   ],
+   "net": 0.0,
+   "debits": 0,
+   "contacts": 0,
+   "wasted_contacts": 0,
+   "wasted_rate": 0.0,
+   "wasted_cost": 0,
+   "never_retry_true": 0,
+   "never_retry_observable": 0,
+   "unauthorized": 0,
+   "oracle_share": 0.0
+  },
+  "B1_blind_ladder": {
+   "gross": 267031791,
+   "incremental": 93463149,
+   "ci": [
+    78579558.525,
+    109929814.425
+   ],
+   "net": -14725940.399999999,
+   "debits": 7056,
+   "contacts": 0,
+   "wasted_contacts": 0,
+   "wasted_rate": 0.0,
+   "wasted_cost": 0,
+   "never_retry_true": 2028,
+   "never_retry_observable": 1674,
+   "unauthorized": 1391,
+   "oracle_share": 0.4418585840718307
+  },
+  "B2_good_rules": {
+   "gross": 323520571,
+   "incremental": 149951929,
+   "ci": [
+    129372949.275,
+    171576879.77499998
+   ],
+   "net": 55993992.6,
+   "debits": 2915,
+   "contacts": 1785,
+   "wasted_contacts": 1641,
+   "wasted_rate": 0.9193277310924369,
+   "wasted_cost": 1476900,
+   "never_retry_true": 112,
+   "never_retry_observable": 0,
+   "unauthorized": 0,
+   "oracle_share": 0.7089162705910934
+  },
+  "B2.5_plus_outage": {
+   "gross": 330132302,
+   "incremental": 156563660,
+   "ci": [
+    135949186.225,
+    178591539.87499997
+   ],
+   "net": 58672039.0,
+   "debits": 2753,
+   "contacts": 1763,
+   "wasted_contacts": 1620,
+   "wasted_rate": 0.9188882586500283,
+   "wasted_cost": 1458000,
+   "never_retry_true": 112,
+   "never_retry_observable": 0,
+   "unauthorized": 0,
+   "oracle_share": 0.7401740457589708
+  },
+  "AGENT": {
+   "gross": 347528790,
+   "incremental": 173960148,
+   "ci": [
+    150907891.275,
+    197588115.67499998
+   ],
+   "net": 63950633.2,
+   "debits": 2850,
+   "contacts": 1056,
+   "wasted_contacts": 985,
+   "wasted_rate": 0.9327651515151515,
+   "wasted_cost": 886500,
+   "never_retry_true": 159,
+   "never_retry_observable": 0,
+   "unauthorized": 0,
+   "oracle_share": 0.8224180920782597
+  },
+  "B3_greedy": {
+   "gross": 385091406,
+   "incremental": 211522764,
+   "ci": [
+    186609715.7,
+    235241644.05
+   ],
+   "net": 83182658.60000001,
+   "debits": 1950,
+   "contacts": 1373,
+   "wasted_contacts": 1211,
+   "wasted_rate": 0.8820101966496723,
+   "wasted_cost": 1089900,
+   "never_retry_true": 0,
+   "never_retry_observable": 0,
+   "unauthorized": 0,
+   "oracle_share": 1.0
+  }
+ },
+ "brier": 0.10074535581805058,
+ "reliability": [
+  [
+   0.0,
+   0.1,
+   1996,
+   0.0480723094291128,
+   0.037575150300601205
+  ],
+  [
+   0.1,
+   0.2,
+   1475,
+   0.15138575828009118,
+   0.12135593220338983
+  ],
+  [
+   0.2,
+   0.3,
+   601,
+   0.2544455012877337,
+   0.17970049916805325
+  ],
+  [
+   0.3,
+   0.4,
+   474,
+   0.32264822593672465,
+   0.23417721518987342
+  ],
+  [
+   0.4,
+   0.5,
+   67,
+   0.4604635194079395,
+   0.4925373134328358
+  ],
+  [
+   0.5,
+   0.6,
+   93,
+   0.5357784327669259,
+   0.4946236559139785
+  ],
+  [
+   0.6,
+   0.7,
+   31,
+   0.630467753251427,
+   0.5161290322580645
+  ],
+  [
+   0.7,
+   0.8,
+   258,
+   0.7607718841381639,
+   0.7945736434108527
+  ],
+  [
+   0.8,
+   0.9,
+   55,
+   0.8337902042686729,
+   0.8
+  ]
+ ],
+ "tiers": {
+  "faithful": {
+   "intents": 2170,
+   "true": 0,
+   "observable": 0
+  },
+  "unmapped": {
+   "intents": 178,
+   "true": 62,
+   "observable": 0
+  },
+  "generic": {
+   "intents": 291,
+   "true": 87,
+   "observable": 0
+  },
+  "misleading": {
+   "intents": 135,
+   "true": 10,
+   "observable": 0
+  },
+  "reason_collides": {
+   "intents": 226,
+   "true": 0,
+   "observable": 0
+  }
+ },
+ "no_action": {
+  "decisions": 11921,
+  "no_action": 1574,
+  "untouched": 685,
+  "by_reason": {
+   "BLOCKED_BY_RULE|R002_terminal_cause_no_debit": 307,
+   "CAPACITY_AUCTION_LOST|R011_capacity_auction_lost": 262,
+   "BLOCKED_BY_RULE|R006_no_alternate_instrument": 37,
+   "NEGATIVE_EV_TERMINAL|EV_UPPER_BOUND_NOT_POSITIVE": 152,
+   "BLOCKED_BY_RULE|R001_no_mandate_no_debit": 337,
+   "BLOCKED_BY_RULE|R009_merchant_alert_once": 155,
+   "BLOCKED_BY_RULE|R004_max_nudges": 21,
+   "BLOCKED_BY_RULE|R003_max_debits": 231,
+   "BLOCKED_BY_RULE|R008_escalation_value_floor": 72
+  }
+ },
+ "binding": {
+  "R002_terminal_cause_no_debit": 1274,
+  "R001_no_mandate_no_debit": 1224,
+  "R011_capacity_auction_lost": 2041,
+  "R006_no_alternate_instrument": 281,
+  "EV_UPPER_BOUND_NOT_POSITIVE": 152,
+  "R008_escalation_value_floor": 852,
+  "R010_escalation_once": 302,
+  "R009_merchant_alert_once": 255,
+  "R003_max_debits": 692,
+  "R004_max_nudges": 28
+ },
+ "auction": {
+  "claims": 2183,
+  "granted": 142,
+  "lost": 2041
+ },
+ "breaker_trips": []
+}
