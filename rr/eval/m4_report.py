@@ -138,7 +138,7 @@ def main() -> None:
 
     print("\n\n=== NO_ACTION: how often, and why ===\n")
     decs = meta["decisions"]
-    no_act = [d for d in decs if d["action"] == "no_action"]
+    no_act = [d for d in decs if d["chosen_action"] == "no_action"]
     touched = {r.intent_id for r in agent if r.debits or r.contacts or r.other_actions}
     print(f"  decisions taken            : {len(decs)}")
     print(f"  ending in NO_ACTION        : {len(no_act)} ({len(no_act)/max(len(decs),1):.1%})")
@@ -146,7 +146,7 @@ def main() -> None:
           f"({(n - len(touched))/n:.1%})\n")
     by_reason: dict = {}
     for d in no_act:
-        k = (d["reason_code"], d["binding_constraint"])
+        k = (d["decision_reason_code"], d["binding_constraint"])
         by_reason[k] = by_reason.get(k, 0) + 1
     print(f"  {'reason_code':<26}{'binding constraint':<38}{'count':>7}")
     print("  " + "-" * 70)

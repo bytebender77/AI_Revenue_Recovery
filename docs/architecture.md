@@ -33,7 +33,7 @@ One intent, from gateway failure to settled outcome.
                                     ▼
         ┌────────────────────────────────────────────────────────────────┐
         │  2. ELIGIBILITY GATE   rr/pipeline/eligibility.py              │
-        │     Emits the PERMITTED ACTION SET — not a veto. R001…R011.    │
+        │     Emits the PERMITTED ACTION SET — not a veto. R001…R012.    │
         │     Records passes as well as blocks, each with the threshold  │
         │     and the observed value that was compared to it.            │
         └───────────────────────────┬────────────────────────────────────┘

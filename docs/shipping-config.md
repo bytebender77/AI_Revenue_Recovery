@@ -149,21 +149,21 @@ which had a debit blocked by the gate.
 1. **Unmapped-code descriptions are independent of the true cause** in the frozen
    cohort generator, so chance (~1/15) is the ceiling on that slice for any
    classifier. Documented, not fixed — fixing it would invalidate M1–M5.
-3. **True `NEVER_RETRY` violations cannot reach zero.** ~15% of failures arrive with
+2. **True `NEVER_RETRY` violations cannot reach zero.** ~15% of failures arrive with
    a generic or unmapped code hiding a terminal cause. Gate-visible violations are 0
    and must stay 0; true-cause violations are irreducible given the signal.
-4. **`ESCALATE_HUMAN` is likely over-powered** in the frozen response model
+3. **`ESCALATE_HUMAN` is likely over-powered** in the frozen response model
    (p ≈ 0.23 at ₹40), making it +EV almost everywhere. Frozen before any results
    were seen; disclosed rather than retuned.
-5. **B3 is a greedy oracle**, so it is a lower bound on the ceiling — B2.5 beats it
+4. **B3 is a greedy oracle**, so it is a lower bound on the ceiling — B2.5 beats it
    on `auth_failed`.
-6. **The adapter execution seam is unwired.** `rr/pipeline/executor.py` was dead
+5. **The adapter execution seam is unwired.** `rr/pipeline/executor.py` was dead
    and has been deleted. `rr/adapters/base.py` and `rr/sim/adapter.py` still define
    `revalidate`/`execute`/`poll_outcome` with no live caller — the tick loop
    executes and `PostgresSink` records. They are retained as M7's contract for the
    one live Razorpay test-mode call and carry a header saying so. Idempotency,
    fire-time revalidation and `attempt` rows are preserved in the sink and asserted.
-7. **Explainer rejection rate is 0% on EV records** (0/54 live gpt-4o calls), with
+6. **Explainer rejection rate is 0% on EV records** (0/54 live gpt-4o calls), with
    `p_success` in the required set. Not a check that never runs: falsifying
    `p_mean` against all 60 stored drafts rejects 60/60. gpt-4o quotes the record
    verbatim reliably when the prompt demands it.
