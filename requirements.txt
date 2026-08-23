@@ -4,3 +4,9 @@ pytest>=8.0
 # LLM tail normaliser. Install the provider you have a key for.
 openai>=1.40          # Structured Outputs (json_schema) landed in 1.40
 anthropic>=0.40       # output_config.format
+
+# NOTE: install into a clean venv, not a conda base env.
+#   python3 -m venv .venv && ./.venv/bin/pip install -r requirements.txt
+# openai 3.x uses httpx2 (not httpx). In a polluted conda base env the SDK raised
+# `TypeError: process() takes no keyword arguments`, surfaced as APIConnectionError,
+# even with the correct openai+httpx2 versions installed. Same versions work in a venv.

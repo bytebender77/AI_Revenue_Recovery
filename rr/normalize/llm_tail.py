@@ -93,6 +93,7 @@ class LLMCall:
         return asdict(self)
 
 
+MAX_FAILURES_PER_KEY = 2
 CACHE_FORMAT = 2   # bumped when the key shape changes; format 1 keys were input-only
 
 
@@ -152,6 +153,11 @@ class TailNormalizer:
     calls: list = field(default_factory=list)
     stale_cache_discarded: bool = False
     _cache: dict = field(default_factory=dict)
+    # Per-RUN failure counter, never persisted. Errors are not written to the disk
+    # cache (a blip must not become a permanent answer), but without this a total
+    # outage re-calls the same failing input once per intent -- thousands of calls.
+    # Bounded here at MAX_FAILURES_PER_KEY attempts per distinct input per run.
+    _failed: dict = field(default_factory=dict)
 
     def __post_init__(self):
         if not (self.cache_path and self.cache_path.exists()):
@@ -169,6 +175,18 @@ class TailNormalizer:
         rendered = render_input(event)
         input_hash = rendered_input_hash(rendered)
         key = cache_key(self.resolver.kind, self.resolver.model_id, input_hash)
+
+        if self._failed.get(key, 0) >= MAX_FAILURES_PER_KEY:
+            call = LLMCall(
+                purpose="tail_normalizer", model_id=self.resolver.model_id,
+                prompt_version=PROMPT_VERSION, prompt_hash=prompt_hash(),
+                rendered_input_hash=input_hash,
+                temperature=getattr(self.resolver, "temperature", None),
+                temperature_note=self.resolver.temperature_note, raw_output="",
+                parse_status="error_suppressed", resolved_cause=FailureCause.UNKNOWN.value,
+                confidence="low")
+            self.calls.append(call)
+            return FailureCause.UNKNOWN, "low", call
 
         if key in self._cache:
             hit = self._cache[key]
@@ -212,7 +230,9 @@ class TailNormalizer:
         # returns UNKNOWN; caching that would freeze a one-off outage into a
         # permanent wrong answer that survives every later run. Only durable
         # verdicts -- ok, below_floor, schema_violation -- are worth remembering.
-        if status != "error":
+        if status == "error":
+            self._failed[key] = self._failed.get(key, 0) + 1
+        else:
             self._cache[key] = {"cause": cause.value, "confidence": confidence,
                                 "call": {**call.as_row(), "cached": False}}
         return cause, confidence, call
