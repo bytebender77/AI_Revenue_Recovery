@@ -178,11 +178,15 @@ bank- and merchant-influenced text: [docs/injection-surface.md](docs/injection-s
 
 ## Guardrails
 
-Across every arm and every signal tier on the sealed cohort:
+Every **gated** arm — B2, B2.5, AGENT, B3 — across every signal tier on the sealed
+cohort:
 
 - **0 observable `NEVER_RETRY` violations** — re-debits against a cause the gate could
   see was terminal.
-- **0 unauthorised debits** — re-debits with no standing mandate. B1 attempted 1391.
+- **0 unauthorised debits** — re-debits with no standing mandate.
+
+**B1, the ungated blind ladder, is the counterfactual: 1674 observable violations and
+1391 unauthorised debits.** The gate is the whole of that difference.
 
 159 *true* violations remain and **cannot reach zero**: they sit entirely in tiers
 where the gateway hid the cause. The `faithful` tier — 72% of the cohort — has none.

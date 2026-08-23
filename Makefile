@@ -1,4 +1,8 @@
-PY := python3
+# Prefer the project venv when it exists. The README explains why this matters:
+# openai 3.x depends on httpx2, and in a conda base the SDK raises
+# `TypeError: process() takes no keyword arguments` with correct versions
+# installed. A judge who skips the venv step should not silently get that.
+PY := $(if $(wildcard .venv/bin/python),./.venv/bin/python,python3)
 
 # Load .env if present, so API keys don't have to be exported by hand every shell.
 # Never committed -- see .gitignore. Do not quote values: KEY=sk-... not KEY="sk-..."

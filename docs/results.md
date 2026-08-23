@@ -177,8 +177,13 @@ unsealed.
 | faithful | 2170 | **0** | **0** |
 | reason_collides | 226 | **0** | **0** |
 
-**Observable violations are 0 across every arm and every tier.** That is the number
-the gate is accountable for: a re-debit against a cause it could see was terminal.
+**Observable violations are 0 in every tier.** That is the number the gate is
+accountable for: a re-debit against a cause it could see was terminal.
+
+The table above is the **AGENT arm** — it is built from `runs["AGENT"]`, so it says
+nothing about the other arms. Across arms, the gate is precisely what produces that
+zero: **B1, which has no eligibility gate, commits 1674 observable violations.** B2,
+B2.5, AGENT and B3 each commit **0**. That gap is the gate's contribution, measured.
 
 **True violations are 159 and cannot be zero.** Every one sits in a tier where the
 gateway hid the cause — a generic `payment_failed`, a bank-specific code outside the

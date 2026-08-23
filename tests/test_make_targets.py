@@ -181,10 +181,22 @@ def test_make_test_is_not_run_recursively():
 
 
 def test_make_ablation_normalizer_needs_an_api_key():
-    """README: `make ablation-normalizer RESOLVER=openai`."""
+    """README: `make ablation-normalizer RESOLVER=openai`.
+
+    Opt-in via RR_LIVE_LLM_TESTS=1, NOT merely on OPENAI_API_KEY being present.
+    The Makefile does `include .env` + `export`, so a key in .env is visible to
+    every target -- gating on the key alone made plain `make test` spend money on
+    live gpt-4o calls. That is not hypothetical: it happened, and models/llm_calls.jsonl
+    recorded the uncached rows with their cost. A test suite must not have a
+    monetary side effect.
+    """
+    if os.environ.get("RR_LIVE_LLM_TESTS") != "1":
+        pytest.skip("live-LLM tests are opt-in: set RR_LIVE_LLM_TESTS=1 to exercise "
+                    "`make ablation-normalizer RESOLVER=openai` (paid gpt-4o calls). "
+                    "Deliberately not keyed on OPENAI_API_KEY: the Makefile exports "
+                    ".env, so that would make plain `make test` spend money")
     if not os.environ.get("OPENAI_API_KEY"):
-        pytest.skip("OPENAI_API_KEY not set; the documented form uses a live resolver "
-                    "and would make paid calls")
+        pytest.skip("RR_LIVE_LLM_TESTS=1 but OPENAI_API_KEY is not set")
     need("data/dev_observed.jsonl", "run `make cohort`")
     ok(make("ablation-normalizer", "RESOLVER=openai", timeout=SLOW), "ablation-normalizer")
 
