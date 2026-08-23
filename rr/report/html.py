@@ -20,36 +20,61 @@ LABEL = {"B0_do_nothing": "B0 do-nothing", "B1_blind_ladder": "B1 blind ladder",
          "AGENT": "AGENT", "B3_greedy": "B3 greedy oracle"}
 
 CSS = """
-:root{--bg:#fbfaf7;--fg:#1c1a17;--mut:#6b665e;--line:#e2ded6;--card:#fff;
---pos:#1a6b45;--neg:#a33227;--accent:#8a4b2a}
-:root:not([data-theme=light]) @media (prefers-color-scheme:dark){}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
---bg:#16151300;--fg:#ece8e1;--mut:#a09a90;--line:#332f2a;--card:#1e1c19;
---pos:#5fbf8f;--neg:#e0796b;--accent:#d99a6c}}
-:root[data-theme=dark]{--bg:#161513;--fg:#ece8e1;--mut:#a09a90;--line:#332f2a;
---card:#1e1c19;--pos:#5fbf8f;--neg:#e0796b;--accent:#d99a6c}
+/* Light palette is the base, defined on bare :root so nothing depends on a media
+   query having matched. Dark redefines ONLY the tokens, twice: once for the system
+   preference (guarded so an explicit light choice wins) and once for an explicit
+   dark choice. body paints an explicit token background -- a transparent body
+   borrows whatever the host is painting, which is how this page previously
+   rendered cream text on the browser's white. */
+:root{
+  --bg:#fbfaf7; --fg:#1c1a17; --mut:#6b665e; --line:#e2ded6; --card:#ffffff;
+  --card-fg:#1c1a17; --pos:#146b45; --neg:#a33227; --accent:#8a4b2a;
+  --hi:rgba(138,75,42,.10);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#161513; --fg:#ece8e1; --mut:#a09a90; --line:#332f2a; --card:#1e1c19;
+    --card-fg:#ece8e1; --pos:#5fbf8f; --neg:#e0796b; --accent:#d99a6c;
+    --hi:rgba(217,154,108,.14);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#161513; --fg:#ece8e1; --mut:#a09a90; --line:#332f2a; --card:#1e1c19;
+  --card-fg:#ece8e1; --pos:#5fbf8f; --neg:#e0796b; --accent:#d99a6c;
+  --hi:rgba(217,154,108,.14);
+}
 *{box-sizing:border-box}
+html{background:var(--bg)}
 body{background:var(--bg);color:var(--fg);margin:0;padding:2.5rem 1.25rem 5rem;
-font:15px/1.6 Georgia,'Iowan Old Style',serif;-webkit-font-smoothing:antialiased}
-main{max-width:60rem;margin:0 auto}
-h1{font-size:1.9rem;margin:0 0 .3rem;letter-spacing:-.01em}
+font:16px/1.6 Georgia,'Iowan Old Style','Times New Roman',serif;
+-webkit-font-smoothing:antialiased}
+main{max-width:62rem;margin:0 auto}
+h1{font-size:1.9rem;margin:0 0 .35rem;letter-spacing:-.01em;color:var(--fg)}
 h2{font-size:1.15rem;margin:2.75rem 0 .6rem;padding-bottom:.35rem;
-border-bottom:1px solid var(--line);letter-spacing:-.005em}
-.sub{color:var(--mut);margin:0 0 2rem;font-size:.92rem}
-.wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-table{border-collapse:collapse;width:100%;font:13px/1.45 ui-monospace,'SF Mono',Menlo,monospace}
-th,td{padding:.42rem .6rem;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+border-bottom:1px solid var(--line);letter-spacing:-.005em;color:var(--fg)}
+.sub{color:var(--mut);margin:0 0 2rem;font-size:.95rem;max-width:46rem}
+code{font:.9em/1 ui-monospace,'SF Mono',Menlo,monospace}
+.wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -.25rem}
+table{border-collapse:collapse;width:100%;
+font:13px/1.5 ui-monospace,'SF Mono',Menlo,monospace;color:var(--fg)}
+th,td{padding:.45rem .65rem;text-align:right;border-bottom:1px solid var(--line);
+white-space:nowrap;color:var(--fg)}
 th:first-child,td:first-child{text-align:left}
-thead th{color:var(--mut);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
-tr.hi td{background:color-mix(in srgb,var(--accent) 9%,transparent);font-weight:700}
+thead th{color:var(--mut);font-weight:600;font-size:11px;text-transform:uppercase;
+letter-spacing:.07em;border-bottom:1.5px solid var(--line)}
+tr.hi td{background:var(--hi);font-weight:700}
 .pos{color:var(--pos)}.neg{color:var(--neg)}
-.note{color:var(--mut);font-size:.88rem;margin:.7rem 0 0;font-style:italic}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:.75rem;margin:1.25rem 0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:7px;padding:.85rem 1rem}
-.card .k{color:var(--mut);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
-.card .v{font:600 1.35rem/1.25 ui-monospace,Menlo,monospace;margin-top:.2rem}
-.card .c{color:var(--mut);font-size:.8rem;margin-top:.15rem}
-svg{max-width:100%;height:auto;display:block;margin:1rem 0}
+.note{color:var(--mut);font-size:.9rem;margin:.8rem 0 0;font-style:italic;max-width:46rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(11.5rem,1fr));
+gap:.8rem;margin:1.5rem 0 .5rem}
+.card{background:var(--card);color:var(--card-fg);border:1px solid var(--line);
+border-radius:8px;padding:.9rem 1rem}
+.card .k{color:var(--mut);font-size:10.5px;text-transform:uppercase;
+letter-spacing:.07em;line-height:1.35}
+.card .v{font:600 1.4rem/1.2 ui-monospace,Menlo,monospace;margin-top:.3rem;
+color:var(--card-fg)}
+.card .c{color:var(--mut);font-size:.8rem;margin-top:.25rem;line-height:1.4}
+svg{max-width:100%;height:auto;display:block;margin:1.25rem 0}
 """
 
 
@@ -173,7 +198,15 @@ def build(dev: dict, test: dict, causes: list) -> str:
     reasons = "".join(
         f"<tr><td>{k.split('|')[0]}</td><td>{k.split('|')[1]}</td><td>{v}</td></tr>"
         for k, v in sorted(na["by_reason"].items(), key=lambda kv: -kv[1]))
-    return f"""<style>{CSS}</style>
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Revenue Recovery — sealed results</title>
+<style>{CSS}</style>
+</head>
+<body>
 <main>
 <h1>AI Revenue Recovery — sealed results</h1>
 <p class="sub">Held-out test cohort, n={test['n']}. Disjoint merchants and customers,
@@ -221,7 +254,9 @@ signal reveals and nothing more.</p>
 <p class="note">Three economically distinct reasons for doing nothing, never merged: a rule
 removed the option, someone else's payment outbid this one, or nothing available cleared its
 own cost. {na['untouched']} of {test['n']} intents were never acted on at all.</p>
-</main>"""
+</main>
+</body>
+</html>"""
 
 
 def main() -> None:
