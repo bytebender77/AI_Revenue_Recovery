@@ -16,13 +16,13 @@ raw output of one run on a cohort that was read exactly once.
 Held-out test cohort, n = 3000. Disjoint merchants and customers from the training
 data, a later time window, and an outage pattern that does not appear in dev.
 
-| arm | incremental | 95% CI | net | debits | contacts |
-|---|---|---|---|---|---|
-| B1 blind ladder | 934,631 | [785,796, 1,099,298] | **−147,259** | 7056 | 0 |
-| B2 good rules | 1,499,519 | [1,293,729, 1,715,769] | 559,940 | 2915 | 1785 |
-| B2.5 + outage rule | 1,565,637 | [1,359,492, 1,785,915] | 586,720 | 2753 | 1763 |
-| **AGENT** | **1,739,601** | **[1,509,079, 1,975,881]** | **639,506** | 2850 | **1056** |
-| B3 greedy oracle | 2,115,228 | [1,866,097, 2,352,416] | 831,827 | 1950 | 1373 |
+| arm                | incremental   | 95% CI                     | net          | debits | contacts |
+| ------------------ | ------------- | -------------------------- | ------------ | ------ | -------- |
+| B1 blind ladder    | 934,631       | [785,796, 1,099,298]       | **−147,259** | 7056   | 0        |
+| B2 good rules      | 1,499,519     | [1,293,729, 1,715,769]     | 559,940      | 2915   | 1785     |
+| B2.5 + outage rule | 1,565,637     | [1,359,492, 1,785,915]     | 586,720      | 2753   | 1763     |
+| **AGENT**          | **1,739,601** | **[1,509,079, 1,975,881]** | **639,506**  | 2850   | **1056** |
+| B3 greedy oracle   | 2,115,228     | [1,866,097, 2,352,416]     | 831,827      | 1950   | 1373     |
 
 INR. **Beats the rules baseline by +240,082** [71,499, 414,677] while sending **41%
 fewer customer contacts**, and captures **82.2%** of the greedy oracle's attainable
@@ -54,13 +54,13 @@ make run           # end-to-end: 500 intents, every decision written to Postgres
 > **Use the venv, not a conda base environment.** `openai` 3.x depends on **`httpx2`**,
 > not `httpx`. In a polluted conda base the SDK raises
 > `TypeError: process() takes no keyword arguments`, surfaced as `APIConnectionError`,
-> *with correct versions installed* — `curl` works, raw `httpx2` works, only the SDK
+> _with correct versions installed_ — `curl` works, raw `httpx2` works, only the SDK
 > fails. Identical versions work in a clean venv. Run everything as `./.venv/bin/python`.
 
 > **Database port.** Defaults to **55432** (`RR_DB_PORT`). 5433 and 5434 were both
 > shadowed by a local Postgres bound to `127.0.0.1`, which wins over the container's
 > `0.0.0.0` bind for localhost traffic and produces a confusing `role "rr" does not
-> exist`.
+exist`.
 
 Optional, for the LLM components: `cp .env.example .env` and add `OPENAI_API_KEY`
 (unquoted — `make` loads `.env` via `include`, which keeps quote characters).
@@ -119,7 +119,7 @@ it, the agent optimises one quantity and is scored on another, and the gap betwe
 is pure claimed credit.
 
 **We measured the difference rather than asserting it.** `POLICY.ev_objective="gross"`
-runs as its own arm. On dev (n=6000, `make m4` — *not* the sealed cohort):
+runs as its own arm. On dev (n=6000, `make m4` — _not_ the sealed cohort):
 `ev_incremental` beats `ev_gross` by **16,407, 95% CI [−105,871, 139,349]** — a **tie**
 on recovery. The honest reading is that the term does not buy measurable incremental
 recovery; **it buys restraint.** The gross objective reaches the same recovery while
@@ -136,8 +136,8 @@ available cleared its own cost.
 
 **Success model** is an empirical-Bayes Beta-Binomial with hierarchical shrinkage —
 not a fitted tree — so every score traces to a named cell with an observation count:
-*"43 observations, 11 successes, posterior mean 0.26, 90% CI [0.17, 0.37], shrunk
-toward its parent."* Brier 0.1007 on held-out. It is **systematically overconfident in
+_"43 observations, 11 successes, posterior mean 0.26, 90% CI [0.17, 0.37], shrunk
+toward its parent."_ Brier 0.1007 on held-out. It is **systematically overconfident in
 the 0.2–0.4 band** (predicted 0.254 vs observed 0.180 over 1075 attempts) — reported,
 not corrected, because correcting after the sealed run would unseal it.
 
@@ -152,12 +152,12 @@ and a version triple. The ledger is append-only, hash-chained, and trigger-prote
 
 Two places, neither of which can select an action.
 
-| | tail normaliser | explainer |
-|---|---|---|
-| **Ships** | **OFF** | ON |
-| Job | resolve gateway codes the deterministic map misses | render a committed decision as prose |
-| Constraint | `json_schema`, `strict: true`, closed taxonomy enum + UNKNOWN | `json_schema`, single field |
-| On failure | UNKNOWN → conservative path | templated fallback built from the record alone |
+|            | tail normaliser                                               | explainer                                      |
+| ---------- | ------------------------------------------------------------- | ---------------------------------------------- |
+| **Ships**  | **OFF**                                                       | ON                                             |
+| Job        | resolve gateway codes the deterministic map misses            | render a committed decision as prose           |
+| Constraint | `json_schema`, `strict: true`, closed taxonomy enum + UNKNOWN | `json_schema`, single field                    |
+| On failure | UNKNOWN → conservative path                                   | templated fallback built from the record alone |
 
 **The normaliser ships OFF because we measured it and it lost.** Live `gpt-4o`:
 **−191,440, 95% CI [−370,675, −17,320]** — a significant loss. It resolved 676/676 of
@@ -188,7 +188,7 @@ cohort:
 **B1, the ungated blind ladder, is the counterfactual: 1674 observable violations and
 1391 unauthorised debits.** The gate is the whole of that difference.
 
-159 *true* violations remain and **cannot reach zero**: they sit entirely in tiers
+159 _true_ violations remain and **cannot reach zero**: they sit entirely in tiers
 where the gateway hid the cause. The `faithful` tier — 72% of the cohort — has none.
 A gate can enforce what the signal reveals and nothing more; the tier table in
 [results.md §5](docs/results.md) is the evidence.
@@ -202,7 +202,7 @@ healthy cause trip on the strength of its own naturally-weak third attempt.
 
 ## Razorpay test mode
 
-**Open question 9 is resolved: test mode can force a *specific* failure reason**, not
+**Open question 9 is resolved: test mode can force a _specific_ failure reason**, not
 only a generic failure. Razorpay documents an Error Scenarios section with per-error
 test cards, and the real `reason` enumeration is now mapped onto our taxonomy in
 [docs/razorpay-reason-mapping.md](docs/razorpay-reason-mapping.md). Three of our
@@ -228,7 +228,7 @@ Stated here rather than buried; full list in
 2. **B2.5's outage rule stopped being significant on test** (CI spans zero) — a
    threshold tuned on one outage shape does not transfer. The agent's
    `issuer_downtime` win held.
-3. **B3 is a *greedy* oracle**, so "82.2% of attainable" is measured against a lower
+3. **B3 is a _greedy_ oracle**, so "82.2% of attainable" is measured against a lower
    bound on the true ceiling.
 4. **`ESCALATE_HUMAN` is likely over-powered** in the frozen response model, making it
    +EV almost everywhere. Frozen before any result was seen; disclosed, not retuned.
@@ -236,7 +236,7 @@ Stated here rather than buried; full list in
    slots — RBI e-mandate windows, card-network retry caps, TRAI quiet hours,
    chargeback economics. None is asserted as fact anywhere. See
    [docs/compliance-open-questions.md](docs/compliance-open-questions.md).
-6. **Data is synthetic**, generated by a response model frozen and committed *before*
+6. **Data is synthetic**, generated by a response model frozen and committed _before_
    any policy code existed and pinned by hash
    ([docs/CHANGELOG-sim.md](docs/CHANGELOG-sim.md)), so the world could not be tuned
    until the agent won.
@@ -245,15 +245,15 @@ Stated here rather than buried; full list in
 
 ## Repo map
 
-| path | what |
-|---|---|
-| `rr/sim/` | frozen response model, cohort generator, sim executor adapter |
-| `rr/agent/` | EV policy, decision record, observable features |
-| `rr/pipeline/` | ingest, normalise, eligibility gate, Postgres sink |
-| `rr/normalize/`, `rr/explain/` | the two LLM call sites, containment-tested |
-| `rr/eval/` | tick loop, metrics, ablations, sealed run |
-| `rr/api/`, `rr/report/` | audit endpoint, static HTML report |
-| `rr/attic/` | the retired M2 rules port, unreachable and asserted so |
-| `docs/architecture.md` | **how it fits together**, and what it cannot do |
-| `docs/results.md` | **the numbers** |
-| `docs/shipping-config.md` | exactly what M6 measured and the video shows |
+| path                           | what                                                          |
+| ------------------------------ | ------------------------------------------------------------- |
+| `rr/sim/`                      | frozen response model, cohort generator, sim executor adapter |
+| `rr/agent/`                    | EV policy, decision record, observable features               |
+| `rr/pipeline/`                 | ingest, normalise, eligibility gate, Postgres sink            |
+| `rr/normalize/`, `rr/explain/` | the two LLM call sites, containment-tested                    |
+| `rr/eval/`                     | tick loop, metrics, ablations, sealed run                     |
+| `rr/api/`, `rr/report/`        | audit endpoint, static HTML report                            |
+| `rr/attic/`                    | the retired M2 rules port, unreachable and asserted so        |
+| `docs/architecture.md`         | **how it fits together**, and what it cannot do               |
+| `docs/results.md`              | **the numbers**                                               |
+| `docs/shipping-config.md`      | exactly what M6 measured and the video shows                  |
